@@ -20,8 +20,21 @@ from django.contrib import admin
 from django.urls import path, include
 from usuarios.views import register_user, login_user
 
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from usuarios.views import register_user, login_user
+from propuestas.views import RequisitoViewSet, PalabraClaveViewSet, PropuestaViewSet
+
+router = DefaultRouter()
+router.register(r'requisitos', RequisitoViewSet)
+router.register(r'palabras-clave', PalabraClaveViewSet)
+router.register(r'propuestas', PropuestaViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/register/', register_user, name='register'),
     path('api/login/', login_user, name='login'),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
