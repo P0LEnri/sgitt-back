@@ -39,10 +39,10 @@ class AlumnoSerializer(serializers.ModelSerializer):
             email=email,
             password=password,
             first_name=nombre,
-            last_name=f"{apellido_paterno} {apellido_materno}".strip()
+            last_name=apellido_paterno
         )
         
-        return Alumno.objects.create(user=user, **validated_data)
+        return Alumno.objects.create(user=user, apellido_materno=apellido_materno, **validated_data)
 
 class ProfesorSerializer(serializers.ModelSerializer):
     user = UserSerializer()
