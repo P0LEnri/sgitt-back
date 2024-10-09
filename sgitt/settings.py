@@ -168,3 +168,15 @@ LOGGING = {
         'level': 'INFO',
     },
 }
+
+# Configuración del sitio
+SITE_URL = 'http://localhost:8000'  # Cambia esto a la URL de tu sitio cuando esté en producción
+FRONTEND_URL = 'http://localhost:3000'  # Cambia esto a la URL de tu frontend en producción
+# Configuración de correo electrónico
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'sgitt2002@gmail.com'
+EMAIL_HOST_PASSWORD = 'lwda ueja hvda ndhc'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

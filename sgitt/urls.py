@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from usuarios.views import VerifyEmailView
 
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/', include('usuarios.urls',)),
     path('api/', include('propuestas.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/verify-email/<str:token>/', VerifyEmailView.as_view(), name='verify_email'),
 ]
