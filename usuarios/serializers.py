@@ -11,9 +11,9 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 class AlumnoSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField()
-    nombre = serializers.CharField()
-    apellido_paterno = serializers.CharField()
+    email = serializers.EmailField(source='user.email', read_only=True)
+    nombre = serializers.CharField(source='user.first_name', read_only=True)
+    apellido_paterno = serializers.CharField(source='user.last_name', read_only=True)
     apellido_materno = serializers.CharField()
     password = serializers.CharField(write_only=True)
     confirmPassword = serializers.CharField(write_only=True)
@@ -50,3 +50,11 @@ class ProfesorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profesor
         fields = '__all__'
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        User = get_user_model()
+        user = User.objects.create(**user_data)
+        profesor = Profesor.objects.create(user=user, **validated_data)
+
+        return profesor

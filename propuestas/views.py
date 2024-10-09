@@ -1,16 +1,22 @@
 from rest_framework import viewsets, permissions
+
+from .filters import *
 from .models import Requisito, PalabraClave, Propuesta
 from .serializers import RequisitoSerializer, PalabraClaveSerializer, PropuestaSerializer
+import logging
 
+logger = logging.getLogger(__name__)
 class RequisitoViewSet(viewsets.ModelViewSet):
     queryset = Requisito.objects.all()
     serializer_class = RequisitoSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_class = RequisitoFilter
 
 class PalabraClaveViewSet(viewsets.ModelViewSet):
     queryset = PalabraClave.objects.all()
     serializer_class = PalabraClaveSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_class = PalabrasFilter
 
 """
 class PropuestaViewSet(viewsets.ModelViewSet):
@@ -24,14 +30,15 @@ class PropuestaViewSet(viewsets.ModelViewSet):
 
 """
 
-import logging
-
-logger = logging.getLogger(__name__)
-
 class PropuestaViewSet(viewsets.ModelViewSet):
     queryset = Propuesta.objects.all()
     serializer_class = PropuestaSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_class = PropuestaFilter
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
 
     def create(self, request, *args, **kwargs):
         logger.info(f"User: {request.user}")
@@ -40,4 +47,4 @@ class PropuestaViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(autor=self.request.user)    
+        serializer.save(autor=self.request.user)
