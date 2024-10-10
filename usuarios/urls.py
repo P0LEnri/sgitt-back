@@ -6,4 +6,5 @@ urlpatterns = [
     path('login/', LoginUserView.as_view(), name='login_user'),
     path('alumnos/', AlumnoAPI.as_view(), name='alumnos'),
     path('profesores/', ProfesorAPI.as_view(), name='profesores'),
+    path('verify-email/<uuid:token>/', VerifyEmailView.as_view(), name='verify_email'),
 ]
