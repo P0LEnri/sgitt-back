@@ -1,12 +1,17 @@
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
+from .filters import AlumnoFilter, ProfesorFilter
+from .models import Alumno, Profesor
+from .serializers import AlumnoSerializer, ProfesorSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Alumno
 from .serializers import AlumnoSerializer
 from django.core.exceptions import ObjectDoesNotExist
+
 
 User = get_user_model()
 
@@ -48,7 +53,6 @@ class LoginUserView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email')
         password = request.data.get('password')
-        
         try:
             user = User.objects.get(email=email)
             if user.check_password(password):
@@ -68,3 +72,16 @@ class LoginUserView(APIView):
                 return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
         except ObjectDoesNotExist:
             return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
+
+#################APIS###########################3
+class AlumnoAPI(generics.ListCreateAPIView):
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = AlumnoFilter
+
+class ProfesorAPI(generics.ListCreateAPIView):
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProfesorFilter

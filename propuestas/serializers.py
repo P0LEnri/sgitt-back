@@ -14,7 +14,7 @@ class PalabraClaveSerializer(serializers.ModelSerializer):
 class PropuestaSerializer(serializers.ModelSerializer):
     
     requisitos = RequisitoSerializer(many=True, read_only=True)
-    print('PropuestaSerializer',requisitos)
+    # print('PropuestaSerializer',requisitos)
     palabras_clave = PalabraClaveSerializer(many=True, read_only=True)
     autor = serializers.ReadOnlyField(source='autor.email')
 
