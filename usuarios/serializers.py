@@ -13,9 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 class AlumnoSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(source='user.email', read_only=True)
-    nombre = serializers.CharField(source='user.first_name', read_only=True)
-    apellido_paterno = serializers.CharField(source='user.last_name', read_only=True)
+    email = serializers.EmailField(source='user.email')
+    nombre = serializers.CharField(source='user.first_name')
+    apellido_paterno = serializers.CharField(source='user.last_name')
     apellido_materno = serializers.CharField()
     password = serializers.CharField(write_only=True)
     confirmPassword = serializers.CharField(write_only=True)
@@ -30,27 +30,31 @@ class AlumnoSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        email = validated_data.pop('email')
+        user_data = validated_data.pop('user', {})
         password = validated_data.pop('password')
-        validated_data.pop('confirmPassword')  # Removemos confirmPassword ya que no lo necesitamos para crear el usuario
-        nombre = validated_data.pop('nombre')
-        apellido_paterno = validated_data.pop('apellido_paterno')
-        apellido_materno = validated_data.pop('apellido_materno')
+        validated_data.pop('confirmPassword')
         
         user = User.objects.create_user(
-            email=email,
+            email=user_data.get('email'),
             password=password,
-            first_name=nombre,
-            last_name=apellido_paterno,
+            first_name=user_data.get('first_name'),
+            last_name=user_data.get('last_name'),
             is_active=False,
             email_verified=False 
         )
         
-        alumno = Alumno.objects.create(user=user, apellido_materno=apellido_materno, **validated_data)
+        alumno = Alumno.objects.create(user=user, **validated_data)
         
         self.send_verification_email(user)
         
         return alumno
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['email'] = instance.user.email
+        representation['nombre'] = instance.user.first_name
+        representation['apellido_paterno'] = instance.user.last_name
+        return representation
     
     
     def send_verification_email(self, user):
