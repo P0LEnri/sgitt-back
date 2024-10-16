@@ -4,6 +4,8 @@ from .filters import *
 from .models import Requisito, PalabraClave, Propuesta
 from .serializers import RequisitoSerializer, PalabraClaveSerializer, PropuestaSerializer
 import logging
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 logger = logging.getLogger(__name__)
 class RequisitoViewSet(viewsets.ModelViewSet):
@@ -48,3 +50,9 @@ class PropuestaViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(autor=self.request.user)
+    
+    @action(detail=False, methods=['GET'])
+    def mis_propuestas(self, request):
+        propuestas = Propuesta.objects.filter(autor=request.user)
+        serializer = self.get_serializer(propuestas, many=True)
+        return Response(serializer.data)
