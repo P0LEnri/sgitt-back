@@ -185,3 +185,23 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sgitt2002@gmail.com'
 EMAIL_HOST_PASSWORD = 'lwda ueja hvda ndhc'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Primero, intenta usar pylibmc si está disponible
+try:
+    import pylibmc
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
+    }
+except ImportError:
+    # Si pylibmc no está disponible, usa el backend de caché local
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+
+CACHE_TIMEOUT = 86400  # 24 horas, ajusta según tus necesidades

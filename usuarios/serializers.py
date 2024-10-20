@@ -82,16 +82,40 @@ class AlumnoSerializer(serializers.ModelSerializer):
     )
 
 class ProfesorSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    nombre = serializers.CharField(source='user.get_full_name', read_only=True)
+    email = serializers.EmailField(source='user.email')
+    first_name = serializers.CharField(write_only=True)
+    last_name = serializers.CharField(write_only=True)
 
     class Meta:
         model = Profesor
-        fields = '__all__'
+        fields = ['id', 'nombre', 'email', 'matricula', 'materias', 'first_name', 'last_name']
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user')
+        first_name = validated_data.pop('first_name', '')
+        last_name = validated_data.pop('last_name', '')
+        email = validated_data.pop('email')
+        
         User = get_user_model()
-        user = User.objects.create(**user_data)
+        user = User.objects.create(
+            email=email,
+            first_name=first_name,
+            last_name=last_name
+        )
+        
         profesor = Profesor.objects.create(user=user, **validated_data)
-
         return profesor
+
+    def update(self, instance, validated_data):
+        user_data = {}
+        if 'email' in validated_data:
+            user_data['email'] = validated_data.pop('email')
+        if 'first_name' in validated_data:
+            user_data['first_name'] = validated_data.pop('first_name')
+        if 'last_name' in validated_data:
+            user_data['last_name'] = validated_data.pop('last_name')
+        
+        if user_data:
+            User.objects.filter(id=instance.user.id).update(**user_data)
+        
+        return super().update(instance, validated_data)
