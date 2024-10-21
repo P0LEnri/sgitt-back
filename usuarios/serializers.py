@@ -82,40 +82,58 @@ class AlumnoSerializer(serializers.ModelSerializer):
     )
 
 class ProfesorSerializer(serializers.ModelSerializer):
-    nombre = serializers.CharField(source='user.get_full_name', read_only=True)
     email = serializers.EmailField(source='user.email')
-    first_name = serializers.CharField(write_only=True)
-    last_name = serializers.CharField(write_only=True)
+    nombre = serializers.CharField(source='user.first_name')
+    apellido = serializers.CharField(source='user.last_name')
+    password = serializers.CharField(write_only=True, required=False)
+    confirmPassword = serializers.CharField(write_only=True, required=False)
 
     class Meta:
         model = Profesor
-        fields = ['id', 'nombre', 'email', 'matricula', 'materias', 'first_name', 'last_name']
+        fields = ('id', 'email', 'nombre', 'apellido', 'password', 'confirmPassword', 'matricula', 'materias')
+
+    def validate(self, data):
+        if 'password' in data:
+            if data['password'] != data.get('confirmPassword'):
+                raise serializers.ValidationError("Las contraseñas no coinciden")
+        return data
 
     def create(self, validated_data):
-        first_name = validated_data.pop('first_name', '')
-        last_name = validated_data.pop('last_name', '')
-        email = validated_data.pop('email')
+        user_data = {}
+        user_data['email'] = validated_data.pop('user', {}).get('email')
+        user_data['first_name'] = validated_data.pop('user', {}).get('first_name')
+        user_data['last_name'] = validated_data.pop('user', {}).get('last_name')
+        password = validated_data.pop('password', None)
+        validated_data.pop('confirmPassword', None)
         
         User = get_user_model()
-        user = User.objects.create(
-            email=email,
-            first_name=first_name,
-            last_name=last_name
+        user = User.objects.create_user(
+            email=user_data['email'],
+            password=password,
+            first_name=user_data['first_name'],
+            last_name=user_data['last_name'],
+            is_active=True,  # Los profesores podrían no necesitar verificación de email
+            email_verified=True
         )
         
         profesor = Profesor.objects.create(user=user, **validated_data)
         return profesor
 
     def update(self, instance, validated_data):
-        user_data = {}
-        if 'email' in validated_data:
-            user_data['email'] = validated_data.pop('email')
-        if 'first_name' in validated_data:
-            user_data['first_name'] = validated_data.pop('first_name')
-        if 'last_name' in validated_data:
-            user_data['last_name'] = validated_data.pop('last_name')
-        
-        if user_data:
-            User.objects.filter(id=instance.user.id).update(**user_data)
-        
+        user_data = validated_data.pop('user', {})
+        if 'email' in user_data:
+            instance.user.email = user_data['email']
+        if 'first_name' in user_data:
+            instance.user.first_name = user_data['first_name']
+        if 'last_name' in user_data:
+            instance.user.last_name = user_data['last_name']
+        instance.user.save()
+
         return super().update(instance, validated_data)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['email'] = instance.user.email
+        representation['nombre'] = instance.user.first_name
+        representation['apellido'] = instance.user.last_name
+        return representation

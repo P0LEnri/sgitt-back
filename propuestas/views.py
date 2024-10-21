@@ -1,8 +1,8 @@
 from rest_framework import viewsets, permissions
 
 from .filters import *
-from .models import Requisito, PalabraClave, Propuesta
-from .serializers import RequisitoSerializer, PalabraClaveSerializer, PropuestaSerializer
+from .models import Requisito, PalabraClave, Propuesta, Area
+from .serializers import RequisitoSerializer, PalabraClaveSerializer, PropuestaSerializer, AreaSerializer
 import logging
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -19,6 +19,11 @@ class PalabraClaveViewSet(viewsets.ModelViewSet):
     serializer_class = PalabraClaveSerializer
     permission_classes = [permissions.IsAuthenticated]
     filterset_class = PalabrasFilter
+
+class AreaViewSet(viewsets.ModelViewSet):
+    queryset = Area.objects.all()
+    serializer_class = AreaSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 """
 class PropuestaViewSet(viewsets.ModelViewSet):
@@ -49,7 +54,10 @@ class PropuestaViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(autor=self.request.user)
+        carrera = ''
+        if hasattr(self.request.user, 'alumno'):
+            carrera = self.request.user.alumno.carrera
+        serializer.save(autor=self.request.user, carrera=carrera)
     
     @action(detail=False, methods=['GET'])
     def mis_propuestas(self, request):

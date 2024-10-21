@@ -1,7 +1,7 @@
 from django_filters import rest_framework as filters
 from django.db.models import Q
 from django.contrib.auth import get_user_model
-from .models import Propuesta, Requisito, PalabraClave
+from .models import Propuesta, Requisito, PalabraClave, Area
 
 
 class RequisitoFilter(filters.FilterSet):
@@ -23,18 +23,24 @@ class PropuestaFilter(filters.FilterSet):
     objetivo = filters.CharFilter(field_name='objetivo', lookup_expr='icontains')
     cantidad_alumnos = filters.NumberFilter(field_name='cantidad_alumnos', lookup_expr='exact')
     cantidad_profesores = filters.NumberFilter(field_name='cantidad_profesores')
-    start_date = filters.DateFilter(field_name='fecha_creacion', lookup_expr='gte')  # Fecha de inicio (mayor o igual que)
-    end_date = filters.DateFilter(field_name='fecha_creacion', lookup_expr='lte')  # Fecha de fin (menor o igual que)
+    start_date = filters.DateFilter(field_name='fecha_creacion', lookup_expr='gte')
+    end_date = filters.DateFilter(field_name='fecha_creacion', lookup_expr='lte')
     requisitos = filters.ModelMultipleChoiceFilter(
         queryset=Requisito.objects.all(),
         field_name='requisitos',
-        conjoined=False,  # Cambiar a True si quieres que coincidan todos los requisitos
+        conjoined=False,
     )
     palabras_clave = filters.ModelMultipleChoiceFilter(
         queryset=PalabraClave.objects.all(),
         field_name='palabras_clave',
-        conjoined=False,  # Cambiar a True si quieres que coincidan todas las palabras clave
+        conjoined=False,
     )
+    areas = filters.ModelMultipleChoiceFilter(
+        queryset=Area.objects.all(),
+        field_name='areas',
+        conjoined=False,
+    )
+    carrera = filters.CharFilter(field_name='carrera', lookup_expr='icontains')
     autor = filters.ModelChoiceFilter(queryset=get_user_model().objects.all(), field_name='autor')
 
     class Meta:
@@ -48,6 +54,8 @@ class PropuestaFilter(filters.FilterSet):
             'end_date',
             'requisitos',
             'palabras_clave',
+            'areas',
+            'carrera',
             'autor'
         ]
         strict = True
