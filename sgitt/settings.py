@@ -43,7 +43,18 @@ INSTALLED_APPS = [
     'corsheaders',
     'usuarios',
     'propuestas',
+    'chat',
+    'channels',
+    'rest_framework_simplejwt',
 ]
+
+ASGI_APPLICATION = 'sgitt.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
