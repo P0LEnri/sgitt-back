@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -102,6 +103,7 @@ DATABASES = {
         'PORT': config('DB_PORT'),
     }
 }
+
 
 
 # Password validation
@@ -197,3 +199,32 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sgitt2002@gmail.com'
 EMAIL_HOST_PASSWORD = 'lwda ueja hvda ndhc'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Primero, intenta usar pylibmc si está disponible
+try:
+    import pylibmc
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
+    }
+except ImportError:
+    # Si pylibmc no está disponible, usa el backend de caché local
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+
+CACHE_TIMEOUT = 86400  # 24 horas, ajusta según tus necesidades
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}

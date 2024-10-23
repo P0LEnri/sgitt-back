@@ -26,4 +26,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/verify-email/<str:token>/', VerifyEmailView.as_view(), name='verify_email'),
     path('api/chat/', include('chat.urls')),
+    path('api/usuarios/', include('usuarios.urls')),
 ]
