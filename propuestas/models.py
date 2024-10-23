@@ -12,6 +12,12 @@ class PalabraClave(models.Model):
 
     def __str__(self):
         return self.palabra
+    
+class Area(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nombre
 
 class Propuesta(models.Model):
     nombre = models.CharField(max_length=255)
@@ -20,6 +26,8 @@ class Propuesta(models.Model):
     cantidad_profesores = models.PositiveIntegerField()
     requisitos = models.ManyToManyField(Requisito)
     palabras_clave = models.ManyToManyField(PalabraClave)
+    areas = models.ManyToManyField(Area)
+    carrera = models.CharField(max_length=100, blank=True)  # Puede ser blanco si es creado por un profesor
     autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='propuestas')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)

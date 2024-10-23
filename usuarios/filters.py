@@ -15,6 +15,7 @@ class AlumnoSearchFilter(filters.Filter):
                                        Q(materno__icontains=value))
         return queryset
 
+
 class ProfesorSearchFilter(filters.Filter):
     def filter(self, queryset, value):
         if value:
