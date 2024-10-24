@@ -15,9 +15,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from rest_framework.decorators import api_view, permission_classes
-import spacy
+#import spacy
 from spellchecker import SpellChecker
-from gensim.models import KeyedVectors
+#from gensim.models import KeyedVectors
 import os
 from transformers import AutoTokenizer, AutoModel
 import torch
@@ -28,10 +28,10 @@ import logging
 from django.db.models import Q
 
 # Cargar el modelo de spaCy para español
-nlp = spacy.load("es_core_news_sm")
+#nlp = spacy.load("es_core_news_sm")
 
 # Inicializar el corrector ortográfico en español
-spell = SpellChecker(language='es')
+#spell = SpellChecker(language='es')
 
 
 
