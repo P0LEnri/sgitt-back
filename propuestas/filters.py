@@ -42,6 +42,8 @@ class PropuestaFilter(filters.FilterSet):
     )
     carrera = filters.CharFilter(field_name='carrera', lookup_expr='icontains')
     autor = filters.ModelChoiceFilter(queryset=get_user_model().objects.all(), field_name='autor')
+    tipo_propuesta = filters.CharFilter(field_name='tipo_propuesta', lookup_expr='icontains')
+    
 
     class Meta:
         model = Propuesta
@@ -56,6 +58,8 @@ class PropuestaFilter(filters.FilterSet):
             'palabras_clave',
             'areas',
             'carrera',
-            'autor'
+            'autor',
+            'datos_contacto',
+            'tipo_propuesta'
         ]
         strict = True

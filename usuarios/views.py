@@ -85,10 +85,13 @@ class LoginUserView(APIView):
                         return Response({"error": "Tu cuenta está inactiva. Contacta al administrador."}, status=status.HTTP_403_FORBIDDEN)
                 
                 refresh = RefreshToken.for_user(user)
+                print('alumno' if hasattr(user, 'alumno') else 'profesor')
+                print(str(email))
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
-                    'user_type': 'alumno' if hasattr(user, 'alumno') else 'profesor'
+                    'user_type': 'alumno' if hasattr(user, 'alumno') else 'profesor',
+                    'user_email': str(email)
                 })
             else:
                 return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)

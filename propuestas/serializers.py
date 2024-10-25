@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Requisito, PalabraClave, Propuesta, Area
+from .models import Requisito, PalabraClave, Propuesta, Area, DatoContacto
 
 class RequisitoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,6 +16,11 @@ class AreaSerializer(serializers.ModelSerializer):
         model = Area
         fields = ['id', 'nombre']
 
+class DatoContactoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DatoContacto
+        fields = ['id', 'dato']
+
 class PropuestaSerializer(serializers.ModelSerializer):
     
     requisitos = RequisitoSerializer(many=True, read_only=True)
@@ -23,12 +28,14 @@ class PropuestaSerializer(serializers.ModelSerializer):
     palabras_clave = PalabraClaveSerializer(many=True, read_only=True)
     autor = serializers.SerializerMethodField()
     areas = AreaSerializer(many=True, read_only=True)
+    datos_contacto = DatoContactoSerializer(many=True, read_only=True)
 
     class Meta:
         model = Propuesta
-        fields = ['id', 'nombre', 'objetivo', 'cantidad_alumnos', 'cantidad_profesores', 
-                  'requisitos', 'palabras_clave', 'areas', 'carrera', 'autor', 'fecha_creacion', 'fecha_actualizacion']
-    
+        fields = ['id', 'nombre', 'objetivo', 'cantidad_alumnos', 'cantidad_profesores',
+                 'requisitos', 'palabras_clave', 'areas', 'carrera', 'autor',
+                 'fecha_creacion', 'fecha_actualizacion', 'tipo_propuesta', 'datos_contacto']
+
     def get_autor(self, obj):
         return {
             'nombre': f"{obj.autor.first_name} {obj.autor.last_name}",
@@ -40,6 +47,7 @@ class PropuestaSerializer(serializers.ModelSerializer):
         requisitos_data = self.context['request'].data.get('requisitos', [])
         palabras_clave_data = self.context['request'].data.get('palabras_clave', [])
         areas_data = self.context['request'].data.get('areas', [])
+        datos_contacto_data = self.context['request'].data.get('datos_contacto', [])
         
         propuesta = Propuesta.objects.create(**validated_data)
         
@@ -54,5 +62,10 @@ class PropuestaSerializer(serializers.ModelSerializer):
         for area in areas_data:
             a, _ = Area.objects.get_or_create(nombre=area)
             propuesta.areas.add(a)
+
+        for dato in datos_contacto_data:
+            # Ahora solo necesitamos el dato directamente, no es un diccionario
+            dc, _ = DatoContacto.objects.get_or_create(dato=dato)
+            propuesta.datos_contacto.add(dc)
         
         return propuesta

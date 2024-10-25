@@ -19,6 +19,12 @@ class Area(models.Model):
     def __str__(self):
         return self.nombre
 
+class DatoContacto(models.Model):
+    dato = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.dato
+
 class Propuesta(models.Model):
     nombre = models.CharField(max_length=255)
     objetivo = models.TextField()
@@ -31,6 +37,8 @@ class Propuesta(models.Model):
     autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='propuestas')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
+    tipo_propuesta = models.CharField(max_length=50)  # Sin choices
+    datos_contacto = models.ManyToManyField(DatoContacto)
 
     def __str__(self):
         return self.nombre
