@@ -1,8 +1,9 @@
 from rest_framework import viewsets, permissions
+from django.core.exceptions import PermissionDenied
 
 from .filters import *
-from .models import Requisito, PalabraClave, Propuesta, Area
-from .serializers import RequisitoSerializer, PalabraClaveSerializer, PropuestaSerializer, AreaSerializer
+from .models import Requisito, PalabraClave, Propuesta, Area , DatoContacto
+from .serializers import RequisitoSerializer, PalabraClaveSerializer, PropuestaSerializer, AreaSerializer, DatoContactoSerializer
 import logging
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -25,6 +26,11 @@ class AreaViewSet(viewsets.ModelViewSet):
     serializer_class = AreaSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+class DatoContactoViewSet(viewsets.ModelViewSet):
+    queryset = DatoContacto.objects.all()
+    serializer_class = DatoContactoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 """
 class PropuestaViewSet(viewsets.ModelViewSet):
     queryset = Propuesta.objects.all()
@@ -42,6 +48,45 @@ class PropuestaViewSet(viewsets.ModelViewSet):
     serializer_class = PropuestaSerializer
     permission_classes = [permissions.IsAuthenticated]
     filterset_class = PropuestaFilter
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.autor != request.user:
+            raise PermissionDenied("No tienes permiso para editar esta propuesta")
+        
+        # Obtener los datos del request
+        requisitos_data = request.data.get('requisitos', [])
+        palabras_clave_data = request.data.get('palabras_clave', [])
+        areas_data = request.data.get('areas', [])
+        datos_contacto_data = request.data.get('datos_contacto', [])
+        
+        # Actualizar la instancia con los datos básicos
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        # Actualizar relaciones many-to-many
+        instance.requisitos.clear()
+        for requisito in requisitos_data:
+            req, _ = Requisito.objects.get_or_create(descripcion=requisito)
+            instance.requisitos.add(req)
+
+        instance.palabras_clave.clear()
+        for palabra in palabras_clave_data:
+            pc, _ = PalabraClave.objects.get_or_create(palabra=palabra)
+            instance.palabras_clave.add(pc)
+
+        instance.areas.clear()
+        for area in areas_data:
+            a, _ = Area.objects.get_or_create(nombre=area)
+            instance.areas.add(a)
+
+        instance.datos_contacto.clear()
+        for dato in datos_contacto_data:
+            dc, _ = DatoContacto.objects.get_or_create(dato=dato)
+            instance.datos_contacto.add(dc)
+
+        return Response(serializer.data)
 
     def get_queryset(self):
         queryset = super().get_queryset()
