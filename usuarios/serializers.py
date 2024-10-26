@@ -1,10 +1,15 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Alumno, Profesor
+from .models import Alumno, Profesor,AreaConocimiento,Materia
 from django.core.mail import send_mail
 from django.conf import settings
 
 User = get_user_model()
+
+class AreaConocimientoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AreaConocimiento
+        fields = ['id', 'nombre']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,10 +24,12 @@ class AlumnoSerializer(serializers.ModelSerializer):
     apellido_materno = serializers.CharField()
     password = serializers.CharField(write_only=True)
     confirmPassword = serializers.CharField(write_only=True)
+    areas_alumno = AreaConocimientoSerializer(many=True, read_only=True)
+    areas_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
 
     class Meta:
         model = Alumno
-        fields = ('email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios')
+        fields = ('email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids')
 
     def validate(self, data):
         if data['password'] != data['confirmPassword']:
@@ -33,6 +40,7 @@ class AlumnoSerializer(serializers.ModelSerializer):
         user_data = validated_data.pop('user', {})
         password = validated_data.pop('password')
         validated_data.pop('confirmPassword')
+        areas_ids = validated_data.pop('areas_ids', [])
         
         user = User.objects.create_user(
             email=user_data.get('email'),
@@ -44,6 +52,8 @@ class AlumnoSerializer(serializers.ModelSerializer):
         )
         
         alumno = Alumno.objects.create(user=user, **validated_data)
+        if areas_ids:
+            alumno.areas_alumno.set(areas_ids)
         
         self.send_verification_email(user)
         
@@ -80,6 +90,11 @@ class AlumnoSerializer(serializers.ModelSerializer):
             </html>
             '''
     )
+        
+class MateriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Materia
+        fields = ['id', 'nombre']
 
 class ProfesorSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
@@ -87,10 +102,18 @@ class ProfesorSerializer(serializers.ModelSerializer):
     apellido = serializers.CharField(source='user.last_name')
     password = serializers.CharField(write_only=True, required=False)
     confirmPassword = serializers.CharField(write_only=True, required=False)
+    materias = MateriaSerializer(many=True, read_only=True)
+    materias_ids = serializers.ListField(
+        child=serializers.IntegerField(),
+        write_only=True,
+        required=False
+    )
+
 
     class Meta:
         model = Profesor
-        fields = ('id', 'email', 'nombre', 'apellido', 'password', 'confirmPassword', 'matricula', 'materias')
+        fields = ('id', 'email', 'nombre', 'apellido', 'password', 'confirmPassword', 'materias', 'materias', 'materias_ids', 'es_profesor')
+
 
     def validate(self, data):
         if 'password' in data:
@@ -105,6 +128,7 @@ class ProfesorSerializer(serializers.ModelSerializer):
         user_data['last_name'] = validated_data.pop('user', {}).get('last_name')
         password = validated_data.pop('password', None)
         validated_data.pop('confirmPassword', None)
+        materias_ids = validated_data.pop('materias_ids', [])
         
         User = get_user_model()
         user = User.objects.create_user(
@@ -117,6 +141,8 @@ class ProfesorSerializer(serializers.ModelSerializer):
         )
         
         profesor = Profesor.objects.create(user=user, **validated_data)
+        if materias_ids:
+            profesor.materias.set(materias_ids)
         return profesor
 
     def update(self, instance, validated_data):

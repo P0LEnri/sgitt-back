@@ -1,6 +1,6 @@
 from django_filters import rest_framework as filters
 
-from usuarios.models import Alumno, Profesor
+from usuarios.models import Alumno, Profesor, Materia
 from django.db.models import Q
 class AlumnoSearchFilter(filters.Filter):
     def filter(self, queryset, value):
@@ -39,7 +39,10 @@ class AlumnoFilter(filters.FilterSet):
 
 class ProfesorFilter(filters.FilterSet):
     usuario = ProfesorSearchFilter()
-    materias = filters.CharFilter(field_name='materias', lookup_expr='icontains')
+    materias = filters.ModelMultipleChoiceFilter(
+        field_name='materias',
+        queryset=Materia.objects.all()
+    )
     class Meta:
         model = Profesor
         fields = ['usuario', 'materias']

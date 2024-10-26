@@ -35,6 +35,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+class AreaConocimiento(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
 
 class Alumno(models.Model):
     class Carrera(models.TextChoices):
@@ -47,17 +53,28 @@ class Alumno(models.Model):
     boleta = models.CharField(unique=True, max_length=255)
     carrera = models.CharField(max_length=3, choices=Carrera.choices, default=Carrera.SISTEMAS)
     plan_estudios = models.CharField(max_length=50)
+    areas_alumno = models.ManyToManyField(AreaConocimiento, related_name='alumnos')
 
     class Meta:
         ordering = ['boleta']
         indexes = [models.Index(fields=['boleta']), ]
 
+class Materia(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        ordering = ['nombre']
+
 class Profesor(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    matricula = models.CharField(unique=True, max_length=255)
-    materias = models.CharField(max_length=255)
+    materias = models.ManyToManyField(Materia, related_name='profesores')
     es_profesor = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ['matricula']
-        indexes = [models.Index(fields=['matricula']), ]
+        ordering = ['user__email']
+    
+    def __str__(self):
+        return f"{self.user.email} - Profesor"

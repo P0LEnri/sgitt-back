@@ -1,12 +1,12 @@
-from rest_framework import status, generics
+from rest_framework import status, generics, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from .filters import AlumnoFilter, ProfesorFilter
-from .models import Alumno, Profesor
-from .serializers import AlumnoSerializer, ProfesorSerializer
+from .models import Alumno, Profesor, Materia
+from .serializers import AlumnoSerializer, ProfesorSerializer, MateriaSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Alumno
 from .serializers import AlumnoSerializer
@@ -364,3 +364,12 @@ class ProfesorAPI(generics.ListCreateAPIView):
     serializer_class = ProfesorSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProfesorFilter
+
+class MateriasAPI(generics.ListAPIView):
+    queryset = Materia.objects.all()
+    serializer_class = MateriaSerializer
+
+class MateriaViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Materia.objects.all()
+    serializer_class = MateriaSerializer
+    permission_classes = [AllowAny]
