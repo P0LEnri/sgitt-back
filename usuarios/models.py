@@ -71,7 +71,9 @@ class Materia(models.Model):
 
 class Profesor(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    apellido_materno = models.CharField(max_length=50)
     materias = models.ManyToManyField(Materia, related_name='profesores')
+    areas_profesor = models.ManyToManyField(AreaConocimiento, related_name='profesores')
     es_profesor = models.BooleanField(default=True)
 
     class Meta:

@@ -376,7 +376,7 @@ class MateriaViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = MateriaSerializer
     permission_classes = [AllowAny]
 
-class AlumnoPerfilView(generics.RetrieveAPIView):
+class AlumnoPerfilView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = AlumnoSerializer
 
@@ -385,8 +385,16 @@ class AlumnoPerfilView(generics.RetrieveAPIView):
             return Alumno.objects.get(user=self.request.user)
         except Alumno.DoesNotExist:
             raise Http404("No existe un perfil de alumno para este usuario")
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
-class ProfesorPerfilView(generics.RetrieveAPIView):
+class ProfesorPerfilView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProfesorSerializer
 
@@ -395,3 +403,11 @@ class ProfesorPerfilView(generics.RetrieveAPIView):
             return Profesor.objects.get(user=self.request.user)
         except Profesor.DoesNotExist:
             raise Http404("No existe un perfil de profesor para este usuario")
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
