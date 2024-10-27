@@ -8,7 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sgitt.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
-from usuarios.models import Profesor, Materia
+from usuarios.models import Profesor, Materia,AreaConocimiento
 
 User = get_user_model()
 
@@ -39,7 +39,7 @@ def create_materias():
     
     materias_dict = {}
     for nombre in materias_nombres:
-        materia, created = Materia.objects.get_or_create(nombre=nombre)
+        materia, created = AreaConocimiento.objects.get_or_create(nombre=nombre)
         materias_dict[nombre] = materia
         if created:
             print(f"Materia creada: {nombre}")
@@ -92,9 +92,10 @@ def populate_profesores(num_profesores=100):
 def clean_database():
     """Limpia la base de datos de profesores y materias"""
     try:
-        Profesor.objects.all().delete()
-        Materia.objects.all().delete()
-        User.objects.filter(email__contains="@ejemplo.com").delete()
+        #Profesor.objects.all().delete()
+        #Materia.objects.all().delete()
+        AreaConocimiento.objects.all().delete()
+        #User.objects.filter(email__contains="@ejemplo.com").delete()
         print("Base de datos limpiada exitosamente")
     except Exception as e:
         print(f"Error al limpiar la base de datos: {str(e)}")
@@ -103,7 +104,8 @@ if __name__ == '__main__':
     print("¿Deseas limpiar la base de datos antes de poblarla? (s/n)")
     if input().lower() == 's':
         clean_database()
+        create_materias()
     
     print("Iniciando población de profesores...")
-    populate_profesores()
+    #populate_profesores()
     print("Población de profesores completada.")

@@ -26,6 +26,8 @@ from sentence_transformers import SentenceTransformer
 from django.conf import settings
 import logging
 from django.db.models import Q
+from django.http import Http404
+
 
 # Cargar el modelo de spaCy para español
 #nlp = spacy.load("es_core_news_sm")
@@ -373,3 +375,23 @@ class MateriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Materia.objects.all()
     serializer_class = MateriaSerializer
     permission_classes = [AllowAny]
+
+class AlumnoPerfilView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AlumnoSerializer
+
+    def get_object(self):
+        try:
+            return Alumno.objects.get(user=self.request.user)
+        except Alumno.DoesNotExist:
+            raise Http404("No existe un perfil de alumno para este usuario")
+
+class ProfesorPerfilView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProfesorSerializer
+
+    def get_object(self):
+        try:
+            return Profesor.objects.get(user=self.request.user)
+        except Profesor.DoesNotExist:
+            raise Http404("No existe un perfil de profesor para este usuario")

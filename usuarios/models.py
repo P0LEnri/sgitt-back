@@ -54,6 +54,7 @@ class Alumno(models.Model):
     carrera = models.CharField(max_length=3, choices=Carrera.choices, default=Carrera.SISTEMAS)
     plan_estudios = models.CharField(max_length=50)
     areas_alumno = models.ManyToManyField(AreaConocimiento, related_name='alumnos')
+    areas_custom = None
 
     class Meta:
         ordering = ['boleta']

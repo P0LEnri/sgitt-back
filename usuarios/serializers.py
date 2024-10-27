@@ -26,10 +26,11 @@ class AlumnoSerializer(serializers.ModelSerializer):
     confirmPassword = serializers.CharField(write_only=True)
     areas_alumno = AreaConocimientoSerializer(many=True, read_only=True)
     areas_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
+    areas_custom = serializers.ListField(child=serializers.CharField(), write_only=True, required=False, default=[])
 
     class Meta:
         model = Alumno
-        fields = ('email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids')
+        fields = ('email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids', 'areas_custom')
 
     def validate(self, data):
         if data['password'] != data['confirmPassword']:
@@ -41,6 +42,9 @@ class AlumnoSerializer(serializers.ModelSerializer):
         password = validated_data.pop('password')
         validated_data.pop('confirmPassword')
         areas_ids = validated_data.pop('areas_ids', [])
+        areas_custom = validated_data.pop('areas_custom', [])
+        print("Areas IDs recibidas:", areas_ids)
+        print("Areas custom recibidas:", areas_custom)
         
         user = User.objects.create_user(
             email=user_data.get('email'),
@@ -52,8 +56,24 @@ class AlumnoSerializer(serializers.ModelSerializer):
         )
         
         alumno = Alumno.objects.create(user=user, **validated_data)
+        # Procesar las materias seleccionadas y convertirlas en áreas
         if areas_ids:
-            alumno.areas_alumno.set(areas_ids)
+            for materia_id in areas_ids:
+                try:
+                    materia = Materia.objects.get(id=materia_id)
+                    print("Materia encontrada:", materia)
+                    # Crear o obtener un área de conocimiento basada en la materia
+                    area, created = AreaConocimiento.objects.get_or_create(
+                        nombre=materia.nombre
+                    )
+                    print("Área creada:", area)
+                    alumno.areas_alumno.add(area)
+                except Materia.DoesNotExist:
+                    continue
+        
+        for area_nombre in areas_custom:
+            area, created = AreaConocimiento.objects.get_or_create(nombre=area_nombre)
+            alumno.areas_alumno.add(area)
         
         self.send_verification_email(user)
         
