@@ -8,7 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sgitt.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
-from usuarios.models import Profesor, Materia,AreaConocimiento
+from usuarios.models import Profesor, Materia
 
 User = get_user_model()
 
@@ -39,14 +39,14 @@ def create_materias():
     
     materias_dict = {}
     for nombre in materias_nombres:
-        materia, created = AreaConocimiento.objects.get_or_create(nombre=nombre)
+        materia, created = Materia.objects.get_or_create(nombre=nombre)
         materias_dict[nombre] = materia
         if created:
             print(f"Materia creada: {nombre}")
     
     return materias_dict
 
-def create_profesor(email, first_name, last_name, matricula, materias_list):
+def create_profesor(email, first_name, last_name, apellido_materno, materias_list):
     try:
         # Crear usuario
         user = User.objects.create_user(
@@ -61,7 +61,7 @@ def create_profesor(email, first_name, last_name, matricula, materias_list):
         # Crear profesor
         profesor = Profesor.objects.create(
             user=user,
-            
+            apellido_materno=apellido_materno,
             es_profesor=True
         )
         
@@ -73,7 +73,7 @@ def create_profesor(email, first_name, last_name, matricula, materias_list):
         print(f"Error al crear profesor {email}: {str(e)}")
         return None
 
-def populate_profesores(num_profesores=100):
+def populate_profesores(num_profesores=30):
     # Primero creamos o recuperamos todas las materias
     materias_dict = create_materias()
     materias_list = list(materias_dict.values())
@@ -82,20 +82,19 @@ def populate_profesores(num_profesores=100):
         email = f"profesor{i+1}@ejemplo.com"
         first_name = f"Nombre{i+1}"
         last_name = f"Apellido{i+1}"
-        matricula = f"PROF{100000+i}"
+        apellido_materno = f"Materno{i+1}"
         
         # Seleccionar aleatoriamente entre 1 y 3 materias
-        materias_asignadas = random.sample(materias_list, k=random.randint(1, 3))
+        materias_asignadas = random.sample(materias_list, k=random.randint(3, 5))
         
-        create_profesor(email, first_name, last_name, matricula, materias_asignadas)
+        create_profesor(email, first_name, last_name, apellido_materno, materias_asignadas)
 
 def clean_database():
     """Limpia la base de datos de profesores y materias"""
     try:
-        #Profesor.objects.all().delete()
-        #Materia.objects.all().delete()
-        AreaConocimiento.objects.all().delete()
-        #User.objects.filter(email__contains="@ejemplo.com").delete()
+        Profesor.objects.all().delete()
+        Materia.objects.all().delete()
+        User.objects.filter(email__contains="@ejemplo.com").delete()
         print("Base de datos limpiada exitosamente")
     except Exception as e:
         print(f"Error al limpiar la base de datos: {str(e)}")
@@ -104,8 +103,7 @@ if __name__ == '__main__':
     print("¿Deseas limpiar la base de datos antes de poblarla? (s/n)")
     if input().lower() == 's':
         clean_database()
-        create_materias()
     
     print("Iniciando población de profesores...")
-    #populate_profesores()
+    populate_profesores()
     print("Población de profesores completada.")
