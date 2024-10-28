@@ -1,12 +1,12 @@
-from rest_framework import status, generics
+from rest_framework import status, generics, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from .filters import AlumnoFilter, ProfesorFilter
-from .models import Alumno, Profesor
-from .serializers import AlumnoSerializer, ProfesorSerializer
+from .models import Alumno, Profesor, Materia
+from .serializers import AlumnoSerializer, ProfesorSerializer, MateriaSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Alumno
 from .serializers import AlumnoSerializer
@@ -26,6 +26,8 @@ from sentence_transformers import SentenceTransformer
 from django.conf import settings
 import logging
 from django.db.models import Q
+from django.http import Http404
+
 
 # Cargar el modelo de spaCy para español
 #nlp = spacy.load("es_core_news_sm")
@@ -364,3 +366,48 @@ class ProfesorAPI(generics.ListCreateAPIView):
     serializer_class = ProfesorSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProfesorFilter
+
+class MateriasAPI(generics.ListAPIView):
+    queryset = Materia.objects.all()
+    serializer_class = MateriaSerializer
+
+class MateriaViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Materia.objects.all()
+    serializer_class = MateriaSerializer
+    permission_classes = [AllowAny]
+
+class AlumnoPerfilView(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AlumnoSerializer
+
+    def get_object(self):
+        try:
+            return Alumno.objects.get(user=self.request.user)
+        except Alumno.DoesNotExist:
+            raise Http404("No existe un perfil de alumno para este usuario")
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+class ProfesorPerfilView(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProfesorSerializer
+
+    def get_object(self):
+        try:
+            return Profesor.objects.get(user=self.request.user)
+        except Profesor.DoesNotExist:
+            raise Http404("No existe un perfil de profesor para este usuario")
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)

@@ -1,10 +1,15 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Alumno, Profesor
+from .models import Alumno, Profesor,AreaConocimiento,Materia
 from django.core.mail import send_mail
 from django.conf import settings
 
 User = get_user_model()
+
+class AreaConocimientoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AreaConocimiento
+        fields = ['id', 'nombre']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,20 +24,29 @@ class AlumnoSerializer(serializers.ModelSerializer):
     apellido_materno = serializers.CharField()
     password = serializers.CharField(write_only=True)
     confirmPassword = serializers.CharField(write_only=True)
+    areas_alumno = AreaConocimientoSerializer(many=True, read_only=True)
+    areas_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
+    areas_custom = serializers.ListField(child=serializers.CharField(), write_only=True, required=False, default=[])
 
     class Meta:
         model = Alumno
-        fields = ('email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios')
+        fields = ('email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids', 'areas_custom')
 
     def validate(self, data):
-        if data['password'] != data['confirmPassword']:
-            raise serializers.ValidationError("Las contraseñas no coinciden")
+        # Solo validar contraseñas si están presentes en los datos
+        if 'password' in data and 'confirmPassword' in data:
+            if data['password'] != data['confirmPassword']:
+                raise serializers.ValidationError("Las contraseñas no coinciden")
         return data
 
     def create(self, validated_data):
         user_data = validated_data.pop('user', {})
         password = validated_data.pop('password')
         validated_data.pop('confirmPassword')
+        areas_ids = validated_data.pop('areas_ids', [])
+        areas_custom = validated_data.pop('areas_custom', [])
+        print("Areas IDs recibidas:", areas_ids)
+        print("Areas custom recibidas:", areas_custom)
         
         user = User.objects.create_user(
             email=user_data.get('email'),
@@ -44,10 +58,50 @@ class AlumnoSerializer(serializers.ModelSerializer):
         )
         
         alumno = Alumno.objects.create(user=user, **validated_data)
+        # Procesar las materias seleccionadas y convertirlas en áreas
+        if areas_ids:
+            for materia_id in areas_ids:
+                try:
+                    materia = Materia.objects.get(id=materia_id)
+                    print("Materia encontrada:", materia)
+                    # Crear o obtener un área de conocimiento basada en la materia
+                    area, created = AreaConocimiento.objects.get_or_create(
+                        nombre=materia.nombre
+                    )
+                    print("Área creada:", area)
+                    alumno.areas_alumno.add(area)
+                except Materia.DoesNotExist:
+                    continue
+        
+        for area_nombre in areas_custom:
+            area, created = AreaConocimiento.objects.get_or_create(nombre=area_nombre)
+            alumno.areas_alumno.add(area)
         
         self.send_verification_email(user)
         
         return alumno
+    
+    def update(self, instance, validated_data):
+        areas_ids = validated_data.pop('areas_ids', [])
+        areas_custom = validated_data.pop('areas_custom', [])
+
+        # Actualizar áreas
+        instance.areas_alumno.clear()
+        for materia_id in areas_ids:
+            try:
+                materia = Materia.objects.get(id=materia_id)
+                area, _ = AreaConocimiento.objects.get_or_create(
+                    nombre=materia.nombre
+                )
+                instance.areas_alumno.add(area)
+            except Materia.DoesNotExist:
+                continue
+
+        for area_nombre in areas_custom:
+            area, _ = AreaConocimiento.objects.get_or_create(nombre=area_nombre)
+            instance.areas_alumno.add(area)
+
+        return instance
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -80,17 +134,38 @@ class AlumnoSerializer(serializers.ModelSerializer):
             </html>
             '''
     )
+        
+class MateriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Materia
+        fields = ['id', 'nombre']
 
 class ProfesorSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
     nombre = serializers.CharField(source='user.first_name')
-    apellido = serializers.CharField(source='user.last_name')
+    apellido_paterno = serializers.CharField(source='user.last_name')
+    apellido_materno = serializers.CharField()
     password = serializers.CharField(write_only=True, required=False)
     confirmPassword = serializers.CharField(write_only=True, required=False)
+    materias = MateriaSerializer(many=True, read_only=True)
+    materias_ids = serializers.ListField(
+        child=serializers.IntegerField(),
+        write_only=True,
+        required=False
+    )
+    areas_profesor = AreaConocimientoSerializer(many=True, read_only=True)
+    areas_ids = serializers.ListField(
+        child=serializers.IntegerField(),
+        write_only=True,
+        required=False,
+        default=[]
+    )
+
 
     class Meta:
         model = Profesor
-        fields = ('id', 'email', 'nombre', 'apellido', 'password', 'confirmPassword', 'matricula', 'materias')
+        fields = ('id', 'email', 'nombre', 'apellido_paterno', 'apellido_materno', 'password', 'confirmPassword', 'materias', 'materias', 'materias_ids', 'areas_profesor', 'areas_ids','es_profesor')
+
 
     def validate(self, data):
         if 'password' in data:
@@ -105,6 +180,9 @@ class ProfesorSerializer(serializers.ModelSerializer):
         user_data['last_name'] = validated_data.pop('user', {}).get('last_name')
         password = validated_data.pop('password', None)
         validated_data.pop('confirmPassword', None)
+        materias_ids = validated_data.pop('materias_ids', [])
+        materias_ids = validated_data.pop('materias_ids', [])
+        areas_ids = validated_data.pop('areas_ids', [])
         
         User = get_user_model()
         user = User.objects.create_user(
@@ -117,19 +195,47 @@ class ProfesorSerializer(serializers.ModelSerializer):
         )
         
         profesor = Profesor.objects.create(user=user, **validated_data)
+        if materias_ids:
+            profesor.materias.set(materias_ids)
+        if areas_ids:
+            profesor.areas_profesor.set(areas_ids)
         return profesor
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user', {})
-        if 'email' in user_data:
-            instance.user.email = user_data['email']
-        if 'first_name' in user_data:
-            instance.user.first_name = user_data['first_name']
-        if 'last_name' in user_data:
-            instance.user.last_name = user_data['last_name']
-        instance.user.save()
-
-        return super().update(instance, validated_data)
+        # Obtener los IDs de materias y áreas del request data original
+        materias_ids = self.context['request'].data.get('materias_ids', [])
+        areas_custom = self.context['request'].data.get('areas_custom', [])
+        
+        # Actualizar las materias si se proporcionaron
+        if materias_ids:
+            instance.materias.clear()
+            instance.materias.set(materias_ids)
+        
+        
+        # Actualizar las áreas de conocimiento
+        # Si areas_custom es una lista vacía o None, limpiamos las áreas
+        if areas_custom is not None:  # Solo actuamos si el campo fue proporcionado
+            instance.areas_profesor.clear()
+            # Si hay áreas nuevas, las añadimos
+            if areas_custom:
+                for area_nombre in areas_custom:
+                    area, created = AreaConocimiento.objects.get_or_create(nombre=area_nombre)
+                    instance.areas_profesor.add(area)
+        
+        # Actualizar otros campos si es necesario
+        if 'user' in validated_data:
+            user_data = validated_data.pop('user')
+            user = instance.user
+            for attr, value in user_data.items():
+                setattr(user, attr, value)
+            user.save()
+        
+        # Actualizar campos directos del profesor
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        instance.save()
+        return instance
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
