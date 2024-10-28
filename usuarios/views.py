@@ -163,7 +163,6 @@ def buscar_profesores(request):
 
 
 
-
 # Cargar el modelo BETO
 tokenizer = AutoTokenizer.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
 model = AutoModel.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
@@ -174,34 +173,75 @@ def get_bert_embedding(text):
         outputs = model(**inputs)
     return outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
 
+def calculate_profesor_similarity(query_vector, profesor):
+    """
+    Calcula la similitud entre la consulta y cada materia del profesor,
+    devolviendo la máxima similitud encontrada.
+    """
+    materias = profesor.materias.all()
+    if not materias:
+        return 0.0
+    
+    # Calcular similitud para cada materia
+    materia_similarities = []
+    for materia in materias:
+        materia_vector = get_bert_embedding(materia.nombre)
+        similarity = cosine_similarity([query_vector], [materia_vector])[0][0]
+        materia_similarities.append(similarity)
+    
+    # Podemos usar diferentes estrategias para combinar las similitudes:
+    # 1. Máximo (mejor coincidencia individual)
+    max_similarity = max(materia_similarities)
+    # 2. Promedio (coincidencia general)
+    avg_similarity = sum(materia_similarities) / len(materia_similarities)
+    # 3. Promedio ponderado de las mejores N coincidencias
+    top_n = sorted(materia_similarities, reverse=True)[:2]  # Tomamos las 2 mejores
+    weighted_similarity = sum(top_n) / len(top_n)
+    
+    # Combinamos las métricas (puedes ajustar los pesos según necesites)
+    final_similarity = (max_similarity * 0.5 + 
+                       avg_similarity * 0.2 + 
+                       weighted_similarity * 0.3)
+    
+    return final_similarity
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def buscar_profesores(request):
     query = request.GET.get('q', '')
-    profesores = list(Profesor.objects.all())
+    # Obtener profesores con sus materias precargadas
+    profesores = list(Profesor.objects.prefetch_related('materias').all())
 
     if query and profesores:
         try:
-            print(f"Consulta: {query}")  # Para depuración
+            print(f"Consulta: {query}")
             query_vector = get_bert_embedding(query)
             
+            # Calcular similitudes
             similarities = []
             for prof in profesores:
-                prof_vector = get_bert_embedding(prof.materias)
-                similarity = cosine_similarity([query_vector], [prof_vector])[0][0]
+                similarity = calculate_profesor_similarity(query_vector, prof)
                 similarities.append((prof, similarity))
+                print(f"Profesor: {prof.user.email}, Similitud: {similarity}")  # Debug
 
-            similarities.sort(key=lambda x: x[1], reverse=True)
-            print(similarities)
-            top_5_profesores = [prof for prof, _ in similarities[:5]]
-            #imprimir similitudes
-            print(top_5_profesores)
+            # Filtrar y ordenar resultados
+            filtered_similarities = [
+                (prof, sim) for prof, sim in similarities 
+                if sim > 0.3  # Umbral mínimo de similitud
+            ]
+            
+            filtered_similarities.sort(key=lambda x: x[1], reverse=True)
+            top_5_profesores = [prof for prof, sim in filtered_similarities[:6]]
+
             serializer = ProfesorSerializer(top_5_profesores, many=True)
             return Response(serializer.data)
+            
         except Exception as e:
+            print(f"Error en búsqueda: {str(e)}")
             return Response({"error": str(e)}, status=400)
     
-    serializer = ProfesorSerializer(profesores, many=True)
+    # Si no hay query, devolver una selección limitada de profesores
+    serializer = ProfesorSerializer(profesores[:9], many=True)
     return Response(serializer.data)
 
 logger = logging.getLogger(__name__)
