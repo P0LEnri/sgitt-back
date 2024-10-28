@@ -33,5 +33,10 @@ class Message(models.Model):
             models.Index(fields=['conversation', 'timestamp']),
         ]
     
-    def __str__(self):
-        return f'{self.sender.email}: {self.content[:50]}'
+    def mark_as_read(self, user):
+        if user not in self.read_by.all():
+            self.read_by.add(user)
+            self.save()
+    
+    def is_read_by(self, user):
+        return self.read_by.filter(id=user.id).exists()

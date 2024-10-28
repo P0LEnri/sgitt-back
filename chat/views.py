@@ -52,14 +52,21 @@ class MessageViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         conversation_id = self.request.data.get('conversation_id')
         conversation = Conversation.objects.get(id=conversation_id)
-        serializer.save(sender=self.request.user, conversation=conversation)
-        
-        # Marcar como leído para el remitente
-        message = serializer.instance
-        message.read_by.add(self.request.user)
+        message = serializer.save(sender=self.request.user, conversation=conversation)
+        message.mark_as_read(self.request.user)  # Marcar como leído para el remitente
     
     @action(detail=True, methods=['POST'])
     def mark_as_read(self, request, pk=None):
         message = self.get_object()
-        message.read_by.add(request.user)
+        message.mark_as_read(request.user)
+        # Notificar a través de WebSocket la actualización
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f'notifications_{request.user.id}',
+            {
+                'type': 'unread_count_update',
+                'conversation_id': message.conversation.id,
+                'unread_count': message.conversation.messages.exclude(read_by=request.user).count()
+            }
+        )
         return Response({'status': 'message marked as read'})

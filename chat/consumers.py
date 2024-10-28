@@ -119,3 +119,28 @@ class ChatConsumer(AsyncWebsocketConsumer):
             return False
         except Exception:
             return False
+        
+class NotificationConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        if not self.scope["user"].is_authenticated:
+            await self.close(code=4001)
+            return
+
+        await self.channel_layer.group_add(
+            f'notifications_{self.scope["user"].id}',
+            self.channel_name
+        )
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(
+            f'notifications_{self.scope["user"].id}',
+            self.channel_name
+        )
+
+    async def unread_count_update(self, event):
+        await self.send(text_data=json.dumps({
+            'type': 'unread_count_update',
+            'conversation_id': event['conversation_id'],
+            'unread_count': event['unread_count']
+        }))        

@@ -3,9 +3,11 @@ from rest_framework import serializers
 from .models import Conversation, Message
 from usuarios.serializers import UserSerializer
 
+
 class MessageSerializer(serializers.ModelSerializer):
     sender_email = serializers.CharField(source='sender.email', read_only=True)
     sender_name = serializers.SerializerMethodField()
+    read_by = serializers.SerializerMethodField()
     
     class Meta:
         model = Message
@@ -13,6 +15,9 @@ class MessageSerializer(serializers.ModelSerializer):
     
     def get_sender_name(self, obj):
         return f"{obj.sender.first_name} {obj.sender.last_name}"
+    
+    def get_read_by(self, obj):
+        return [{'id': user.id, 'email': user.email} for user in obj.read_by.all()]
 
 class ConversationSerializer(serializers.ModelSerializer):
     participants = UserSerializer(many=True, read_only=True)
