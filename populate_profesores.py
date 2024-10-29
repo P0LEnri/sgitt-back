@@ -1,6 +1,6 @@
 import os
 import django
-import random
+import json
 from django.core.exceptions import ObjectDoesNotExist
 
 # Configura el entorno de Django
@@ -8,36 +8,26 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sgitt.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
-from usuarios.models import Profesor, Materia
+from usuarios.models import Profesor, Materia, AreaConocimiento
 
 User = get_user_model()
 
-def create_materias():
+def load_json_data(file_path):
+    """Carga los datos del archivo JSON"""
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return json.load(file)
+
+def create_materias(materias_data):
     """Crea las materias en la base de datos y devuelve un diccionario con todas ellas"""
-    materias_nombres = [
-        "Cálculo", "Álgebra Lineal", "Cálculo Aplicado", "Comunicación Oral y Escrita",
-        "Fundamentos de Programación", "Análisis Vectorial", "Matemáticas Discretas",
-        "Fundamentos de Algoritmos y Estructuras de Datos", "Ingeniería, Ética y Sociedad",
-        "Fundamentos Económicos", "Ecuaciones Diferenciales", "Circuitos Eléctricos",
-        "Fundamentos de Diseño Digital", "Bases de Datos", "Finanzas Empresariales",
-        "Paradigmas de Programación", "Análisis y Diseño de Algoritmos",
-        "Probabilidad y Estadística", "Matemáticas Avanzadas para la Ingeniería",
-        "Electrónica Analógica", "Diseño de Sistemas Digitales",
-        "Tecnologías para el Desarrollo de Aplicaciones Web", "Sistemas Operativos",
-        "Teoría de la Computación", "Procesamiento Digital de Señales",
-        "Instrumentación y Control", "Arquitectura de Computadoras",
-        "Análisis y Diseño de Sistemas", "Formulación y Evaluación de Proyectos Informáticos",
-        "Compiladores", "Redes de Computadoras", "Sistemas en Chip", "Optativa A1",
-        "Optativa B1", "Métodos Cuantitativos para la Toma de Decisiones",
-        "Ingeniería de Software", "Inteligencia Artificial",
-        "Aplicaciones para Comunicaciones en Red", "Desarrollo de Aplicaciones Móviles Nativas",
-        "Optativa A2", "Optativa B2", "Trabajo Terminal I", "Sistemas Distribuidos",
-        "Administración de Servicios en Red", "Estancia Profesional",
-        "Desarrollo de Habilidades Sociales para la Alta Dirección", "Trabajo Terminal II",
-        "Gestión Empresarial", "Liderazgo Personal"
-    ]
-    
     materias_dict = {}
+    materias_nombres = set()
+    
+    # Extraer nombres únicos de materias del JSON
+    for profesor in materias_data:
+        for materia in profesor['materias']:
+            materias_nombres.add(materia['unidad_aprendizaje'])
+    
+    # Crear materias en la base de datos
     for nombre in materias_nombres:
         materia, created = Materia.objects.get_or_create(nombre=nombre)
         materias_dict[nombre] = materia
@@ -46,14 +36,18 @@ def create_materias():
     
     return materias_dict
 
-def create_profesor(email, first_name, last_name, apellido_materno, materias_list):
+def create_profesor(profesor_data, materias_dict):
     try:
         # Crear usuario
+        email = profesor_data['correo']
+        nombres = profesor_data['nombre']['nombre'].split()
+        nombre = nombres[0]  # Primer nombre
+        
         user = User.objects.create_user(
             email=email,
-            password='123',  # Considera usar una contraseña más segura
-            first_name=first_name,
-            last_name=last_name,
+            password='123',
+            first_name=nombre,
+            last_name=profesor_data['nombre']['apellido_paterno'],
             is_active=True,
             email_verified=True
         )
@@ -61,49 +55,54 @@ def create_profesor(email, first_name, last_name, apellido_materno, materias_lis
         # Crear profesor
         profesor = Profesor.objects.create(
             user=user,
-            apellido_materno=apellido_materno,
+            apellido_materno=profesor_data['nombre']['apellido_materno'],
             es_profesor=True
         )
         
         # Asignar materias
-        profesor.materias.set(materias_list)
-        print(f"Profesor creado: {profesor.user.email} con {len(materias_list)} materias")
+        materias_asignadas = []
+        for materia_data in profesor_data['materias']:
+            nombre_materia = materia_data['unidad_aprendizaje']
+            if nombre_materia in materias_dict:
+                materias_asignadas.append(materias_dict[nombre_materia])
+        
+        profesor.materias.set(materias_asignadas)
+        print(f"Profesor creado: {profesor.user.email} con {len(materias_asignadas)} materias")
         return profesor
     except Exception as e:
         print(f"Error al crear profesor {email}: {str(e)}")
         return None
 
-def populate_profesores(num_profesores=30):
-    # Primero creamos o recuperamos todas las materias
-    materias_dict = create_materias()
-    materias_list = list(materias_dict.values())
+def populate_profesores(json_file_path):
+    # Cargar datos del JSON
+    profesores_data = load_json_data(json_file_path)
     
-    for i in range(num_profesores):
-        email = f"profesor{i+1}@ejemplo.com"
-        first_name = f"Nombre{i+1}"
-        last_name = f"Apellido{i+1}"
-        apellido_materno = f"Materno{i+1}"
-        
-        # Seleccionar aleatoriamente entre 1 y 3 materias
-        materias_asignadas = random.sample(materias_list, k=random.randint(3, 5))
-        
-        create_profesor(email, first_name, last_name, apellido_materno, materias_asignadas)
+    # Primero creamos o recuperamos todas las materias
+    materias_dict = create_materias(profesores_data)
+    
+    # Crear profesores
+    for profesor_data in profesores_data:
+        create_profesor(profesor_data, materias_dict)
 
 def clean_database():
     """Limpia la base de datos de profesores y materias"""
     try:
         Profesor.objects.all().delete()
         Materia.objects.all().delete()
+        AreaConocimiento.objects.all().delete()
+        #User.objects.filter(email__contains="@yopmail.com").delete() # Se borran tambien los alumnos xd si se quieren borrar los profesores descomentar esta linea
         User.objects.filter(email__contains="@ejemplo.com").delete()
         print("Base de datos limpiada exitosamente")
     except Exception as e:
         print(f"Error al limpiar la base de datos: {str(e)}")
 
 if __name__ == '__main__':
+    json_file_path = 'profesores_procesados.json'  # Asegúrate de que la ruta sea correcta
+    
     print("¿Deseas limpiar la base de datos antes de poblarla? (s/n)")
     if input().lower() == 's':
         clean_database()
     
     print("Iniciando población de profesores...")
-    populate_profesores()
+    populate_profesores(json_file_path)
     print("Población de profesores completada.")

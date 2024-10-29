@@ -27,6 +27,8 @@ from django.conf import settings
 import logging
 from django.db.models import Q
 from django.http import Http404
+import re
+from typing import List, Tuple, Dict
 
 
 # Cargar el modelo de spaCy para español
@@ -161,7 +163,7 @@ def buscar_profesores(request):
     serializer = ProfesorSerializer(profesores, many=True)
     return Response(serializer.data)"""
 
-
+"""
 
 # Cargar el modelo BETO
 tokenizer = AutoTokenizer.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
@@ -174,10 +176,10 @@ def get_bert_embedding(text):
     return outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
 
 def calculate_profesor_similarity(query_vector, profesor):
-    """
-    Calcula la similitud entre la consulta y cada materia del profesor,
-    devolviendo la máxima similitud encontrada.
-    """
+    
+    #Calcula la similitud entre la consulta y cada materia del profesor,
+    #devolviendo la máxima similitud encontrada.
+    
     materias = profesor.materias.all()
     if not materias:
         return 0.0
@@ -244,6 +246,7 @@ def buscar_profesores(request):
     serializer = ProfesorSerializer(profesores[:9], many=True)
     return Response(serializer.data)
 
+"""
 logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
@@ -341,14 +344,38 @@ def test_users_data(request):
     return Response(data)
  
 
+
 """
 
-
 # Cargar el modelo una vez al inicio de la aplicación
-model = SentenceTransformer('hiiamsid/sentence_similarity_spanish_es')
+model = SentenceTransformer('distiluse-base-multilingual-cased-v1') #hiiamsid/sentence_similarity_spanish_es
 
 def get_embedding(text):
     return model.encode(text)
+
+def get_profesor_similarities(query_vector, profesor):
+    
+    #Calcula la similitud entre la consulta y las materias del profesor
+    
+    materias = profesor.materias.all()
+    if not materias:
+        return 0.0
+
+    # Obtener embeddings para cada materia
+    materia_vectors = [get_embedding(materia.nombre) for materia in materias]
+    
+    # Calcular similitud con cada materia
+    similitudes = [
+        np.dot(query_vector, materia_vec) / (np.linalg.norm(query_vector) * np.linalg.norm(materia_vec))
+        for materia_vec in materia_vectors
+    ]
+    
+    # Podemos usar diferentes estrategias para combinar las similitudes:
+    max_sim = max(similitudes)  # Mejor coincidencia
+    avg_sim = sum(similitudes) / len(similitudes)  # Promedio
+    
+    # Combinar las métricas (ajustar pesos según necesidad)
+    return max_sim * 0.99 + avg_sim * 0.01
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -356,43 +383,182 @@ def buscar_profesores(request):
     query = request.GET.get('q', '')
     
     if not query:
-        profesores = Profesor.objects.all()[:10]  # Limitar a 10 si no hay consulta
+        profesores = Profesor.objects.prefetch_related('materias').all()[:10]
         serializer = ProfesorSerializer(profesores, many=True)
         return Response(serializer.data)
     
     try:
         query_vector = get_embedding(query)
         
-        # Intentar obtener embeddings precalculados de la caché
-        profesores_embeddings = cache.get('profesores_embeddings')
-        if profesores_embeddings is None:
-            profesores = list(Profesor.objects.all())
-            profesores_embeddings = [(prof, get_embedding(prof.materias)) for prof in profesores]
-            cache.set('profesores_embeddings', profesores_embeddings, timeout=settings.CACHE_TIMEOUT)
+        # Intentar obtener profesores de la caché
+        profesores = list(Profesor.objects.prefetch_related('materias').all())
         
-        # Calcular similitudes
-        similarities = [
-            (prof, np.dot(query_vector, prof_vector) / (np.linalg.norm(query_vector) * np.linalg.norm(prof_vector)))
-            for prof, prof_vector in profesores_embeddings
+        # Calcular similitudes para cada profesor
+        similarities = []
+        for profesor in profesores:
+            similarity = get_profesor_similarities(query_vector, profesor)
+            print(f"Profesor: {profesor.user.email}, Similitud: {similarity:.3f}")
+            similarities.append((profesor, similarity))
+        
+        # Filtrar por umbral de similitud y ordenar
+        filtered_similarities = [
+            (prof, sim) for prof, sim in similarities 
+            if sim > 0.4  # Ajustar umbral según necesidad
         ]
-        #print(similarities)
-        # Filtrar similitudes mayores a 0
-        filtered_similarities = [(prof, sim) for prof, sim in similarities if sim > 0.6 ]
-
-        # Ordenar y seleccionar los 5 más similares
-        top_5_profesores = sorted(filtered_similarities, key=lambda x: x[1], reverse=True)[:5]
-        print(top_5_profesores)
-
-        # Serializar
-        serializer = ProfesorSerializer([prof for prof, _ in top_5_profesores], many=True)
-
+        
+        # Ordenar por similitud y tomar los top 5
+        top_profesores = sorted(filtered_similarities, key=lambda x: x[1], reverse=True)[:5]
+        
+        # Debug info
+        for prof, sim in top_profesores:
+            materias_nombres = ', '.join(m.nombre for m in prof.materias.all())
+            print(f"Profesor: {prof.user.email}, Similitud: {sim:.3f}")
+            print(f"Materias: {materias_nombres}")
+        
+        # Serializar resultados
+        serializer = ProfesorSerializer([prof for prof, _ in top_profesores], many=True)
         return Response(serializer.data)
+        
     except Exception as e:
+        print(f"Error en búsqueda: {str(e)}")
         return Response({"error": str(e)}, status=400)
 
-
-
 """
+
+# Inicializar el modelo una sola vez
+model = SentenceTransformer('hiiamsid/sentence_similarity_spanish_es') #hiiamsid/sentence_similarity_spanish_es distiluse-base-multilingual-cased-v1
+
+def preprocess_text(text: str) -> str:
+    """
+    Preprocesa el texto para mejorar la calidad de la búsqueda.
+    """
+    # Convertir a minúsculas y eliminar acentos
+    text = text.lower()
+    text = re.sub(r'[áäà]', 'a', text)
+    text = re.sub(r'[éëè]', 'e', text)
+    text = re.sub(r'[íïì]', 'i', text)
+    text = re.sub(r'[óöò]', 'o', text)
+    text = re.sub(r'[úüù]', 'u', text)
+    
+    # Eliminar caracteres especiales pero mantener espacios entre palabras
+    text = re.sub(r'[^a-z0-9\s]', ' ', text)
+    
+    # Eliminar espacios múltiples
+    text = re.sub(r'\s+', ' ', text)
+    return text.strip()
+
+def get_embeddings(texts: List[str]) -> np.ndarray:
+    """
+    Obtiene los embeddings para una lista de textos.
+    """
+    preprocessed_texts = [preprocess_text(text) for text in texts]
+    return model.encode(preprocessed_texts)
+
+def calculate_similarity_score(query_vector: np.ndarray, profesor: Profesor) -> Tuple[float, Dict]:
+    """
+    Calcula un puntaje de similitud compuesto para un profesor.
+    Retorna el puntaje final y un diccionario con los puntajes individuales.
+    """
+    materias = list(profesor.materias.all())
+    areas = list(profesor.areas_profesor.all())
+    
+    if not materias and not areas:
+        return 0.0, {}
+
+    # Obtener nombres de materias y áreas
+    materia_texts = [m.nombre for m in materias]
+    area_texts = [a.nombre for a in areas]
+    
+    # Calcular similitudes
+    scores = {}
+    
+    if materia_texts:
+        materia_vectors = get_embeddings(materia_texts)
+        materia_similarities = cosine_similarity([query_vector], materia_vectors)[0]
+        scores['max_materia'] = float(np.max(materia_similarities))
+        scores['avg_materia'] = float(np.mean(materia_similarities))
+    
+    if area_texts:
+        area_vectors = get_embeddings(area_texts)
+        area_similarities = cosine_similarity([query_vector], area_vectors)[0]
+        scores['max_area'] = float(np.max(area_similarities))
+        scores['avg_area'] = float(np.mean(area_similarities))
+    
+    # Calcular puntaje final ponderado
+    final_score = 0.0
+    weights = {
+        'max_materia': 0.4,
+        'avg_materia': 0.1,
+        'max_area': 0.4,
+        'avg_area': 0.1
+    }
+    
+    for key, weight in weights.items():
+        if key in scores:
+            final_score += scores[key] * weight
+    
+    return final_score, scores
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def buscar_profesores(request):
+    """
+    Endpoint para buscar profesores basado en similitud semántica.
+    """
+    query = request.GET.get('q', '').strip()
+    debug_mode = request.GET.get('debug', '').lower() == 'true'
+    
+    try:
+        # Si no hay query, devolver profesores recientes o destacados
+        if not query:
+            profesores = Profesor.objects.prefetch_related('materias', 'areas_profesor').all()[:10]
+            serializer = ProfesorSerializer(profesores, many=True)
+            return Response(serializer.data)
+
+        # Preprocesar y obtener embedding de la consulta
+        query_vector = get_embeddings([query])[0]
+        
+        # Obtener profesores con sus relaciones precargadas
+        profesores = Profesor.objects.prefetch_related('materias', 'areas_profesor', 'user').all()
+        
+        # Calcular similitudes
+        profesor_scores = []
+        for profesor in profesores:
+            final_score, detailed_scores = calculate_similarity_score(query_vector, profesor)
+            print(f"Profesor: {profesor.user.email}, Score: {final_score:.3f} (Details: {detailed_scores})")
+
+            if debug_mode:
+                logger.info(f"Profesor: {profesor.user.email}")
+                logger.info(f"Scores: {detailed_scores}")
+                logger.info(f"Final Score: {final_score}")
+            
+            if final_score > 0.0:  # Umbral mínimo de similitud
+                profesor_scores.append((profesor, final_score, detailed_scores))
+        
+        # Ordenar por puntaje y tomar los mejores resultados
+        profesor_scores.sort(key=lambda x: x[1], reverse=True)
+        top_profesores = profesor_scores[:6]
+        
+        # Preparar respuesta
+        response_data = []
+        for profesor, score, detailed_scores in top_profesores:
+            profesor_data = ProfesorSerializer(profesor).data
+            if debug_mode:
+                profesor_data['_debug'] = {
+                    'similarity_score': score,
+                    'detailed_scores': detailed_scores
+                }
+            response_data.append(profesor_data)
+        
+        return Response(response_data)
+        
+    except Exception as e:
+        logger.error(f"Error en búsqueda de profesores: {str(e)}", exc_info=True)
+        return Response(
+            {"error": "Error al procesar la búsqueda", "detail": str(e)},
+            status=400
+        )
+
 
 #################APIS###########################3
 class AlumnoAPI(generics.ListCreateAPIView):

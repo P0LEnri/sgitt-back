@@ -1,0 +1,5745 @@
+[
+    {
+        "nombre": {
+            "apellido_paterno": "Rangel",
+            "apellido_materno": "Nahum",
+            "nombre": "Carlos Alexis"
+        },
+        "correo": "narangel@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1AV2",
+                "unidad_aprendizaje": "Introducción a la Ciencia de Datos"
+            },
+            {
+                "grupo": "7BV1",
+                "unidad_aprendizaje": "Big Data"
+            },
+            {
+                "grupo": "7CV1",
+                "unidad_aprendizaje": "Data Mining"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Aguilar",
+            "apellido_materno": "García",
+            "nombre": "Rafael"
+        },
+        "correo": "raguilarg@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CM3",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "3CM5",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Aguilar",
+            "apellido_materno": "Juaregui",
+            "nombre": "María Elena"
+        },
+        "correo": "meaguilar@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CV1",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Aguilar",
+            "apellido_materno": "Sánchez",
+            "nombre": "Fernando"
+        },
+        "correo": "faguilars@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2BM2",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "3CM11",
+                "unidad_aprendizaje": "Introducción a los Microcontroladores"
+            },
+            {
+                "grupo": "4CM4",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Aguilar",
+            "apellido_materno": "Velázquez",
+            "nombre": "Daniel"
+        },
+        "correo": "daguilarve@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3AM2",
+                "unidad_aprendizaje": "Programación para la Ciencia de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Agustín",
+            "apellido_materno": "Domínguez",
+            "nombre": "Verónica"
+        },
+        "correo": "vagustin@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3AM2",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "3CM2",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "5CM3",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Albortante",
+            "apellido_materno": "Morato",
+            "nombre": "Cecilia"
+        },
+        "correo": "calbortantem@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "2BM1",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2BM2",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2CM2",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "3CM1",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "5CM4",
+                "unidad_aprendizaje": "Compiladores"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Alcántara",
+            "apellido_materno": "Méndez",
+            "nombre": "Alberto Jesús"
+        },
+        "correo": "ajalcantaram@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CM4",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "5CM3",
+                "unidad_aprendizaje": "Compiladores"
+            },
+            {
+                "grupo": "5CM4",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            },
+            {
+                "grupo": "7CM2",
+                "unidad_aprendizaje": "Virtual Instrumentation"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Alcaraz",
+            "apellido_materno": "Torres",
+            "nombre": "Juan Jesús"
+        },
+        "correo": "jjalcarazt@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CM1",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            },
+            {
+                "grupo": "5CV1",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Alegría",
+            "apellido_materno": "Benítez",
+            "nombre": "Gerardo"
+        },
+        "correo": "gera.alegria@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "6AM1",
+                "unidad_aprendizaje": "Analítica Avanzada de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Alemán",
+            "apellido_materno": "Arce",
+            "nombre": "Miguel Ángel"
+        },
+        "correo": "maleman@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "6CM3",
+                "unidad_aprendizaje": "Embedded Systems"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Almazán",
+            "apellido_materno": "Farfán",
+            "nombre": "Rocío"
+        },
+        "correo": "ralmazanf@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CM4",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "3CM5",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Aragón",
+            "apellido_materno": "García",
+            "nombre": "Maribel"
+        },
+        "correo": "maragong@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1AM2",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "1BM1",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Araujo",
+            "apellido_materno": "Díaz",
+            "nombre": "David"
+        },
+        "correo": "daraujo@yopmail.com",
+        "departamento": "POSGR",
+        "materias": [
+            {
+                "grupo": "2MCM1",
+                "unidad_aprendizaje": "Redes Inalámbricas"
+            },
+            {
+                "grupo": "2MCM1",
+                "unidad_aprendizaje": "Seguridad en Redes Inalámbricas (Lab)"
+            },
+            {
+                "grupo": "7SV1",
+                "unidad_aprendizaje": "Tópicos Selectos I (ISISA)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Arcos",
+            "apellido_materno": "Díaz",
+            "nombre": "Elsa Leticia"
+        },
+        "correo": "earcosd@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2BM2",
+                "unidad_aprendizaje": "Cálculo Multivariable"
+            },
+            {
+                "grupo": "2CM5",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            },
+            {
+                "grupo": "3AM1",
+                "unidad_aprendizaje": "Probabilidad"
+            },
+            {
+                "grupo": "3BM1",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "4BM1",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Arzate",
+            "apellido_materno": "Gordillo",
+            "nombre": "Jacqueline"
+        },
+        "correo": "jarzateg@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CV11",
+                "unidad_aprendizaje": "Teoría de Comunicaciones y Señales"
+            },
+            {
+                "grupo": "5CV1",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            },
+            {
+                "grupo": "5CV3",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            },
+            {
+                "grupo": "5CV4",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ávila",
+            "apellido_materno": "Sánchez",
+            "nombre": "Cristhian Alejandro"
+        },
+        "correo": "cavilas@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CV5",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "2BM1",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "3AV1",
+                "unidad_aprendizaje": "Métodos Numéricos"
+            },
+            {
+                "grupo": "3CM5",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "4CV1",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            },
+            {
+                "grupo": "4CV3",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Barrales",
+            "apellido_materno": "López",
+            "nombre": "Ana Luz"
+        },
+        "correo": "analuz_bl@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CV6",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "6CV3",
+                "unidad_aprendizaje": "Sistemas en Chip"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Barrón",
+            "apellido_materno": "Vera",
+            "nombre": "Josue Emanuel"
+        },
+        "correo": "jbarron@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2BV2",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "3CV5",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Bautista",
+            "apellido_materno": "Rosales",
+            "nombre": "Sandra Ivette"
+        },
+        "correo": "sbautistar@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4AM1",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "4CV11",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            },
+            {
+                "grupo": "6CM4",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            },
+            {
+                "grupo": "7CM3",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            },
+            {
+                "grupo": "4CM3",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Blanco",
+            "apellido_materno": "Almazan",
+            "nombre": "Ivan Eduardo"
+        },
+        "correo": "iblancoa@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3AV1",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "3BV1",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "4AV1",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "5CV1",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            },
+            {
+                "grupo": "5CV2",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            },
+            {
+                "grupo": "5CV5",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Buitrón",
+            "apellido_materno": "Damaso",
+            "nombre": "Israel"
+        },
+        "correo": "ibuitron@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CV1",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "1CV5",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cabrera",
+            "apellido_materno": "Chávez",
+            "nombre": "Gloría Lourdes"
+        },
+        "correo": "gcabrerac@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "1BV1",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "1BV2",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "5CV2",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Camacho",
+            "apellido_materno": "Vázquez",
+            "nombre": "Vanessa Alejandra"
+        },
+        "correo": "vcamachov@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4CV4",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            },
+            {
+                "grupo": "5BM1",
+                "unidad_aprendizaje": "Aprendizaje de Máquina"
+            },
+            {
+                "grupo": "6BM1",
+                "unidad_aprendizaje": "Redes Neuronales y Aprendizaje Profundo"
+            },
+            {
+                "grupo": "6CV4",
+                "unidad_aprendizaje": "Inteligencia Artificial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cancino",
+            "apellido_materno": "Calderón",
+            "nombre": "Sergio"
+        },
+        "correo": "scancino@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CM6",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "3CV5",
+                "unidad_aprendizaje": "Circuitos Eléctricos (Lab)"
+            },
+            {
+                "grupo": "5CM1",
+                "unidad_aprendizaje": "Instrumentación y Control (Lab)"
+            },
+            {
+                "grupo": "5CM2",
+                "unidad_aprendizaje": "Instrumentación y Control (Lab)"
+            },
+            {
+                "grupo": "5CM5",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cancino",
+            "apellido_materno": "Mosqueda",
+            "nombre": "Odette Berenice"
+        },
+        "correo": "ocancino@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "1BM1",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "1BM2",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "2CM1",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Canseco",
+            "apellido_materno": "Gutierrez",
+            "nombre": "Yemi Aurora"
+        },
+        "correo": "ycansecog@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "4AM1",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cañedo",
+            "apellido_materno": "Suárez",
+            "nombre": "Leticia"
+        },
+        "correo": "lcanedos@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CM5",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "4CM2",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Carballo",
+            "apellido_materno": "Jiménez",
+            "nombre": "Juan Manuel"
+        },
+        "correo": "jcarballo@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2AM1",
+                "unidad_aprendizaje": "Cálculo Multivariable"
+            },
+            {
+                "grupo": "4CM5",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Carmona",
+            "apellido_materno": "García",
+            "nombre": "Enrique Alfonso"
+        },
+        "correo": "ecarmonag@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "2AV1",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2BV2",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "6CM2",
+                "unidad_aprendizaje": "Machine Learning"
+            },
+            {
+                "grupo": "7BM1",
+                "unidad_aprendizaje": "Reconocimiento de Voz"
+            },
+            {
+                "grupo": "7BV1",
+                "unidad_aprendizaje": "Reconocimiento de Voz"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Carranza",
+            "apellido_materno": "Castillo",
+            "nombre": "Oscar"
+        },
+        "correo": "ocarranzac@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4CM1",
+                "unidad_aprendizaje": "Electrónica Analógica"
+            },
+            {
+                "grupo": "4CM4",
+                "unidad_aprendizaje": "Electrónica Analógica"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Carreto",
+            "apellido_materno": "Arellano",
+            "nombre": "Chadwick"
+        },
+        "correo": "ccarretoa@yopmail.com",
+        "departamento": "POSGR",
+        "materias": [
+            {
+                "grupo": "4AM2",
+                "unidad_aprendizaje": "Cómputo de Alto Desempeño"
+            },
+            {
+                "grupo": "4CM12",
+                "unidad_aprendizaje": "Desarrollo de Sistemas Distribuidos"
+            },
+            {
+                "grupo": "6BM2",
+                "unidad_aprendizaje": "Ingeniería de Software para Sistemas Inteligentes"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Castillo",
+            "apellido_materno": "Cabrera",
+            "nombre": "Gelacio"
+        },
+        "correo": "gcastilloc@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2MCM1",
+                "unidad_aprendizaje": "Fundamentos de Comunicaciones Móviles"
+            },
+            {
+                "grupo": "5CM2",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            },
+            {
+                "grupo": "5CM2",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Castillo",
+            "apellido_materno": "Marrufo",
+            "nombre": "Juan Antonio"
+        },
+        "correo": "jcastillom@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2CM2",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "2CM3",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Castillo",
+            "apellido_materno": "Martínez",
+            "nombre": "Miguel Ángel"
+        },
+        "correo": "macastillom@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5BV1",
+                "unidad_aprendizaje": "Procesamiento de Señales"
+            },
+            {
+                "grupo": "6BM1",
+                "unidad_aprendizaje": "Aplicaciones de Inteligencia Artificial en Sistemas Embebidos"
+            },
+            {
+                "grupo": "6CM1",
+                "unidad_aprendizaje": "Sistemas en Chip"
+            },
+            {
+                "grupo": "6CV1",
+                "unidad_aprendizaje": "Sistemas en Chip"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Catalán",
+            "apellido_materno": "Salgado",
+            "nombre": "Edgar Armando"
+        },
+        "correo": "ecatalans@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3BV2",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "4BV1",
+                "unidad_aprendizaje": "Fundamentos de Inteligencia Artificial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ceballos",
+            "apellido_materno": "Sebastián",
+            "nombre": "Ricardo"
+        },
+        "correo": "rceballoss@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CM1",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "2CM5",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Celis",
+            "apellido_materno": "Domínguez",
+            "nombre": "Adriana Berenice"
+        },
+        "correo": "bcelisd@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1CM1",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "2CM3",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "5AM1",
+                "unidad_aprendizaje": "Metodología de la Investigación y Divulgación Científica"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Centeno",
+            "apellido_materno": "Arrazola",
+            "nombre": "Maria Soledad"
+        },
+        "correo": "mscenteno@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1AM1",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "1BM2",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "8CM3",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            },
+            {
+                "grupo": "3BM1",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            },
+            {
+                "grupo": "3BV2",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cervantes",
+            "apellido_materno": "De",
+            "nombre": "Anda Ismael"
+        },
+        "correo": "icervantesd@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5CV2",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            },
+            {
+                "grupo": "5CV5",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cervantes",
+            "apellido_materno": "Espinosa",
+            "nombre": "Luis Moctezuma"
+        },
+        "correo": "lcervantese@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "3CM1",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "4CM3",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Chavarría",
+            "apellido_materno": "Báez",
+            "nombre": "Lorena"
+        },
+        "correo": "lchavarria@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3AM2",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "3CM4",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "3MCM1",
+                "unidad_aprendizaje": "Ingeniería Software para Cómputo Móvil(Maestría)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cifuentes",
+            "apellido_materno": "Álvarez",
+            "nombre": "Alejandro Sigfrido"
+        },
+        "correo": "ascifuentesa@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "7CM3",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Móviles Nativas"
+            },
+            {
+                "grupo": "7CM4",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Móviles Nativas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cordero",
+            "apellido_materno": "López",
+            "nombre": "Martha Rosa"
+        },
+        "correo": "mcorderol@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "6CM1",
+                "unidad_aprendizaje": "Software Quality Assurance and Desing Patterns"
+            },
+            {
+                "grupo": "6CM2",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Coronilla",
+            "apellido_materno": "Contreras",
+            "nombre": "Ukranio"
+        },
+        "correo": "ucoronillac@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CM11",
+                "unidad_aprendizaje": "Desarrollo de Sistemas Distribuidos"
+            },
+            {
+                "grupo": "7CM2",
+                "unidad_aprendizaje": "Sistemas Distribuidos"
+            },
+            {
+                "grupo": "7CM3",
+                "unidad_aprendizaje": "Sistemas Distribuidos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Correa",
+            "apellido_materno": "Coyac",
+            "nombre": "David"
+        },
+        "correo": "ucoronillac@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM5",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "2AM2",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "2BM2",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "3BM2",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cortés",
+            "apellido_materno": "Dávalos",
+            "nombre": "Andrés"
+        },
+        "correo": "andrescortesdavalos@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CV1",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "3BV1",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "3CV3",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "5CV3",
+                "unidad_aprendizaje": "Compiladores"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cortés",
+            "apellido_materno": "Galicia",
+            "nombre": "Jorge"
+        },
+        "correo": "jcortesg@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "1MCM1",
+                "unidad_aprendizaje": "Seminario I"
+            },
+            {
+                "grupo": "4CM1",
+                "unidad_aprendizaje": "Sistemas Operativos"
+            },
+            {
+                "grupo": "4CM4",
+                "unidad_aprendizaje": "Sistemas Operativos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cortez",
+            "apellido_materno": "Duarte",
+            "nombre": "Nidia Asunción"
+        },
+        "correo": "ncortezd@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CM4",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            },
+            {
+                "grupo": "6CM2",
+                "unidad_aprendizaje": "Introduction to Cryptography"
+            },
+            {
+                "grupo": "6CM5",
+                "unidad_aprendizaje": "Introduction to Cryptography"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cruz",
+            "apellido_materno": "Carlin",
+            "nombre": "Efren"
+        },
+        "correo": "efcruz@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "1CV3",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "7CV2",
+                "unidad_aprendizaje": "Virtual and Augmented Reality"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cruz",
+            "apellido_materno": "García",
+            "nombre": "Daniel"
+        },
+        "correo": "dcruzg@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "2CV1",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2CV2",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cruz",
+            "apellido_materno": "Lázaro",
+            "nombre": "Apolinar Francisco"
+        },
+        "correo": "acruzl@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "2CV2",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "4CV11",
+                "unidad_aprendizaje": "Liderazgo y Desarrollo Profesional"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cruz",
+            "apellido_materno": "Meza",
+            "nombre": "María Elena"
+        },
+        "correo": "mcruzm@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4BM1",
+                "unidad_aprendizaje": "Procesamiento Digital de Imágenes"
+            },
+            {
+                "grupo": "4BM2",
+                "unidad_aprendizaje": "Procesamiento Digital de Imágenes"
+            },
+            {
+                "grupo": "7CM2",
+                "unidad_aprendizaje": "Image Analysis"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cruz",
+            "apellido_materno": "Rojas",
+            "nombre": "Jorge Alberto"
+        },
+        "correo": "jcruzro@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CV3",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            },
+            {
+                "grupo": "2CV4",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            },
+            {
+                "grupo": "3AM2",
+                "unidad_aprendizaje": "Probabilidad"
+            },
+            {
+                "grupo": "3CM2",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "4AM1",
+                "unidad_aprendizaje": "Estadística"
+            },
+            {
+                "grupo": "4CV4",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Cruz",
+            "apellido_materno": "Torres",
+            "nombre": "Benjamín"
+        },
+        "correo": "bcruzt@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4AM1",
+                "unidad_aprendizaje": "Cómputo de Alto Desempeño"
+            },
+            {
+                "grupo": "4AM2",
+                "unidad_aprendizaje": "Cómputo de Alto Desempeño (Lab)"
+            },
+            {
+                "grupo": "4AV1",
+                "unidad_aprendizaje": "Cómputo de Alto Desempeño"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Damián",
+            "apellido_materno": "Almazar",
+            "nombre": "Daniel Isaac"
+        },
+        "correo": "ddamiana@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1CM5",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Dávalos",
+            "apellido_materno": "López",
+            "nombre": "José Carlos"
+        },
+        "correo": "jdavalosl@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3BM2",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "3CM1",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "3CM4",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "De",
+            "apellido_materno": "la",
+            "nombre": "O Torres Saúl"
+        },
+        "correo": "sdelaot@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CV2",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "3CV2",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "3CV4",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "4BV1",
+                "unidad_aprendizaje": "Procesamiento Digital de Imágenes"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "De",
+            "apellido_materno": "Luna",
+            "nombre": "Caballero Roberto"
+        },
+        "correo": "rdeluna@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1AM2",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "1CM2",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Díaz",
+            "apellido_materno": "Huerta",
+            "nombre": "Claudia Celia"
+        },
+        "correo": "ccdiaz@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CV4",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "1CV5",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Díaz",
+            "apellido_materno": "Sánchez",
+            "nombre": "Hugo"
+        },
+        "correo": "hdiazl@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5AV1",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ciencia de Datos"
+            },
+            {
+                "grupo": "6AV1",
+                "unidad_aprendizaje": "Modelado Predictivo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Díaz",
+            "apellido_materno": "Santiago",
+            "nombre": "Ricardo Felipe"
+        },
+        "correo": "rdiazs@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "2CM1",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "3CM2",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Díaz",
+            "apellido_materno": "Santiago",
+            "nombre": "Sandra"
+        },
+        "correo": "sdiazsa@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4CM1",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            },
+            {
+                "grupo": "7CM1",
+                "unidad_aprendizaje": "Selected Topics in Cryptography"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Díaz",
+            "apellido_materno": "Toalá",
+            "nombre": "Iván"
+        },
+        "correo": "idiazt@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2BV1",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "3CM1",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "3CM12",
+                "unidad_aprendizaje": "Teoría de Comunicaciones y Señales"
+            },
+            {
+                "grupo": "5BM1",
+                "unidad_aprendizaje": "Procesamiento de Señales"
+            },
+            {
+                "grupo": "5CM1",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Domínguez",
+            "apellido_materno": "Hernández",
+            "nombre": "Samuel"
+        },
+        "correo": "sdominguezh@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1AM3",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CM8",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "1CM8",
+                "unidad_aprendizaje": "Cálculo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Dorantes",
+            "apellido_materno": "Cordero",
+            "nombre": "Martha Margarita"
+        },
+        "correo": "magyarkhalil@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1BV1",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "8BV1",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Dorantes",
+            "apellido_materno": "Villa",
+            "nombre": "Claudia Jisela"
+        },
+        "correo": "cdorantesv@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM2",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "1CM3",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "1CM6",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Durán",
+            "apellido_materno": "Camarillo",
+            "nombre": "Edmundo René"
+        },
+        "correo": "eduranc@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CM1",
+                "unidad_aprendizaje": "Circuitos Eléctricos (Lab)"
+            },
+            {
+                "grupo": "3CM2",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "3CM3",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "3CM4",
+                "unidad_aprendizaje": "Circuitos Eléctricos (Lab)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Enríquez",
+            "apellido_materno": "Zárate",
+            "nombre": "José Asunción"
+        },
+        "correo": "jenriquezz@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4BM2",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "7CM3",
+                "unidad_aprendizaje": "Web Client and Backend Developmen Frameworks"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Escalante",
+            "apellido_materno": "Notario",
+            "nombre": "Enrique"
+        },
+        "correo": "enriquescalante@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "6AV1",
+                "unidad_aprendizaje": "Analítica Avanzada de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Escamilla",
+            "apellido_materno": "Miranda",
+            "nombre": "Patricia"
+        },
+        "correo": "pescamilla@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CM1",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "4CM4",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Esparza",
+            "apellido_materno": "Salinas",
+            "nombre": "Rocío"
+        },
+        "correo": "resparza@cic.ipn.mx",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "8CM1",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            },
+            {
+                "grupo": "8CM2",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Estrada",
+            "apellido_materno": "Elizalde",
+            "nombre": "Serafín"
+        },
+        "correo": "sestradae@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3AV1",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "3CV2",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Fernández",
+            "apellido_materno": "Vázquez",
+            "nombre": "Alfonso"
+        },
+        "correo": "afernandezv@yopmail.com",
+        "departamento": "POSGR",
+        "materias": [
+            {
+                "grupo": "3BV1",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            },
+            {
+                "grupo": "3MCM1",
+                "unidad_aprendizaje": "Estadística en Comunicaciones"
+            },
+            {
+                "grupo": "3MCM1",
+                "unidad_aprendizaje": "Tópicos Seléctos de Comunicaciones Avanzadas"
+            },
+            {
+                "grupo": "8CM1",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            },
+            {
+                "grupo": "8CM2",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            },
+            {
+                "grupo": "8CM3",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Figueroa",
+            "apellido_materno": "Del",
+            "nombre": "Prado Felipe de Jesús"
+        },
+        "correo": "ffigueroad@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1BM1",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "1BV1",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "3CM1",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "3CM2",
+                "unidad_aprendizaje": "Circuitos Eléctricos (Lab)"
+            },
+            {
+                "grupo": "3CM3",
+                "unidad_aprendizaje": "Circuitos Eléctricos (Lab)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Flores",
+            "apellido_materno": "Roque",
+            "nombre": "Allan Eduardo"
+        },
+        "correo": "afloresr0806@egresado.ipn.mx",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "7CM1",
+                "unidad_aprendizaje": "Sistemas Distribuidos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Flores",
+            "apellido_materno": "Delgado",
+            "nombre": "Raquel"
+        },
+        "correo": "rafloresd@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CV1",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "3CV5",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Flores",
+            "apellido_materno": "Estrada",
+            "nombre": "Ituriel Enrique"
+        },
+        "correo": "iflorese@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CV5",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "5AV1",
+                "unidad_aprendizaje": "Analítica y Visualización de Datos"
+            },
+            {
+                "grupo": "5BV1",
+                "unidad_aprendizaje": "Tecnologías de Lenguaje Natural"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Flores",
+            "apellido_materno": "Fuentes",
+            "nombre": "Naria Adriana"
+        },
+        "correo": "iflorese@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM5",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CM6",
+                "unidad_aprendizaje": "Cálculo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Flores",
+            "apellido_materno": "Mendoza",
+            "nombre": "Yaxkin"
+        },
+        "correo": "iflorese@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "2CM4",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "4CM2",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Flores",
+            "apellido_materno": "Meraz",
+            "nombre": "Yesica Sonia"
+        },
+        "correo": "iflorese@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1BM1",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "1BV1",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "1CM5",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "1CV1",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "2CV1",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "4BM2",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Franco",
+            "apellido_materno": "Martínez",
+            "nombre": "Edgardo Adrián"
+        },
+        "correo": "edfrancom@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CM3",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "2CM5",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2CM6",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "3CM4",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Galeana",
+            "apellido_materno": "Chávez",
+            "nombre": "María del Rosario"
+        },
+        "correo": "mgaleanac@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CV2",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "3CV3",
+                "unidad_aprendizaje": "Bases de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Galiñanes",
+            "apellido_materno": "Rodríguez",
+            "nombre": "María Gabriela"
+        },
+        "correo": "mgalinanesr@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2AV1",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "2CV2",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "3CV3",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "García",
+            "apellido_materno": "Cortes",
+            "nombre": "Rocio"
+        },
+        "correo": "rgarciaco@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4AM2",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Web"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "García",
+            "apellido_materno": "Blanquel",
+            "nombre": "Claudia"
+        },
+        "correo": "cgarciabl@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CM2",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            },
+            {
+                "grupo": "4BM2",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            },
+            {
+                "grupo": "6AM1",
+                "unidad_aprendizaje": "Modelado Predictivo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "García",
+            "apellido_materno": "Floriano",
+            "nombre": "Andrés"
+        },
+        "correo": "agarciafl@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3BV2",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "3CV6",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "4AV1",
+                "unidad_aprendizaje": "Bases de Datos Avanzadas"
+            },
+            {
+                "grupo": "5BV1",
+                "unidad_aprendizaje": "Aprendizaje de Máquina"
+            },
+            {
+                "grupo": "6CV3",
+                "unidad_aprendizaje": "Inteligencia Artificial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "García",
+            "apellido_materno": "Mendoza",
+            "nombre": "Consuelo Varinia"
+        },
+        "correo": "cvgarcia@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5AM1",
+                "unidad_aprendizaje": "Aprendizaje de Máquina e Inteligencia Artificial"
+            },
+            {
+                "grupo": "5BM2",
+                "unidad_aprendizaje": "Aprendizaje de Máquina"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "García",
+            "apellido_materno": "Salas",
+            "nombre": "Horacio Alberto"
+        },
+        "correo": "hogarcias@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5BM1",
+                "unidad_aprendizaje": "Tecnologías de Lenguaje Natural"
+            },
+            {
+                "grupo": "5BM2",
+                "unidad_aprendizaje": "Tecnologías de Lenguaje Natural"
+            },
+            {
+                "grupo": "5BV1",
+                "unidad_aprendizaje": "Visión Artificial"
+            },
+            {
+                "grupo": "5CM5",
+                "unidad_aprendizaje": "Compiladores"
+            },
+            {
+                "grupo": "5CV5",
+                "unidad_aprendizaje": "Compiladores"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "García",
+            "apellido_materno": "Sales",
+            "nombre": "Juan Vicente"
+        },
+        "correo": "jgarciasa@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CV4",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "3CV1",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Gaspar",
+            "apellido_materno": "Medina",
+            "nombre": "Fabián"
+        },
+        "correo": "fgasparm@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CM11",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            },
+            {
+                "grupo": "4CM12",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Gómez",
+            "apellido_materno": "Mayorga",
+            "nombre": "Margarita Elizabeth"
+        },
+        "correo": "mgomezm@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CM1",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            },
+            {
+                "grupo": "5CM5",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            },
+            {
+                "grupo": "7SV1",
+                "unidad_aprendizaje": "Ingeniería Ambiental Automotríz  (ISISA)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Gómez",
+            "apellido_materno": "Tress",
+            "nombre": "Mariana"
+        },
+        "correo": "magomezt@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1AV1",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "1CV4",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "González",
+            "apellido_materno": "Castillo",
+            "nombre": "Jesús Roberto"
+        },
+        "correo": "jrgonzalezc@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CM1",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            },
+            {
+                "grupo": "3CV5",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "González",
+            "apellido_materno": "Cisneros",
+            "nombre": "Alejandro"
+        },
+        "correo": "agonzalezci@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CM4",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "6CV3",
+                "unidad_aprendizaje": "Statistical Tools for Data Analytics"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "González",
+            "apellido_materno": "Trujillo",
+            "nombre": "Miguel Ángel"
+        },
+        "correo": "mgonzalezt@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM3",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "4CM1",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Gutiérrez",
+            "apellido_materno": "Aldana",
+            "nombre": "Eduardo"
+        },
+        "correo": "egutierreza@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3AM1",
+                "unidad_aprendizaje": "Métodos Numéricos"
+            },
+            {
+                "grupo": "5CM3",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Gutiérrez",
+            "apellido_materno": "Mejía",
+            "nombre": "Darwin"
+        },
+        "correo": "dgutierrezm@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CV2",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "2AV2",
+                "unidad_aprendizaje": "Cálculo Multivariable"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Guzmán",
+            "apellido_materno": "Aguilar",
+            "nombre": "Florencio"
+        },
+        "correo": "fguzmana@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM2",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "2CM2",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Guzmán",
+            "apellido_materno": "Flores",
+            "nombre": "Jessie Paulina"
+        },
+        "correo": "jguzmanf@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CM11",
+                "unidad_aprendizaje": "IT Governance"
+            },
+            {
+                "grupo": "5CM2",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Henestrosa",
+            "apellido_materno": "Carrasco",
+            "nombre": "Leticia"
+        },
+        "correo": "lhenestrosa@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CV2",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            },
+            {
+                "grupo": "5CV3",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Hernández",
+            "apellido_materno": "Aguilar",
+            "nombre": "José Luis"
+        },
+        "correo": "jlhernandeza@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4CV2",
+                "unidad_aprendizaje": "Electrónica Analógica"
+            },
+            {
+                "grupo": "5CV1",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            },
+            {
+                "grupo": "5CV4",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Hernández",
+            "apellido_materno": "Aviles",
+            "nombre": "Fernando Dante"
+        },
+        "correo": "faviles@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "6CV1",
+                "unidad_aprendizaje": "Computer Security"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Hernández",
+            "apellido_materno": "Cruz",
+            "nombre": "Macario"
+        },
+        "correo": "mahernandezc@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1AM1",
+                "unidad_aprendizaje": "Introducción a la Ciencia de Datos"
+            },
+            {
+                "grupo": "1AM2",
+                "unidad_aprendizaje": "Introducción a la Ciencia de Datos"
+            },
+            {
+                "grupo": "4BM1",
+                "unidad_aprendizaje": "Fundamentos de Inteligencia Artificial"
+            },
+            {
+                "grupo": "4BM2",
+                "unidad_aprendizaje": "Fundamentos de Inteligencia Artificial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Hernández",
+            "apellido_materno": "Jaime",
+            "nombre": "Josefína"
+        },
+        "correo": "johernandezja@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2BM1",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "2BM2",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "3CM1",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "7BV2",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos (Lab)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Hernández",
+            "apellido_materno": "Olvera",
+            "nombre": "Luis Enrique"
+        },
+        "correo": "lehernandez@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5BV1",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            },
+            {
+                "grupo": "5CV4",
+                "unidad_aprendizaje": "Compiladores"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Hernández",
+            "apellido_materno": "Secundino",
+            "nombre": "José Celestino Elías"
+        },
+        "correo": "jchernandezs@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CM3",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "3CM4",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "3CV3",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Hernández",
+            "apellido_materno": "Vásquez",
+            "nombre": "César"
+        },
+        "correo": "chernandezva@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM6",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "1CM7",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "2CM3",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Herrera",
+            "apellido_materno": "Delgado",
+            "nombre": "Lizbeth Berenice"
+        },
+        "correo": "lherrerad@yopmail.com",
+        "departamento": "SUB ACAD",
+        "materias": [
+            {
+                "grupo": "5AV1",
+                "unidad_aprendizaje": "Metodología de la Investigación y Divulgación Científica"
+            },
+            {
+                "grupo": "6BM2",
+                "unidad_aprendizaje": "Metodología de la Investigación y Divulgación Científica"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Hurtado",
+            "apellido_materno": "Avilés",
+            "nombre": "Gabriel"
+        },
+        "correo": "gabrielhuav@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4CM3",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            },
+            {
+                "grupo": "4CM4",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            },
+            {
+                "grupo": "6CV3",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            },
+            {
+                "grupo": "6CV4",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            },
+            {
+                "grupo": "7CV3",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Móviles Nativas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Jiménez",
+            "apellido_materno": "Benítez",
+            "nombre": "José Alfredo"
+        },
+        "correo": "jajimenezb@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CV2",
+                "unidad_aprendizaje": "Sistemas Operativos"
+            },
+            {
+                "grupo": "5CV5",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            },
+            {
+                "grupo": "6BV1",
+                "unidad_aprendizaje": "Cómputo Paralelo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Jiménez",
+            "apellido_materno": "Galán",
+            "nombre": "Yasmín Ivette"
+        },
+        "correo": "yjimenezg@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2BV2",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "8CV2",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            },
+            {
+                "grupo": "8CV3",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Jiménez",
+            "apellido_materno": "Rodríguez",
+            "nombre": "Luis Martin"
+        },
+        "correo": "luischonps@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CV4",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Jiménez",
+            "apellido_materno": "Ruíz",
+            "nombre": "René Baltazar"
+        },
+        "correo": "rbjimenez@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CV3",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            },
+            {
+                "grupo": "5CV3",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            },
+            {
+                "grupo": "5CV4",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            },
+            {
+                "grupo": "6CV2",
+                "unidad_aprendizaje": "Sistemas en Chip"
+            },
+            {
+                "grupo": "3BV2",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Jiménez",
+            "apellido_materno": "Villanueva",
+            "nombre": "Martha Patricia"
+        },
+        "correo": "mjimenezv@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1AM1",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "1BM2",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Juárez",
+            "apellido_materno": "Gambino",
+            "nombre": "Joel Omar"
+        },
+        "correo": "jjuarezg@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "6AM1",
+                "unidad_aprendizaje": "Procesamiento de Lenguaje Natural"
+            },
+            {
+                "grupo": "7CM1",
+                "unidad_aprendizaje": "Natural Language Processing"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Juárez",
+            "apellido_materno": "León",
+            "nombre": "Carlos"
+        },
+        "correo": "cjuarezl@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CV1",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            },
+            {
+                "grupo": "2CV2",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Juárez",
+            "apellido_materno": "Martínez",
+            "nombre": "Genaro"
+        },
+        "correo": "gjuarezm@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4CV2",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            },
+            {
+                "grupo": "5BM1",
+                "unidad_aprendizaje": "Algoritmos Bioinspirados"
+            },
+            {
+                "grupo": "5BM2",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Juárez",
+            "apellido_materno": "Mendez",
+            "nombre": "Ana Belem"
+        },
+        "correo": "abjuarezm@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "2AV2",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "3BV1",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "3BV2",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "3CV6",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "4CM2",
+                "unidad_aprendizaje": "Sistemas Operativos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Jurado",
+            "apellido_materno": "Jiménez",
+            "nombre": "Roberto"
+        },
+        "correo": "rjuradoj@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CV3",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CV4",
+                "unidad_aprendizaje": "Cálculo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Lazcano",
+            "apellido_materno": "Xoxotla",
+            "nombre": "Laura"
+        },
+        "correo": "llazcano@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1CV2",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "1CV3",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Leal",
+            "apellido_materno": "Pacheco",
+            "nombre": "Christian René"
+        },
+        "correo": "chlealpa@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "3BV1",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "4CV4",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "León",
+            "apellido_materno": "Hernández",
+            "nombre": "Miguel Abel"
+        },
+        "correo": "mleonh@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2AV1",
+                "unidad_aprendizaje": "Cálculo Multivariable"
+            },
+            {
+                "grupo": "2CV1",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Lerma",
+            "apellido_materno": "Magaña",
+            "nombre": "Carlos"
+        },
+        "correo": "c.lerma1404@hotmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5BM2",
+                "unidad_aprendizaje": "Procesamiento de Señales"
+            },
+            {
+                "grupo": "5CM4",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            },
+            {
+                "grupo": "5CM5",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            },
+            {
+                "grupo": "5CV2",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            },
+            {
+                "grupo": "6BM1",
+                "unidad_aprendizaje": "Cómputo Paralelo"
+            },
+            {
+                "grupo": "6BM2",
+                "unidad_aprendizaje": "Cómputo Paralelo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Levario",
+            "apellido_materno": "Medina",
+            "nombre": "Sergio"
+        },
+        "correo": "slevariom@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1BV1",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CV6",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "2CV4",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "2CV5",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            },
+            {
+                "grupo": "2CV5",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "4CV3",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Linares",
+            "apellido_materno": "Vallejo",
+            "nombre": "Erick Eugenio"
+        },
+        "correo": "elinares@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CV1",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            },
+            {
+                "grupo": "6CV4",
+                "unidad_aprendizaje": "Sistemas en Chip"
+            },
+            {
+                "grupo": "7SV1",
+                "unidad_aprendizaje": "Aplicaciones con Microcontroladores para el Automóvil (ISISA)"
+            },
+            {
+                "grupo": "7SV1",
+                "unidad_aprendizaje": "Aplicaciones con Microcontroladores para el Automóvil (ISISA) (Lab)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "López",
+            "apellido_materno": "Rojas",
+            "nombre": "Ariel"
+        },
+        "correo": "arilopez@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "6CM2",
+                "unidad_aprendizaje": "Métodos Cuantitativos para la Toma de Desiciones"
+            },
+            {
+                "grupo": "6CM3",
+                "unidad_aprendizaje": "Métodos Cuantitativos para la Toma de Desiciones"
+            },
+            {
+                "grupo": "6CM4",
+                "unidad_aprendizaje": "High Technology Enterprise Management"
+            },
+            {
+                "grupo": "6CV3",
+                "unidad_aprendizaje": "Métodos Cuantitativos para la Toma de Desiciones"
+            },
+            {
+                "grupo": "6CV4",
+                "unidad_aprendizaje": "Métodos Cuantitativos para la Toma de Desiciones"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "López",
+            "apellido_materno": "Carrera",
+            "nombre": "Benjamín"
+        },
+        "correo": "beneleci@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "3CM5",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "3CM6",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "López",
+            "apellido_materno": "Gómez",
+            "nombre": "Alejandro"
+        },
+        "correo": "alelopez@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4AM2",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones para Análisis de Datos"
+            },
+            {
+                "grupo": "6AM1",
+                "unidad_aprendizaje": "Análisis de Series de Tiempo"
+            },
+            {
+                "grupo": "6AM1",
+                "unidad_aprendizaje": "Estadística Avanzada"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "López",
+            "apellido_materno": "Leyva",
+            "nombre": "Luis Octavio"
+        },
+        "correo": "lolopez@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CV2",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "4CV4",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "López",
+            "apellido_materno": "Rodríguez",
+            "nombre": "Claudia Alejandra"
+        },
+        "correo": "calopezr@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3BM2",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            },
+            {
+                "grupo": "3CM2",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "López",
+            "apellido_materno": "Ruíz",
+            "nombre": "Gabriela de Jesús"
+        },
+        "correo": "glopezru@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4BM2",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            },
+            {
+                "grupo": "4CV3",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "6CM4",
+                "unidad_aprendizaje": "Inteligencia Artificial"
+            },
+            {
+                "grupo": "6CM5",
+                "unidad_aprendizaje": "Inteligencia Artificial"
+            },
+            {
+                "grupo": "6CV1",
+                "unidad_aprendizaje": "Inteligencia Artificial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "López",
+            "apellido_materno": "Sánchez",
+            "nombre": "José Manuel"
+        },
+        "correo": "jmlopezs@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1AV1",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "1BV2",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CV1",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CV6",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "2BV1",
+                "unidad_aprendizaje": "Cálculo Multivariable"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Loyola",
+            "apellido_materno": "Espinosa",
+            "nombre": "Araceli"
+        },
+        "correo": "aloyolae@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "8BM1",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            },
+            {
+                "grupo": "8CV1",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Lucio",
+            "apellido_materno": "Peña",
+            "nombre": "Perla Cecilia"
+        },
+        "correo": "pluciop@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM7",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "2BM1",
+                "unidad_aprendizaje": "Cálculo Multivariable"
+            },
+            {
+                "grupo": "3CV4",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "4CM1",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            },
+            {
+                "grupo": "5AM1",
+                "unidad_aprendizaje": "Procesos Estocásticos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Luna",
+            "apellido_materno": "Benoso",
+            "nombre": "Benjamín"
+        },
+        "correo": "blunab@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CM3",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "5BM1",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Maldonado",
+            "apellido_materno": "Castillo",
+            "nombre": "Idalia"
+        },
+        "correo": "imaldonadoc@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CM3",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            },
+            {
+                "grupo": "6BM1",
+                "unidad_aprendizaje": "Ingeniería de Software para Sistemas Inteligentes"
+            },
+            {
+                "grupo": "7BM1",
+                "unidad_aprendizaje": "Interacción Humano Máquina"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Maldonado",
+            "apellido_materno": "Muñoz",
+            "nombre": "Miguel Ángel"
+        },
+        "correo": "mmaldonadom@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "8AM1",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            },
+            {
+                "grupo": "8CM3",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Manzanilla",
+            "apellido_materno": "Granados",
+            "nombre": "Héctor Manuel"
+        },
+        "correo": "hmanzanilla@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2BV2",
+                "unidad_aprendizaje": "Cálculo Multivariable"
+            },
+            {
+                "grupo": "2CV2",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "4CV3",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Martínez",
+            "apellido_materno": "Acosta",
+            "nombre": "Lilian"
+        },
+        "correo": "lmartineza@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "2AM2",
+                "unidad_aprendizaje": "Ética y Legalidad"
+            },
+            {
+                "grupo": "2BV1",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "2CM2",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "6BM1",
+                "unidad_aprendizaje": "Metodología de la Investigación y Divulgación Científica"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Martínez",
+            "apellido_materno": "Díaz",
+            "nombre": "Juan Carlos"
+        },
+        "correo": "jcmartinezd@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4CM2",
+                "unidad_aprendizaje": "Electrónica Analógica"
+            },
+            {
+                "grupo": "4CM3",
+                "unidad_aprendizaje": "Electrónica Analógica"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Martínez",
+            "apellido_materno": "García",
+            "nombre": "César Román"
+        },
+        "correo": "cmartinezga@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2AM2",
+                "unidad_aprendizaje": "Cálculo Multivariable"
+            },
+            {
+                "grupo": "2CM4",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "2CM6",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Martínez",
+            "apellido_materno": "Guerrero",
+            "nombre": "José Alfredo"
+        },
+        "correo": "jamartinezg@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CV4",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "4CV1",
+                "unidad_aprendizaje": "Electrónica Analógica"
+            },
+            {
+                "grupo": "4CV4",
+                "unidad_aprendizaje": "Electrónica Analógica"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Martínez",
+            "apellido_materno": "Nuño",
+            "nombre": "Jesús Alfredo"
+        },
+        "correo": "jmartinezn@yopmail.com",
+        "departamento": "POSGR",
+        "materias": [
+            {
+                "grupo": "1MCM1",
+                "unidad_aprendizaje": "Métodos Matemáticos para el análisis de sistemas y señales"
+            },
+            {
+                "grupo": "4CV2",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Martínez",
+            "apellido_materno": "Perales",
+            "nombre": "José Cruz"
+        },
+        "correo": "jmartinezp@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2CV4",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "6CM1",
+                "unidad_aprendizaje": "Métodos Cuantitativos para la Toma de Desiciones"
+            },
+            {
+                "grupo": "6CM5",
+                "unidad_aprendizaje": "Métodos Cuantitativos para la Toma de Desiciones"
+            },
+            {
+                "grupo": "6CV1",
+                "unidad_aprendizaje": "Métodos Cuantitativos para la Toma de Desiciones"
+            },
+            {
+                "grupo": "6CV2",
+                "unidad_aprendizaje": "Métodos Cuantitativos para la Toma de Desiciones"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Martínez",
+            "apellido_materno": "Rosales",
+            "nombre": "Ricardo"
+        },
+        "correo": "rrosales@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "7CM1",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            },
+            {
+                "grupo": "7CM2",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Mata",
+            "apellido_materno": "Gil",
+            "nombre": "Patricia"
+        },
+        "correo": "pmatag@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2BV1",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "3CV4",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Melara",
+            "apellido_materno": "Abarca",
+            "nombre": "Reyna Elia"
+        },
+        "correo": "remabarca@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CM2",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "4BV1",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            },
+            {
+                "grupo": "5CM4",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            },
+            {
+                "grupo": "6CM5",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Méndez",
+            "apellido_materno": "Segundo",
+            "nombre": "Laura"
+        },
+        "correo": "lmendezs@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2MCM1",
+                "unidad_aprendizaje": "Seminario II"
+            },
+            {
+                "grupo": "3MCM1",
+                "unidad_aprendizaje": "Gestión de Proy para Comp Móvil"
+            },
+            {
+                "grupo": "4BM1",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Miguel",
+            "apellido_materno": "Pilar",
+            "nombre": "Zelin"
+        },
+        "correo": "zmiguelp@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM1",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "3CM3",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Molina",
+            "apellido_materno": "Pérez",
+            "nombre": "Daniel"
+        },
+        "correo": "dmolinap@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CV1",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "3CV3",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "6BV1",
+                "unidad_aprendizaje": "Tópicos Selectos de Algoritmos Bioinspirados"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Montes",
+            "apellido_materno": "Meza",
+            "nombre": "Adbel Anahí"
+        },
+        "correo": "amontesm@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "6CM2",
+                "unidad_aprendizaje": "Sistemas en Chip"
+            },
+            {
+                "grupo": "6CM3",
+                "unidad_aprendizaje": "Sistemas en Chip"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Montiel",
+            "apellido_materno": "Sánchez",
+            "nombre": "Ángel Salvador"
+        },
+        "correo": "amontiels@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1BV2",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "4BV1",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            },
+            {
+                "grupo": "4CV1",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Morales",
+            "apellido_materno": "Cruz",
+            "nombre": "Juan Carlos"
+        },
+        "correo": "jmoralesc@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CV4",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "5CM4",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            },
+            {
+                "grupo": "6CM4",
+                "unidad_aprendizaje": "Sistemas en Chip"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Morales",
+            "apellido_materno": "González",
+            "nombre": "Ángel"
+        },
+        "correo": "anmorales@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CM2",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "3CM11",
+                "unidad_aprendizaje": "Economic Engineering"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Morales",
+            "apellido_materno": "Güitrón",
+            "nombre": "Sandra Luz"
+        },
+        "correo": "slmorales@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4AV1",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones para Análisis de Datos"
+            },
+            {
+                "grupo": "4CV2",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "7CV1",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Móviles Nativas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Morales",
+            "apellido_materno": "Rodríguez",
+            "nombre": "Úrsula Samantha"
+        },
+        "correo": "umoralesr@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1AV1",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "1AV2",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "7SV1",
+                "unidad_aprendizaje": "Arquitecturas Embebidas Automotrices (ISISA)"
+            },
+            {
+                "grupo": "7SV1",
+                "unidad_aprendizaje": "Arquitecturas Embebidas Automotrices (ISISA) (Lab)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Moreno",
+            "apellido_materno": "Cervantes",
+            "nombre": "Axel Ernesto"
+        },
+        "correo": "amorenoc@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "6CM1",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            },
+            {
+                "grupo": "6CM2",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            },
+            {
+                "grupo": "6CM3",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            },
+            {
+                "grupo": "6CM5",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Moreno",
+            "apellido_materno": "Galván",
+            "nombre": "Elizabeth"
+        },
+        "correo": "emorenog@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3AM2",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "6BM1",
+                "unidad_aprendizaje": "Aplicaciones de Lenguaje Natural"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Moscoso",
+            "apellido_materno": "Malagón",
+            "nombre": "Yosafat"
+        },
+        "correo": "ymoscoso@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "2CV4",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "4CV1",
+                "unidad_aprendizaje": "Teoría de la Computación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Mosso",
+            "apellido_materno": "García",
+            "nombre": "Iván Giovanny"
+        },
+        "correo": "igmosso@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1AM2",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Mújica",
+            "apellido_materno": "Ascencio",
+            "nombre": "César"
+        },
+        "correo": "cmujica@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2BM1",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "3BM1",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            },
+            {
+                "grupo": "3CM6",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "4CM2",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            },
+            {
+                "grupo": "7SV1",
+                "unidad_aprendizaje": "Sistemas Digitales (ISISA)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Muñoz",
+            "apellido_materno": "Salazar",
+            "nombre": "Laura"
+        },
+        "correo": "lmunozs@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1BM1",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "1BM2",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "1CM4",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Nava",
+            "apellido_materno": "Lara",
+            "nombre": "Joel"
+        },
+        "correo": "jnavala@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CV4",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "2AV1",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "2CV2",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ocampo",
+            "apellido_materno": "Botello",
+            "nombre": "Fabiola"
+        },
+        "correo": "focampob@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5AV1",
+                "unidad_aprendizaje": "Minería de Datos"
+            },
+            {
+                "grupo": "6BM2",
+                "unidad_aprendizaje": "Minería de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ocotitla",
+            "apellido_materno": "Rojas",
+            "nombre": "Nancy"
+        },
+        "correo": "nocotitla@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3AM1",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "3CM1",
+                "unidad_aprendizaje": "Bases de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ojeda",
+            "apellido_materno": "Guillén",
+            "nombre": "Didier"
+        },
+        "correo": "dojedag@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1AM1",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1BM2",
+                "unidad_aprendizaje": "Cálculo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ojeda",
+            "apellido_materno": "Santillan",
+            "nombre": "Rodrigo"
+        },
+        "correo": "rojedas@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CV11",
+                "unidad_aprendizaje": "Desarrollo de Sistemas Distribuidos"
+            },
+            {
+                "grupo": "6CV3",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            },
+            {
+                "grupo": "6CV4",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            },
+            {
+                "grupo": "7CM4",
+                "unidad_aprendizaje": "Sistemas Distribuidos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Olalde",
+            "apellido_materno": "Mogollán",
+            "nombre": "Norma"
+        },
+        "correo": "nolalde@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "2CV3",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "2CV4",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "8CV2",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ortega",
+            "apellido_materno": "González",
+            "nombre": "Jean"
+        },
+        "correo": "jeortega@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "2AM1",
+                "unidad_aprendizaje": "Ética y Legalidad"
+            },
+            {
+                "grupo": "4AM2",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ortigoza",
+            "apellido_materno": "Campos",
+            "nombre": "Andrés"
+        },
+        "correo": "aortigoza@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3AM2",
+                "unidad_aprendizaje": "Métodos Numéricos"
+            },
+            {
+                "grupo": "5CM1",
+                "unidad_aprendizaje": "Compiladores"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ortiz",
+            "apellido_materno": "Castillo",
+            "nombre": "Marco Antonio"
+        },
+        "correo": "marco.antonio.ortiz.castillo@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "6AV1",
+                "unidad_aprendizaje": "Procesamiento de Lenguaje Natural"
+            },
+            {
+                "grupo": "6BV1",
+                "unidad_aprendizaje": "Ingeniería de Software para Sistemas Inteligentes"
+            },
+            {
+                "grupo": "6BV1",
+                "unidad_aprendizaje": "Técnicas de Programación para Robots Móviles"
+            },
+            {
+                "grupo": "6CV2",
+                "unidad_aprendizaje": "Inteligencia Artificial"
+            },
+            {
+                "grupo": "6CV2",
+                "unidad_aprendizaje": "Machine Learning"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ortíz",
+            "apellido_materno": "Ramírez",
+            "nombre": "José Antonio"
+        },
+        "correo": "jortizr@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CV1",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "7CV2",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Móviles Nativas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ortuño",
+            "apellido_materno": "Araujo",
+            "nombre": "Jesús"
+        },
+        "correo": "jortunoa@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CV3",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "1CV6",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "2BV2",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "2CV4",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Pachuca",
+            "apellido_materno": "Herrera",
+            "nombre": "Yanira"
+        },
+        "correo": "ypachucaherrera@yahoo.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CM3",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "4AM2",
+                "unidad_aprendizaje": "Estadística"
+            },
+            {
+                "grupo": "4AV1",
+                "unidad_aprendizaje": "Estadística"
+            },
+            {
+                "grupo": "4CM3",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            },
+            {
+                "grupo": "4CM4",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Palacios",
+            "apellido_materno": "Solano",
+            "nombre": "Rocío"
+        },
+        "correo": "rpalacioss@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CV1",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            },
+            {
+                "grupo": "5CV5",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            },
+            {
+                "grupo": "7AM1",
+                "unidad_aprendizaje": "Administración de Proyectos de TI"
+            },
+            {
+                "grupo": "7CV2",
+                "unidad_aprendizaje": "IT Governance"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Paredes",
+            "apellido_materno": "Cadena",
+            "nombre": "Myriam Noemí"
+        },
+        "correo": "mparedesc@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CM1",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "8CV1",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Pastrana",
+            "apellido_materno": "Fernández",
+            "nombre": "Carlos Jesús"
+        },
+        "correo": "cpastrana@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CV2",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            },
+            {
+                "grupo": "5CM3",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            },
+            {
+                "grupo": "5CV6",
+                "unidad_aprendizaje": "Arquitectura de Computadoras"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Peña",
+            "apellido_materno": "Leal",
+            "nombre": "Lezly Fabiola"
+        },
+        "correo": "lpenal@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1CM4",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Peredo",
+            "apellido_materno": "Valderrama",
+            "nombre": "Rubén"
+        },
+        "correo": "rperedo@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4BM1",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "5CM1",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            },
+            {
+                "grupo": "5CM2",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Pérez",
+            "apellido_materno": "de",
+            "nombre": "los Santos Mondragón Tanibet"
+        },
+        "correo": "tperezdm@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CM3",
+                "unidad_aprendizaje": "Sistemas Operativos"
+            },
+            {
+                "grupo": "6CV1",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            },
+            {
+                "grupo": "6CV2",
+                "unidad_aprendizaje": "Aplicaciones para Comunicaciones en Red"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Pérez",
+            "apellido_materno": "Hernádez",
+            "nombre": "María del Pilar Monserrat"
+        },
+        "correo": "mpperez@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "8CV2",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Pérez",
+            "apellido_materno": "Vera",
+            "nombre": "Sandra Mercedes"
+        },
+        "correo": "sperezv@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "3BV1",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            },
+            {
+                "grupo": "4AV1",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Pescador",
+            "apellido_materno": "Rojas",
+            "nombre": "Miriam"
+        },
+        "correo": "mpescadorr@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3MCM1",
+                "unidad_aprendizaje": "Embedded Systems"
+            },
+            {
+                "grupo": "5BM2",
+                "unidad_aprendizaje": "Algoritmos Bioinspirados"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Pineda",
+            "apellido_materno": "Guerrero",
+            "nombre": "Carlos"
+        },
+        "correo": "capineda@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "7CV1",
+                "unidad_aprendizaje": "Sistemas Distribuidos"
+            },
+            {
+                "grupo": "7CV2",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            },
+            {
+                "grupo": "7CV2",
+                "unidad_aprendizaje": "Sistemas Distribuidos"
+            },
+            {
+                "grupo": "7CV3",
+                "unidad_aprendizaje": "Sistemas Distribuidos"
+            },
+            {
+                "grupo": "5CV2",
+                "unidad_aprendizaje": "Procesamiento Digital de Señales"
+            },
+            {
+                "grupo": "5CV4",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ramírez",
+            "apellido_materno": "Guzmán",
+            "nombre": "Alicia Marcela"
+        },
+        "correo": "mrguzman@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "7AM1",
+                "unidad_aprendizaje": "Innovación y Emprendimiento Tecnológico"
+            },
+            {
+                "grupo": "7BM1",
+                "unidad_aprendizaje": "Propiedad Intelectual"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ramírez",
+            "apellido_materno": "Martínez",
+            "nombre": "Elia Tzindejhé"
+        },
+        "correo": "etramirez@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "3BM2",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            },
+            {
+                "grupo": "8AM1",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ramírez",
+            "apellido_materno": "Morales",
+            "nombre": "Mario Augusto"
+        },
+        "correo": "mramirezmo@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3AM1",
+                "unidad_aprendizaje": "Programación para la Ciencia de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ramírez",
+            "apellido_materno": "Romero",
+            "nombre": "Tonáhtiu Arturo"
+        },
+        "correo": "tramirezr@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1BV2",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "2BV1",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2CV3",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2MCM1",
+                "unidad_aprendizaje": "Sistemas Operativos para Cómputo Móvil"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ramírez",
+            "apellido_materno": "Tenorio",
+            "nombre": "Rafael"
+        },
+        "correo": "jpuebla@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2AM1",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "2AM2",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "3AM1",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ramos",
+            "apellido_materno": "Porras",
+            "nombre": "Alejandra"
+        },
+        "correo": "aramospo@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CM6",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "5CV3",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            },
+            {
+                "grupo": "7AM1",
+                "unidad_aprendizaje": "Propiedad Intelectual LCD"
+            },
+            {
+                "grupo": "8CV3",
+                "unidad_aprendizaje": "Liderazgo Personal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rangel",
+            "apellido_materno": "Pérez",
+            "nombre": "María Teresa"
+        },
+        "correo": "mrangelp@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1CV5",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Reséndiz",
+            "apellido_materno": "Muñoz",
+            "nombre": "Rocío"
+        },
+        "correo": "rresendizm@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CM5",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "1CM6",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Reyes",
+            "apellido_materno": "Bermejo",
+            "nombre": "Tlatoani de Jesús"
+        },
+        "correo": "treyesb@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2CM1",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "2CM6",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Reyes",
+            "apellido_materno": "Vera",
+            "nombre": "Abdiel"
+        },
+        "correo": "abdielreyes81@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5AM1",
+                "unidad_aprendizaje": "Minería de Datos"
+            },
+            {
+                "grupo": "5AV1",
+                "unidad_aprendizaje": "Procesos Estocásticos"
+            },
+            {
+                "grupo": "6AV1",
+                "unidad_aprendizaje": "Análisis de Series de Tiempo"
+            },
+            {
+                "grupo": "7AM1",
+                "unidad_aprendizaje": "Modelos Econométricos"
+            },
+            {
+                "grupo": "7AM1",
+                "unidad_aprendizaje": "Modelos Econométricos (Lab)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Ríos",
+            "apellido_materno": "de",
+            "nombre": "la Torre Ignacio"
+        },
+        "correo": "iriost@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "4CM2",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            },
+            {
+                "grupo": "4CM4",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rivera",
+            "apellido_materno": "De",
+            "nombre": "la Rosa Mónica"
+        },
+        "correo": "mriverad@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CM2",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "7CM1",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Móviles Nativas"
+            },
+            {
+                "grupo": "7CM2",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones Móviles Nativas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rocha",
+            "apellido_materno": "Bernabé",
+            "nombre": "María del Rosario"
+        },
+        "correo": "rrocha@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5CM3",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            },
+            {
+                "grupo": "5CV3",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rodríguez",
+            "apellido_materno": "Castillo",
+            "nombre": "Miguel Ángel"
+        },
+        "correo": "marodriguezc@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3BM2",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "3CM6",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rodríguez",
+            "apellido_materno": "Flores",
+            "nombre": "Eduardo"
+        },
+        "correo": "erodrigrezf@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CM4",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "3CM5",
+                "unidad_aprendizaje": "Finanzas Empresariales"
+            },
+            {
+                "grupo": "5CM5",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            },
+            {
+                "grupo": "7BV2",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rodríguez",
+            "apellido_materno": "Jordán",
+            "nombre": "Gabriel de Jesús"
+        },
+        "correo": "grodriguezj@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4AM2",
+                "unidad_aprendizaje": "Bases de Datos Avanzadas"
+            },
+            {
+                "grupo": "5AV1",
+                "unidad_aprendizaje": "Aprendizaje de Máquina e Inteligencia Artificial"
+            },
+            {
+                "grupo": "5CV2",
+                "unidad_aprendizaje": "Compiladores"
+            },
+            {
+                "grupo": "6CV4",
+                "unidad_aprendizaje": "Computer Graphics"
+            },
+            {
+                "grupo": "5CM4",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            },
+            {
+                "grupo": "8CM1",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            },
+            {
+                "grupo": "8CM2",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            },
+            {
+                "grupo": "5CM1",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rodríguez",
+            "apellido_materno": "Sarabia",
+            "nombre": "Tania"
+        },
+        "correo": "tsarabiar@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "1AV1",
+                "unidad_aprendizaje": "Introducción a la Ciencia de Datos"
+            },
+            {
+                "grupo": "3CM6",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "3CV1",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "6CM1",
+                "unidad_aprendizaje": "Non Relational Databases"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rodríguez",
+            "apellido_materno": "Villarreal",
+            "nombre": "José Gregorio"
+        },
+        "correo": "jgrodriguezv@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2BV1",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "2CV5",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rojas",
+            "apellido_materno": "Mexicano",
+            "nombre": "Ismael"
+        },
+        "correo": "irojasm@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "6CM3",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            },
+            {
+                "grupo": "6CM4",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Román",
+            "apellido_materno": "Godínez",
+            "nombre": "Rodrigo Francisco"
+        },
+        "correo": "rodrigo_0045@hotmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "6AM1",
+                "unidad_aprendizaje": "Temas Selectos de Inteligencia Artificial"
+            },
+            {
+                "grupo": "6BM2",
+                "unidad_aprendizaje": "Temas Selectos de Inteligencia Artificial"
+            },
+            {
+                "grupo": "6BV1",
+                "unidad_aprendizaje": "Redes Neuronales y Aprendizaje Profundo"
+            },
+            {
+                "grupo": "6CM1",
+                "unidad_aprendizaje": "Inteligencia Artificial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Romero",
+            "apellido_materno": "Herrera",
+            "nombre": "Rodolfo"
+        },
+        "correo": "rromeroh@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1MCM1",
+                "unidad_aprendizaje": "Arquitectura de dispositivos Móviles"
+            },
+            {
+                "grupo": "3MCM1",
+                "unidad_aprendizaje": "Programación de Dispositivos de Hardware"
+            },
+            {
+                "grupo": "6CM3",
+                "unidad_aprendizaje": "Inteligencia Artificial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rosas",
+            "apellido_materno": "Carrillo",
+            "nombre": "Ary Shared"
+        },
+        "correo": "arosasc@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CV3",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            },
+            {
+                "grupo": "5CV4",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rosas",
+            "apellido_materno": "Trigueros",
+            "nombre": "Jorge Luis"
+        },
+        "correo": "jlrosas@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "6CV2",
+                "unidad_aprendizaje": "Genetic Algorithms"
+            },
+            {
+                "grupo": "7CM3",
+                "unidad_aprendizaje": "Bioinformatics"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Rueda",
+            "apellido_materno": "Meléndez",
+            "nombre": "José Marco Antonio"
+        },
+        "correo": "jrueda@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "2AM1",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2AM2",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "2CM3",
+                "unidad_aprendizaje": "Algoritmos y Estructuras de Datos"
+            },
+            {
+                "grupo": "6CM1",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Salas",
+            "apellido_materno": "Ramirez",
+            "nombre": "Israel"
+        },
+        "correo": "isalasr@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CV1",
+                "unidad_aprendizaje": "Sistemas Operativos"
+            },
+            {
+                "grupo": "4CV3",
+                "unidad_aprendizaje": "Sistemas Operativos"
+            },
+            {
+                "grupo": "4CV4",
+                "unidad_aprendizaje": "Sistemas Operativos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Salazar",
+            "apellido_materno": "Ramírez",
+            "nombre": "Manuel"
+        },
+        "correo": "msalazarra@yopmail.com",
+        "departamento": "POSGR",
+        "materias": [
+            {
+                "grupo": "3CV1",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "3CV2",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Salazar",
+            "apellido_materno": "Urbina",
+            "nombre": "Alvaro"
+        },
+        "correo": "asalazaru@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4AM1",
+                "unidad_aprendizaje": "Bases de Datos Avanzadas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Saldívar",
+            "apellido_materno": "Almorejo",
+            "nombre": "María Magdalena"
+        },
+        "correo": "msaldivara@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1BV2",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "7SV1",
+                "unidad_aprendizaje": "Humanidades IV (ISISA)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Salinas",
+            "apellido_materno": "Callejas",
+            "nombre": "María de Lourdes"
+        },
+        "correo": "sacl0620@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CV4",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "6CV1",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            },
+            {
+                "grupo": "6CV2",
+                "unidad_aprendizaje": "Ingeniería de Software"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Salinas",
+            "apellido_materno": "Hernández",
+            "nombre": "Encarnación"
+        },
+        "correo": "esalinas@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM3",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CM4",
+                "unidad_aprendizaje": "Cálculo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Salinas",
+            "apellido_materno": "Lugo",
+            "nombre": "Sergio"
+        },
+        "correo": "ssalinasl@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3BM1",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "3BM2",
+                "unidad_aprendizaje": "Bases de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Salinas",
+            "apellido_materno": "Rosales",
+            "nombre": "Moisés"
+        },
+        "correo": "msalinasr@yopmail.com",
+        "departamento": "SUB ACAD",
+        "materias": [
+            {
+                "grupo": "6AV1",
+                "unidad_aprendizaje": "Ciberseguridad"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "Quintanilla",
+            "nombre": "Gilberto"
+        },
+        "correo": "gsanchezq@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CM2",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            },
+            {
+                "grupo": "5CM3",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "Arroyo",
+            "nombre": "José Emilio"
+        },
+        "correo": "jsanchezar@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "2CM4",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "2CM5",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "Brito",
+            "nombre": "Miguel"
+        },
+        "correo": "msanchezbr@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3AV1",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "3AV1",
+                "unidad_aprendizaje": "Programación para la Ciencia de Datos"
+            },
+            {
+                "grupo": "3CV2",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "5CV1",
+                "unidad_aprendizaje": "Compiladores"
+            },
+            {
+                "grupo": "7CV1",
+                "unidad_aprendizaje": "Big Data"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "García",
+            "nombre": "Luz María"
+        },
+        "correo": "lmsanchez@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3AM1",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "3BM1",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            },
+            {
+                "grupo": "3CM6",
+                "unidad_aprendizaje": "Análisis y Diseño de Algoritmos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sanchez",
+            "apellido_materno": "Lopez",
+            "nombre": "Luis Tadeo"
+        },
+        "correo": "ltsanchezl@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CV2",
+                "unidad_aprendizaje": "Análisis Vectorial"
+            },
+            {
+                "grupo": "3AV1",
+                "unidad_aprendizaje": "Probabilidad"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "Manilla",
+            "nombre": "Angeles Alejandra"
+        },
+        "correo": "aasanchezm@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "4AM1",
+                "unidad_aprendizaje": "Desarrollo de Aplicaciones para Análisis de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "Moreno",
+            "nombre": "Adriana de la Paz"
+        },
+        "correo": "apsanchezm@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1CM6",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "2CM1",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "Palacios",
+            "nombre": "María Susana"
+        },
+        "correo": "mssanchezp@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM4",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "1CM7",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "Vargas",
+            "nombre": "Perla Rebeca"
+        },
+        "correo": "psanchezv@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1AM2",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1AV2",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "1BV1",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "2CM1",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo (Lab)"
+            },
+            {
+                "grupo": "2CM6",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo (Lab)"
+            },
+            {
+                "grupo": "1BM1",
+                "unidad_aprendizaje": "Cálculo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sánchez",
+            "apellido_materno": "Vélez",
+            "nombre": "Ricardo"
+        },
+        "correo": "rsanchezve@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2AM1",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "2CM6",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Santiago",
+            "apellido_materno": "Valentín",
+            "nombre": "Eric"
+        },
+        "correo": "esantiagov@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CV3",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Santillán",
+            "apellido_materno": "Luna",
+            "nombre": "Raúl"
+        },
+        "correo": "rsantillan@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CV5",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "3CV2",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "3CV3",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "3CV6",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Serrano",
+            "apellido_materno": "Romero",
+            "nombre": "Claudia Wendy"
+        },
+        "correo": "cwendys@yahoo.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1AV2",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "2AV1",
+                "unidad_aprendizaje": "Ética y Legalidad"
+            },
+            {
+                "grupo": "8CV1",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Serrano",
+            "apellido_materno": "Talamantes",
+            "nombre": "José Felix"
+        },
+        "correo": "jfserrano@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5BM1",
+                "unidad_aprendizaje": "Visión Artificial"
+            },
+            {
+                "grupo": "5BM2",
+                "unidad_aprendizaje": "Visión Artificial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Silva",
+            "apellido_materno": "Martínez",
+            "nombre": "Jorge Javier"
+        },
+        "correo": "jjsilva@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "3CM4",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "3CV6",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Silva",
+            "apellido_materno": "Sánchez",
+            "nombre": "Carlos"
+        },
+        "correo": "csilvasa@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "7BV1",
+                "unidad_aprendizaje": "Formulación y Evaluación de Proyectos Informáticos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Solorza",
+            "apellido_materno": "Guzmán",
+            "nombre": "Misael"
+        },
+        "correo": "msolorzag@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1AV2",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CV2",
+                "unidad_aprendizaje": "Cálculo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Sosa",
+            "apellido_materno": "Adán",
+            "nombre": "Fanny"
+        },
+        "correo": "afannys@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4CM11",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            },
+            {
+                "grupo": "8BM1",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Soto",
+            "apellido_materno": "Ramos",
+            "nombre": "Manuel Alejandro"
+        },
+        "correo": "msotor@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "4BV1",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "4CV4",
+                "unidad_aprendizaje": "Tecnologías para el Desarrollo de Aplicaciones Web"
+            },
+            {
+                "grupo": "7CV1",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            },
+            {
+                "grupo": "7CV3",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Suárez",
+            "apellido_materno": "Castañón",
+            "nombre": "Miguel Santiago"
+        },
+        "correo": "mssuarez@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1AM1",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "1BM2",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "3MCM1",
+                "unidad_aprendizaje": "Seminario III"
+            },
+            {
+                "grupo": "4MCM1",
+                "unidad_aprendizaje": "Seminario IV"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Tecla",
+            "apellido_materno": "Parra",
+            "nombre": "Roberto"
+        },
+        "correo": "rteclap@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "1CM7",
+                "unidad_aprendizaje": "Fundamentos de Programación"
+            },
+            {
+                "grupo": "3BM1",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "3CM2",
+                "unidad_aprendizaje": "Paradigmas de Programación"
+            },
+            {
+                "grupo": "5CM2",
+                "unidad_aprendizaje": "Compiladores"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Téllez",
+            "apellido_materno": "Barrera",
+            "nombre": "Juan Carlos"
+        },
+        "correo": "jtellezb@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CM6",
+                "unidad_aprendizaje": "Circuitos Eléctricos (Lab)"
+            },
+            {
+                "grupo": "3CV5",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "5CM1",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            },
+            {
+                "grupo": "5CM2",
+                "unidad_aprendizaje": "Instrumentación y Control"
+            },
+            {
+                "grupo": "5CM4",
+                "unidad_aprendizaje": "Instrumentación y Control (Lab)"
+            },
+            {
+                "grupo": "5CM5",
+                "unidad_aprendizaje": "Instrumentación y Control (Lab)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Téllez",
+            "apellido_materno": "Reyes",
+            "nombre": "Ma. Socorro"
+        },
+        "correo": "stellez@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1CM2",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "1CM3",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Tenorio",
+            "apellido_materno": "Marrón",
+            "nombre": "Marco Antonio"
+        },
+        "correo": "rramirezt@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "5CM5",
+                "unidad_aprendizaje": "Redes de Computadoras"
+            },
+            {
+                "grupo": "7CM4",
+                "unidad_aprendizaje": "Administración de Servicios en Red"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Testa",
+            "apellido_materno": "Nava",
+            "nombre": "Alexis"
+        },
+        "correo": "atesta@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CM5",
+                "unidad_aprendizaje": "Fundamentos de Diseño Digital"
+            },
+            {
+                "grupo": "4CM1",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            },
+            {
+                "grupo": "4CM3",
+                "unidad_aprendizaje": "Diseño de Sistemas Digitales"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Tirado",
+            "apellido_materno": "Lule",
+            "nombre": "Judith Margarita"
+        },
+        "correo": "jtirado@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "2AV2",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "2CV3",
+                "unidad_aprendizaje": "Álgebra Lineal"
+            },
+            {
+                "grupo": "4CV2",
+                "unidad_aprendizaje": "Probabilidad y Estadística"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Torres",
+            "apellido_materno": "González",
+            "nombre": "Enrique"
+        },
+        "correo": "etorres@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2CM4",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "2CM5",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Torres",
+            "apellido_materno": "León",
+            "nombre": "Mónica Rocío"
+        },
+        "correo": "mtorresl@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "8CV3",
+                "unidad_aprendizaje": "Desarrollo de Habilidades Sociales para la Alta Dirección"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Torres",
+            "apellido_materno": "Ruíz",
+            "nombre": "Miguel Jesús"
+        },
+        "correo": "mtorresru@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5AM1",
+                "unidad_aprendizaje": "Analítica y Visualización de Datos"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Uriarte",
+            "apellido_materno": "Arcia",
+            "nombre": "Abril Valeria"
+        },
+        "correo": "auriartea@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "5BV1",
+                "unidad_aprendizaje": "Algoritmos Bioinspirados"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Vasquez",
+            "apellido_materno": "Gomez",
+            "nombre": "Juan Irving"
+        },
+        "correo": "jvasquezg@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "6BM2",
+                "unidad_aprendizaje": "Redes Neuronales y Aprendizaje Profundo"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Vázquez",
+            "apellido_materno": "González",
+            "nombre": "Leonor"
+        },
+        "correo": "levazquezg@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1BM1",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo (Lab)"
+            },
+            {
+                "grupo": "1BM2",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo (Lab)"
+            },
+            {
+                "grupo": "1CM1",
+                "unidad_aprendizaje": "Matemáticas Discretas"
+            },
+            {
+                "grupo": "5AM1",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ciencia de Datos"
+            },
+            {
+                "grupo": "1CM1",
+                "unidad_aprendizaje": "Matemáticas Discretas (Lab)"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Vázquez",
+            "apellido_materno": "Ortiz",
+            "nombre": "Mijaíl"
+        },
+        "correo": "mvazquezo@yopmail.com",
+        "departamento": "CIC",
+        "materias": [
+            {
+                "grupo": "3CV1",
+                "unidad_aprendizaje": "Circuitos Eléctricos"
+            },
+            {
+                "grupo": "4CV3",
+                "unidad_aprendizaje": "Electrónica Analógica"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Vélez",
+            "apellido_materno": "Saldaña",
+            "nombre": "Ulises"
+        },
+        "correo": "uvelez@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "3CM11",
+                "unidad_aprendizaje": "Software Engineering for Mobile Devices"
+            },
+            {
+                "grupo": "3CM3",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "3CM5",
+                "unidad_aprendizaje": "Bases de Datos"
+            },
+            {
+                "grupo": "5CM5",
+                "unidad_aprendizaje": "Análisis y Diseño de Sistemas"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Vera",
+            "apellido_materno": "Hernández",
+            "nombre": "Gumersindo"
+        },
+        "correo": "gvera@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "2BM1",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "2BM2",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Villegas",
+            "apellido_materno": "Navarrete",
+            "nombre": "Sonia"
+        },
+        "correo": "svillegasn@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2CV1",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "2CV3",
+                "unidad_aprendizaje": "Fundamentos Económicos"
+            },
+            {
+                "grupo": "8BV1",
+                "unidad_aprendizaje": "Gestión Empresarial"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Viveros",
+            "apellido_materno": "Vela",
+            "nombre": "Karina"
+        },
+        "correo": "kviveros@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1CM1",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1CM2",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "2CM3",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            },
+            {
+                "grupo": "2CM4",
+                "unidad_aprendizaje": "Cálculo Aplicado"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Winfield",
+            "apellido_materno": "Reyes",
+            "nombre": "Ana María"
+        },
+        "correo": "awinfieldr@yopmail.com",
+        "departamento": "FII",
+        "materias": [
+            {
+                "grupo": "1CV1",
+                "unidad_aprendizaje": "Comunicación Oral y Escrita"
+            },
+            {
+                "grupo": "2BV2",
+                "unidad_aprendizaje": "Ingeniería Ética y Sociedad"
+            },
+            {
+                "grupo": "6BV1",
+                "unidad_aprendizaje": "Metodología de la Investigación y Divulgación Científica"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Zagal",
+            "apellido_materno": "Flores",
+            "nombre": "Roberto Eswart"
+        },
+        "correo": "rzagalf@yopmail.com",
+        "departamento": "ISC",
+        "materias": [
+            {
+                "grupo": "2MCM1",
+                "unidad_aprendizaje": "Tópicos en Inteligencia Artificial Actual"
+            },
+            {
+                "grupo": "7AM1",
+                "unidad_aprendizaje": "Big Data"
+            }
+        ]
+    },
+    {
+        "nombre": {
+            "apellido_paterno": "Zárate",
+            "apellido_materno": "Cárdenas",
+            "nombre": "Alejandro"
+        },
+        "correo": "azaratec@yopmail.com",
+        "departamento": "FB",
+        "materias": [
+            {
+                "grupo": "1AV1",
+                "unidad_aprendizaje": "Cálculo"
+            },
+            {
+                "grupo": "1BV2",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "2CV3",
+                "unidad_aprendizaje": "Mecánica y Electromagnetismo"
+            },
+            {
+                "grupo": "3BV2",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "3CV3",
+                "unidad_aprendizaje": "Ecuaciones Diferenciales"
+            },
+            {
+                "grupo": "4BM1",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            },
+            {
+                "grupo": "4BV1",
+                "unidad_aprendizaje": "Matemáticas Avanzadas para la Ingeniería"
+            }
+        ]
+    }
+]
