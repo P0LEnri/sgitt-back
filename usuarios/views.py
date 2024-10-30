@@ -89,20 +89,35 @@ class LoginUserView(APIView):
                         return Response({"error": "Tu cuenta está inactiva. Contacta al administrador."}, status=status.HTTP_403_FORBIDDEN)
                 
                 refresh = RefreshToken.for_user(user)
-                print('alumno' if hasattr(user, 'alumno') else 'profesor')
-                print(str(email))
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
                     'user_type': 'alumno' if hasattr(user, 'alumno') else 'profesor',
-                    'user_email': str(email)
+                    'user_email': str(email),
+                    'is_admin': user.is_admin  # Añadir este campo
                 })
             else:
                 return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
         except ObjectDoesNotExist:
             return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
-        
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_admin(request):
+    try:
+        user = request.user
+        print(f"Checking admin status for user: {user.email}")  # Debug log
+        print(f"Is admin: {user.is_admin}")  # Debug log
+        return Response({
+            'is_admin': user.is_admin,
+            'email': user.email
+        })
+    except Exception as e:
+        print(f"Error checking admin status: {e}")  # Debug log
+        return Response(
+            {'error': 'Error checking admin status'}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 """ 
             # Corrección ortográfica
@@ -617,3 +632,60 @@ class ProfesorPerfilView(generics.RetrieveUpdateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
+    
+# usuarios/views.py
+from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from django_filters import rest_framework as django_filters
+
+class AlumnoFilter(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='search_fields')
+    carrera = django_filters.ChoiceFilter(choices=Alumno.Carrera.choices)
+    plan_estudios = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = Alumno
+        fields = ['carrera', 'plan_estudios']
+
+    def search_fields(self, queryset, name, value):
+        return queryset.filter(
+            Q(user__email__icontains=value) |
+            Q(user__first_name__icontains=value) |
+            Q(user__last_name__icontains=value) |
+            Q(boleta__icontains=value)
+        )
+
+class ProfesorFilter(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='search_fields')
+    materias = django_filters.ModelMultipleChoiceFilter(
+        queryset=Materia.objects.all(),
+        field_name='materias',
+        conjoined=False
+    )
+
+    class Meta:
+        model = Profesor
+        fields = ['materias']
+
+    def search_fields(self, queryset, name, value):
+        return queryset.filter(
+            Q(user__email__icontains=value) |
+            Q(user__first_name__icontains=value) |
+            Q(user__last_name__icontains=value)
+        )
+
+class AlumnoViewSet(viewsets.ModelViewSet):
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = AlumnoFilter
+    search_fields = ['user__email', 'user__first_name', 'user__last_name', 'boleta']
+
+class ProfesorViewSet(viewsets.ModelViewSet):
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = ProfesorFilter
+    search_fields = ['user__email', 'user__first_name', 'user__last_name']

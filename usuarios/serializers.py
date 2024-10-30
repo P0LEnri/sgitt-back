@@ -243,3 +243,5 @@ class ProfesorSerializer(serializers.ModelSerializer):
         representation['nombre'] = instance.user.first_name
         representation['apellido'] = instance.user.last_name
         return representation
+    
+    

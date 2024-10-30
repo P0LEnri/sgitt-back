@@ -1,6 +1,12 @@
 from django.urls import path, include
 from .views import *
 from . import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'alumnos', views.AlumnoViewSet)
+router.register(r'profesores', views.ProfesorViewSet)
+
 
 urlpatterns = [
     path('register/', RegisterUserView.as_view(), name='register_user'),
@@ -15,4 +21,6 @@ urlpatterns = [
     path('test-data/', views.test_users_data, name='test-users-data'),
     path('materias/', views.MateriaViewSet.as_view({'get': 'list'}), name='materia-list'),
     path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
+    path('check-admin/', views.check_admin, name='check-admin'),
+    path('', include(router.urls)),
 ]
