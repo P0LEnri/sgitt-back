@@ -40,8 +40,8 @@ def create_profesor(profesor_data, materias_dict):
     try:
         # Crear usuario
         email = profesor_data['correo']
-        nombres = profesor_data['nombre']['nombre'].split()
-        nombre = nombres[0]  # Primer nombre
+        nombre = profesor_data['nombre']['nombre']
+        #nombre = nombres[0]  # Primer nombre
         
         user = User.objects.create_user(
             email=email,
