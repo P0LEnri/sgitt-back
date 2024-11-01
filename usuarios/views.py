@@ -276,21 +276,16 @@ def search_users(request):
         alumno__boleta__icontains=query
     ).exclude(id=request.user.id)
 
-    # Búsqueda por matrícula (profesores)
-    profesores_users = User.objects.filter(
-        profesor__matricula__icontains=query
-    ).exclude(id=request.user.id)
-
-    # Búsqueda por apellido materno (alumnos)
-    alumnos_materno_users = User.objects.filter(
-        alumno__apellido_materno__icontains=query
+    # Búsqueda por apellido materno (alumnos y profesores)
+    usuarios_materno = User.objects.filter(
+        Q(alumno__apellido_materno__icontains=query) |
+        Q(profesor__apellido_materno__icontains=query)
     ).exclude(id=request.user.id)
 
     # Combinar resultados
-    users = users | alumnos_users | profesores_users | alumnos_materno_users
+    users = users | alumnos_users | usuarios_materno
     users = users.distinct()  # Eliminar duplicados
     
-    # Log found users
     logger.info(f"Found {users.count()} users matching query")
     logger.info(f"Query results: {[user.email for user in users]}")
     
@@ -305,7 +300,6 @@ def search_users(request):
             'type': 'unknown'
         }
 
-        # Agregar información adicional según el tipo de usuario
         try:
             if hasattr(user, 'alumno'):
                 user_data.update({
@@ -317,8 +311,8 @@ def search_users(request):
             elif hasattr(user, 'profesor'):
                 user_data.update({
                     'type': 'profesor',
-                    'matricula': user.profesor.matricula,
-                    'materias': user.profesor.materias
+                    'apellido_materno': user.profesor.apellido_materno,
+                    'materias': [{'id': m.id, 'nombre': m.nombre} for m in user.profesor.materias.all()]
                 })
         except Exception as e:
             logger.error(f"Error getting user details: {e}")
@@ -488,8 +482,8 @@ def calculate_similarity_score(query_vector: np.ndarray, profesor: Profesor) -> 
     final_score = 0.0
     weights = {
         'max_materia': 0.4,
-        'avg_materia': 0.1,
-        'max_area': 0.4,
+        'avg_materia': 0.4,
+        'max_area': 0.1,
         'avg_area': 0.1
     }
     
@@ -525,7 +519,7 @@ def buscar_profesores(request):
         profesor_scores = []
         for profesor in profesores:
             final_score, detailed_scores = calculate_similarity_score(query_vector, profesor)
-            print(f"Profesor: {profesor.user.email}, Score: {final_score:.3f} (Details: {detailed_scores})")
+            #print(f"Profesor: {profesor.user.email}, Score: {final_score:.3f} (Details: {detailed_scores})")
 
             if debug_mode:
                 logger.info(f"Profesor: {profesor.user.email}")

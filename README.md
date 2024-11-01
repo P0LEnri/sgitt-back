@@ -2,7 +2,7 @@
 
 1. Create a virtual environment:
    ```
-   python -m venv venv
+   python -m venv env
    ```
 
 2. Activate the virtual environment:
