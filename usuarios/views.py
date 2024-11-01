@@ -29,6 +29,7 @@ from django.db.models import Q
 from django.http import Http404
 import re
 from typing import List, Tuple, Dict
+from .embedding_utils import preprocess_text, model
 
 
 # Cargar el modelo de spaCy para español
@@ -420,12 +421,12 @@ def buscar_profesores(request):
 """
 
 # Inicializar el modelo una sola vez
-model = SentenceTransformer('hiiamsid/sentence_similarity_spanish_es') #hiiamsid/sentence_similarity_spanish_es distiluse-base-multilingual-cased-v1
-
+#model = SentenceTransformer('hiiamsid/sentence_similarity_spanish_es') #hiiamsid/sentence_similarity_spanish_es distiluse-base-multilingual-cased-v1
+"""
 def preprocess_text(text: str) -> str:
-    """
-    Preprocesa el texto para mejorar la calidad de la búsqueda.
-    """
+    
+    #Preprocesa el texto para mejorar la calidad de la búsqueda.
+    
     # Convertir a minúsculas y eliminar acentos
     text = text.lower()
     text = re.sub(r'[áäà]', 'a', text)
@@ -440,7 +441,7 @@ def preprocess_text(text: str) -> str:
     # Eliminar espacios múltiples
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
-
+"""
 def get_embeddings(texts: List[str]) -> np.ndarray:
     """
     Obtiene los embeddings para una lista de textos.
@@ -458,34 +459,38 @@ def calculate_similarity_score(query_vector: np.ndarray, profesor: Profesor) -> 
     
     if not materias and not areas:
         return 0.0, {}
-
-    # Obtener nombres de materias y áreas
-    materia_texts = [m.nombre for m in materias]
-    area_texts = [a.nombre for a in areas]
     
     # Calcular similitudes
     scores = {}
     
-    if materia_texts:
-        materia_vectors = get_embeddings(materia_texts)
-        materia_similarities = cosine_similarity([query_vector], materia_vectors)[0]
+    if materias:
+        materia_embeddings = [m.get_embedding_array() for m in materias]
+        materia_embeddings = np.stack(materia_embeddings)
+        materia_similarities = np.dot(materia_embeddings, query_vector)
         scores['max_materia'] = float(np.max(materia_similarities))
         scores['avg_materia'] = float(np.mean(materia_similarities))
     
-    if area_texts:
-        area_vectors = get_embeddings(area_texts)
-        area_similarities = cosine_similarity([query_vector], area_vectors)[0]
+    if areas:
+        area_embeddings = [a.get_embedding_array() for a in areas]
+        area_embeddings = np.stack(area_embeddings)
+        area_similarities = np.dot(area_embeddings, query_vector)
         scores['max_area'] = float(np.max(area_similarities))
         scores['avg_area'] = float(np.mean(area_similarities))
     
     # Calcular puntaje final ponderado
     final_score = 0.0
-    weights = {
-        'max_materia': 0.4,
-        'avg_materia': 0.4,
-        'max_area': 0.1,
-        'avg_area': 0.1
-    }
+    if areas:
+        weights = {
+            'max_materia': 0.4,
+            'avg_materia': 0.4,
+            'max_area': 0.1,
+            'avg_area': 0.1
+        }
+    else:
+        weights = {
+            'max_materia': 0.5,
+            'avg_materia': 0.5
+        }
     
     for key, weight in weights.items():
         if key in scores:
@@ -519,7 +524,7 @@ def buscar_profesores(request):
         profesor_scores = []
         for profesor in profesores:
             final_score, detailed_scores = calculate_similarity_score(query_vector, profesor)
-            #print(f"Profesor: {profesor.user.email}, Score: {final_score:.3f} (Details: {detailed_scores})")
+            print(f"Profesor: {profesor.user.email}, Score: {final_score:.3f} (Details: {detailed_scores})")
 
             if debug_mode:
                 logger.info(f"Profesor: {profesor.user.email}")

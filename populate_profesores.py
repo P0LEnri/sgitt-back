@@ -56,7 +56,9 @@ def create_profesor(profesor_data, materias_dict):
         profesor = Profesor.objects.create(
             user=user,
             apellido_materno=profesor_data['nombre']['apellido_materno'],
-            es_profesor=True
+            es_profesor=True,
+            departamento= profesor_data['departamento'],  
+            primer_inicio=True  
         )
         
         # Asignar materias
@@ -90,7 +92,7 @@ def clean_database():
         Profesor.objects.all().delete()
         Materia.objects.all().delete()
         AreaConocimiento.objects.all().delete()
-        #User.objects.filter(email__contains="@yopmail.com").delete() # Se borran tambien los alumnos xd si se quieren borrar los profesores descomentar esta linea
+        User.objects.filter(email__contains="@yopmail.com").delete() # Se borran tambien los alumnos xd si se quieren borrar los profesores descomentar esta linea
         User.objects.filter(email__contains="@ejemplo.com").delete()
         print("Base de datos limpiada exitosamente")
     except Exception as e:
