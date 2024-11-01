@@ -34,7 +34,7 @@ class PropuestaSerializer(serializers.ModelSerializer):
         model = Propuesta
         fields = ['id', 'nombre', 'objetivo', 'cantidad_alumnos', 'cantidad_profesores',
                  'requisitos', 'palabras_clave', 'areas', 'carrera', 'autor',
-                 'fecha_creacion', 'fecha_actualizacion', 'tipo_propuesta', 'datos_contacto']
+                 'fecha_creacion', 'fecha_actualizacion', 'tipo_propuesta', 'datos_contacto', 'visible']
 
     def get_autor(self, obj):
         return {
@@ -48,6 +48,11 @@ class PropuestaSerializer(serializers.ModelSerializer):
         palabras_clave_data = self.context['request'].data.get('palabras_clave', [])
         areas_data = self.context['request'].data.get('areas', [])
         datos_contacto_data = self.context['request'].data.get('datos_contacto', [])
+        user = self.context['request'].user
+        
+        # Si es profesor, usar el departamento como carrera
+        if hasattr(user, 'profesor'):
+            validated_data['carrera'] = user.profesor.departamento
         
         propuesta = Propuesta.objects.create(**validated_data)
         

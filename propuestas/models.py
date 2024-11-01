@@ -39,6 +39,7 @@ class Propuesta(models.Model):
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     tipo_propuesta = models.CharField(max_length=50)  # Sin choices
     datos_contacto = models.ManyToManyField(DatoContacto)
+    visible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nombre
@@ -48,4 +49,5 @@ class Propuesta(models.Model):
         indexes = [
             models.Index(fields=['nombre']),
             models.Index(fields=['fecha_creacion']),
+            models.Index(fields=['visible']), 
         ]
