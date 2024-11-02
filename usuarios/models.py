@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin 
 from django.conf import settings
 import uuid
-
+from .embedding_utils import preprocess_text, model  # Import the embedding model and preprocessing
+import numpy as np
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -38,6 +39,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
 class AreaConocimiento(models.Model):
     nombre = models.CharField(max_length=100)
+    embedding = models.BinaryField(null=True)  # Store embedding as binary
+
+    def save(self, *args, **kwargs):
+        # Calculate embedding before saving
+        if self.nombre:
+            preprocessed_text = preprocess_text(self.nombre)
+            embedding = model.encode([preprocessed_text])[0]  # Get first embedding
+            self.embedding = embedding.tobytes()  # Convert numpy array to binary
+        super().save(*args, **kwargs)
+
+    def get_embedding_array(self):
+        # Convert binary back to numpy array when needed
+        if self.embedding:
+            return np.frombuffer(self.embedding, dtype=np.float32)
+        return None
 
     def __str__(self):
         return self.nombre
@@ -60,8 +76,23 @@ class Alumno(models.Model):
         ordering = ['boleta']
         indexes = [models.Index(fields=['boleta']), ]
 
+
 class Materia(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
+    embedding = models.BinaryField(null=True)
+
+    def save(self, *args, **kwargs):
+        # Calculate embedding before saving
+        if self.nombre:
+            preprocessed_text = preprocess_text(self.nombre)
+            embedding = model.encode([preprocessed_text])[0]
+            self.embedding = embedding.tobytes()
+        super().save(*args, **kwargs)
+
+    def get_embedding_array(self):
+        if self.embedding:
+            return np.frombuffer(self.embedding, dtype=np.float32)
+        return None
 
     def __str__(self):
         return self.nombre
@@ -75,6 +106,8 @@ class Profesor(models.Model):
     materias = models.ManyToManyField(Materia, related_name='profesores')
     areas_profesor = models.ManyToManyField(AreaConocimiento, related_name='profesores')
     es_profesor = models.BooleanField(default=True)
+    departamento = models.CharField(max_length=100, blank=True) 
+    primer_inicio = models.BooleanField(default=True)  
 
     class Meta:
         ordering = ['user__email']

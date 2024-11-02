@@ -89,8 +89,12 @@ class PropuestaViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset
+        # Si el usuario está viendo todas las propuestas, solo mostrar las visibles
+        if self.action == 'list':
+            return Propuesta.objects.filter(visible=True)
+        # Para mis_propuestas y otras acciones, mostrar todas las propuestas del usuario
+        return Propuesta.objects.all()
+
 
     def create(self, request, *args, **kwargs):
         logger.info(f"User: {request.user}")
@@ -99,9 +103,12 @@ class PropuestaViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        carrera = ''
-        if hasattr(self.request.user, 'alumno'):
+        if hasattr(self.request.user, 'profesor'):
+            carrera = self.request.user.profesor.departamento
+        elif hasattr(self.request.user, 'alumno'):
             carrera = self.request.user.alumno.carrera
+        else:
+            carrera = ''
         serializer.save(autor=self.request.user, carrera=carrera)
     
     @action(detail=False, methods=['GET'])
@@ -109,3 +116,16 @@ class PropuestaViewSet(viewsets.ModelViewSet):
         propuestas = Propuesta.objects.filter(autor=request.user)
         serializer = self.get_serializer(propuestas, many=True)
         return Response(serializer.data)
+    
+    @action(detail=True, methods=['PATCH'])
+    def toggle_visibility(self, request, pk=None):
+        propuesta = self.get_object()
+        if propuesta.autor != request.user:
+            raise PermissionDenied("No tienes permiso para editar esta propuesta")
+        
+        visible = request.data.get('visible', None)
+        if visible is not None:
+            propuesta.visible = visible
+            propuesta.save()
+        
+        return Response(self.get_serializer(propuesta).data)
