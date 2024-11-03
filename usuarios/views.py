@@ -29,6 +29,10 @@ from django.db.models import Q
 from django.http import Http404
 import re
 from typing import List, Tuple, Dict
+import uuid
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
 from .embedding_utils import preprocess_text, model
 
 
@@ -452,5 +456,189 @@ class CambiarContrasenaProfesorView(APIView):
         except Exception as e:
             return Response(
                 {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        
+class ResetPasswordRequestView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email')
+        try:
+            user = User.objects.get(email=email)
+            # Generar nuevo token
+            user.verification_token = uuid.uuid4()
+            user.save()
+            
+            # Enviar email
+            reset_link = f"{settings.FRONTEND_URL}/reset-password/{user.verification_token}"
+            send_mail(
+                'Restablecer Contraseña',
+                f'Para restablecer tu contraseña, haz clic en el siguiente enlace: {reset_link}',
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+                fail_silently=False,
+                html_message=f'''
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                            <h2 style="color: #4a5568;">Restablecer Contraseña</h2>
+                            <p>Has solicitado restablecer tu contraseña. Haz clic en el siguiente botón para continuar:</p>
+                            <a href="{reset_link}" style="display: inline-block; padding: 10px 20px; background-color: #4299e1; color: white; text-decoration: none; border-radius: 5px;">
+                                Restablecer Contraseña
+                            </a>
+                            <p>Si no has solicitado restablecer tu contraseña, puedes ignorar este mensaje.</p>
+                        </div>
+                    </body>
+                </html>
+                '''
+            )
+            return Response(
+                {"message": "Se ha enviado un enlace de restablecimiento a tu correo electrónico."},
+                status=status.HTTP_200_OK
+            )
+        except User.DoesNotExist:
+            return Response(
+                {"error": "No existe una cuenta con ese correo electrónico."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+class ResetPasswordConfirmView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, token):
+        try:
+            user = User.objects.get(verification_token=token)
+            password = request.data.get('password')
+            confirm_password = request.data.get('confirmPassword')
+
+            if not password or not confirm_password:
+                return Response(
+                    {"error": "Ambas contraseñas son requeridas"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if password != confirm_password:
+                return Response(
+                    {"error": "Las contraseñas no coinciden"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if len(password) < 8:
+                return Response(
+                    {"error": "La contraseña debe tener al menos 8 caracteres"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if not any(char.isdigit() for char in password):
+                return Response(
+                    {"error": "La contraseña debe contener al menos un número"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if not any(char.isupper() for char in password):
+                return Response(
+                    {"error": "La contraseña debe contener al menos una letra mayúscula"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Actualizar contraseña
+            user.set_password(password)
+            user.verification_token = uuid.uuid4()  # Invalidar el token actual
+            user.save()
+
+            return Response(
+                {"message": "Contraseña actualizada exitosamente"},
+                status=status.HTTP_200_OK
+            )
+
+        except User.DoesNotExist:
+            return Response(
+                {"error": "Token inválido o expirado"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+
+class CambiarContrasenaView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            user = request.user
+            current_password = request.data.get('currentPassword')
+            new_password = request.data.get('newPassword')
+            confirm_password = request.data.get('confirmPassword')
+
+            # Verificar que se proporcionaron todos los campos
+            if not all([current_password, new_password, confirm_password]):
+                return Response(
+                    {"error": "Todos los campos son requeridos"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Verificar que la contraseña actual es correcta
+            if not user.check_password(current_password):
+                return Response(
+                    {"error": "La contraseña actual es incorrecta"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Verificar que las contraseñas nuevas coinciden
+            if new_password != confirm_password:
+                return Response(
+                    {"error": "Las contraseñas nuevas no coinciden"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Validar que la nueva contraseña cumple con los requisitos
+            try:
+                # Validaciones personalizadas
+                if len(new_password) < 8:
+                    raise ValidationError(
+                        "La contraseña debe tener al menos 8 caracteres."
+                    )
+                
+                if not any(char.isdigit() for char in new_password):
+                    raise ValidationError(
+                        "La contraseña debe contener al menos un número."
+                    )
+                
+                if not any(char.isupper() for char in new_password):
+                    raise ValidationError(
+                        "La contraseña debe contener al menos una letra mayúscula."
+                    )
+
+                # Validar la contraseña usando las validaciones de Django
+                validate_password(new_password, user)
+
+                # Verificar que la nueva contraseña no es igual a la actual
+                if current_password == new_password:
+                    return Response(
+                        {"error": "La nueva contraseña debe ser diferente a la actual"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                # Actualizar la contraseña
+                user.set_password(new_password)
+                user.save()
+
+                # Generar nuevos tokens para mantener la sesión activa
+                from rest_framework_simplejwt.tokens import RefreshToken
+                refresh = RefreshToken.for_user(user)
+
+                return Response({
+                    "message": "Contraseña actualizada exitosamente",
+                    "access": str(refresh.access_token),
+                    "refresh": str(refresh)
+                }, status=status.HTTP_200_OK)
+
+            except ValidationError as e:
+                return Response(
+                    {"error": str(e).strip('[]').strip("'")},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+        except Exception as e:
+            return Response(
+                {"error": "Ocurrió un error al cambiar la contraseña"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
