@@ -16,5 +16,9 @@ urlpatterns = [
     path('materias/', views.MateriaViewSet.as_view({'get': 'list'}), name='materia-list'),
     path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
     path('cambiar-contrasena-profesor/', CambiarContrasenaProfesorView.as_view(), name='cambiar-contrasena-profesor'),
+    path('reset-password-request/', ResetPasswordRequestView.as_view(), name='reset-password-request'),
+    path('reset-password/<uuid:token>/', ResetPasswordConfirmView.as_view(), name='reset-password-confirm'),
+    path('cambiar-contrasena/', CambiarContrasenaView.as_view(), name='cambiar-contrasena'),
+
 
 ]

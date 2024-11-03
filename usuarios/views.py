@@ -29,6 +29,10 @@ from django.db.models import Q
 from django.http import Http404
 import re
 from typing import List, Tuple, Dict
+import uuid
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
 from .embedding_utils import preprocess_text, model
 
 
@@ -47,13 +51,43 @@ class RegisterUserView(APIView):
 
     def post(self, request, *args, **kwargs):
         serializer = AlumnoSerializer(data=request.data)
+        errors = {}
+
+        # Validar si el correo ya existe
+        email = request.data.get('email')
+        if User.objects.filter(email=email).exists():
+            errors['email'] = "Este correo electrónico ya está registrado."
+
+        # Validar si la boleta ya existe
+        boleta = request.data.get('boleta')
+        if Alumno.objects.filter(boleta=boleta).exists():
+            errors['boleta'] = "Esta boleta ya está registrada."
+
+        # Validar contraseña
+        password = request.data.get('password')
+        if password:
+            if len(password) < 8:
+                errors['password'] = "La contraseña debe tener al menos 8 caracteres."
+            elif not any(char.isdigit() for char in password):
+                errors['password'] = "La contraseña debe contener al menos un número."
+            elif not any(char.isupper() for char in password):
+                errors['password'] = "La contraseña debe contener al menos una letra mayúscula."
+
+        if errors:
+            return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
+
         if serializer.is_valid():
             try:
                 alumno = serializer.save()
-                return Response({"message": "Usuario registrado exitosamente. Por favor, verifica tu correo electrónico."}, status=status.HTTP_201_CREATED)
+                return Response({
+                    "message": "Usuario registrado exitosamente. Por favor, verifica tu correo electrónico."
+                }, status=status.HTTP_201_CREATED)
             except Exception as e:
-                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response({
+                    "errors": {"general": str(e)}
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny]
@@ -105,150 +139,6 @@ class LoginUserView(APIView):
             return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
         
 
-
-""" 
-            # Corrección ortográfica
-            query_words = query.split()
-            corrected_query = ' '.join([spell.correction(word) for word in query_words])
-
-            # Lematización y eliminación de stopwords
-            doc = nlp(corrected_query)
-            lemmatized_query = ' '.join([token.lemma_ for token in doc if not token.is_stop])
-            """
-
-
-"""# Cargar el modelo de word embeddings (asegúrate de que la ruta sea correcta)
-model_path = 'C:/Users/enri-/Downloads/cc.es.300.vec.gz'  # o .bin si usas el formato binario
-word_vectors = KeyedVectors.load_word2vec_format(model_path, binary=False, limit=100000)  # Limita a 100,000 palabras para ahorrar memoria
-
-def expand_query(query, word_vectors, topn=3):
-    expanded_terms = []
-    for word in query.split():
-        try:
-            similar_words = [w for w, _ in word_vectors.most_similar(word, topn=topn)]
-            expanded_terms.extend(similar_words)
-        except KeyError:
-            # Si la palabra no está en el vocabulario, la ignoramos
-            pass
-    return ' '.join(set(query.split() + expanded_terms))
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def buscar_profesores(request):
-    query = request.GET.get('q', '')
-    profesores = list(Profesor.objects.all())
-
-    if query and profesores:
-        try:
-            # Expandir la consulta con sinónimos
-            expanded_query = expand_query(query, word_vectors)
-            print(f"Consulta expandida: {expanded_query}")  # Para depuración
-            corpus = [prof.materias for prof in profesores]
-            #Expandir corpus con sinónimos
-            corpus = [expand_query(materia, word_vectors) for materia in corpus]
-            print(f"Corpus expandido: {corpus}")  # Para depuración
-
-            vectorizer = TfidfVectorizer()
-           
-            tfidf_matrix = vectorizer.fit_transform(corpus)
-            query_tfidf = vectorizer.transform([expanded_query])
-            
-            cosine_similarities = cosine_similarity(query_tfidf, tfidf_matrix).flatten()
-            similar_indices = cosine_similarities.argsort()[::-1]
-            
-            # Seleccionar los 5 profesores más similares
-            top_5_indices = similar_indices[:5]
-            profesores = [profesores[int(i)] for i in top_5_indices ]
-        except Exception as e:
-            return Response({"error": str(e)}, status=400)
-    
-    serializer = ProfesorSerializer(profesores, many=True)
-    return Response(serializer.data)"""
-
-"""
-
-# Cargar el modelo BETO
-tokenizer = AutoTokenizer.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
-model = AutoModel.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
-
-def get_bert_embedding(text):
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512, padding=True)
-    with torch.no_grad():
-        outputs = model(**inputs)
-    return outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
-
-def calculate_profesor_similarity(query_vector, profesor):
-    
-    #Calcula la similitud entre la consulta y cada materia del profesor,
-    #devolviendo la máxima similitud encontrada.
-    
-    materias = profesor.materias.all()
-    if not materias:
-        return 0.0
-    
-    # Calcular similitud para cada materia
-    materia_similarities = []
-    for materia in materias:
-        materia_vector = get_bert_embedding(materia.nombre)
-        similarity = cosine_similarity([query_vector], [materia_vector])[0][0]
-        materia_similarities.append(similarity)
-    
-    # Podemos usar diferentes estrategias para combinar las similitudes:
-    # 1. Máximo (mejor coincidencia individual)
-    max_similarity = max(materia_similarities)
-    # 2. Promedio (coincidencia general)
-    avg_similarity = sum(materia_similarities) / len(materia_similarities)
-    # 3. Promedio ponderado de las mejores N coincidencias
-    top_n = sorted(materia_similarities, reverse=True)[:2]  # Tomamos las 2 mejores
-    weighted_similarity = sum(top_n) / len(top_n)
-    
-    # Combinamos las métricas (puedes ajustar los pesos según necesites)
-    final_similarity = (max_similarity * 0.5 + 
-                       avg_similarity * 0.2 + 
-                       weighted_similarity * 0.3)
-    
-    return final_similarity
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def buscar_profesores(request):
-    query = request.GET.get('q', '')
-    # Obtener profesores con sus materias precargadas
-    profesores = list(Profesor.objects.prefetch_related('materias').all())
-
-    if query and profesores:
-        try:
-            print(f"Consulta: {query}")
-            query_vector = get_bert_embedding(query)
-            
-            # Calcular similitudes
-            similarities = []
-            for prof in profesores:
-                similarity = calculate_profesor_similarity(query_vector, prof)
-                similarities.append((prof, similarity))
-                print(f"Profesor: {prof.user.email}, Similitud: {similarity}")  # Debug
-
-            # Filtrar y ordenar resultados
-            filtered_similarities = [
-                (prof, sim) for prof, sim in similarities 
-                if sim > 0.3  # Umbral mínimo de similitud
-            ]
-            
-            filtered_similarities.sort(key=lambda x: x[1], reverse=True)
-            top_5_profesores = [prof for prof, sim in filtered_similarities[:6]]
-
-            serializer = ProfesorSerializer(top_5_profesores, many=True)
-            return Response(serializer.data)
-            
-        except Exception as e:
-            print(f"Error en búsqueda: {str(e)}")
-            return Response({"error": str(e)}, status=400)
-    
-    # Si no hay query, devolver una selección limitada de profesores
-    serializer = ProfesorSerializer(profesores[:9], many=True)
-    return Response(serializer.data)
-
-"""
 logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
@@ -341,108 +231,6 @@ def test_users_data(request):
  
 
 
-"""
-
-# Cargar el modelo una vez al inicio de la aplicación
-model = SentenceTransformer('distiluse-base-multilingual-cased-v1') #hiiamsid/sentence_similarity_spanish_es
-
-def get_embedding(text):
-    return model.encode(text)
-
-def get_profesor_similarities(query_vector, profesor):
-    
-    #Calcula la similitud entre la consulta y las materias del profesor
-    
-    materias = profesor.materias.all()
-    if not materias:
-        return 0.0
-
-    # Obtener embeddings para cada materia
-    materia_vectors = [get_embedding(materia.nombre) for materia in materias]
-    
-    # Calcular similitud con cada materia
-    similitudes = [
-        np.dot(query_vector, materia_vec) / (np.linalg.norm(query_vector) * np.linalg.norm(materia_vec))
-        for materia_vec in materia_vectors
-    ]
-    
-    # Podemos usar diferentes estrategias para combinar las similitudes:
-    max_sim = max(similitudes)  # Mejor coincidencia
-    avg_sim = sum(similitudes) / len(similitudes)  # Promedio
-    
-    # Combinar las métricas (ajustar pesos según necesidad)
-    return max_sim * 0.99 + avg_sim * 0.01
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def buscar_profesores(request):
-    query = request.GET.get('q', '')
-    
-    if not query:
-        profesores = Profesor.objects.prefetch_related('materias').all()[:10]
-        serializer = ProfesorSerializer(profesores, many=True)
-        return Response(serializer.data)
-    
-    try:
-        query_vector = get_embedding(query)
-        
-        # Intentar obtener profesores de la caché
-        profesores = list(Profesor.objects.prefetch_related('materias').all())
-        
-        # Calcular similitudes para cada profesor
-        similarities = []
-        for profesor in profesores:
-            similarity = get_profesor_similarities(query_vector, profesor)
-            print(f"Profesor: {profesor.user.email}, Similitud: {similarity:.3f}")
-            similarities.append((profesor, similarity))
-        
-        # Filtrar por umbral de similitud y ordenar
-        filtered_similarities = [
-            (prof, sim) for prof, sim in similarities 
-            if sim > 0.4  # Ajustar umbral según necesidad
-        ]
-        
-        # Ordenar por similitud y tomar los top 5
-        top_profesores = sorted(filtered_similarities, key=lambda x: x[1], reverse=True)[:5]
-        
-        # Debug info
-        for prof, sim in top_profesores:
-            materias_nombres = ', '.join(m.nombre for m in prof.materias.all())
-            print(f"Profesor: {prof.user.email}, Similitud: {sim:.3f}")
-            print(f"Materias: {materias_nombres}")
-        
-        # Serializar resultados
-        serializer = ProfesorSerializer([prof for prof, _ in top_profesores], many=True)
-        return Response(serializer.data)
-        
-    except Exception as e:
-        print(f"Error en búsqueda: {str(e)}")
-        return Response({"error": str(e)}, status=400)
-
-"""
-
-# Inicializar el modelo una sola vez
-#model = SentenceTransformer('hiiamsid/sentence_similarity_spanish_es') #hiiamsid/sentence_similarity_spanish_es distiluse-base-multilingual-cased-v1
-"""
-def preprocess_text(text: str) -> str:
-    
-    #Preprocesa el texto para mejorar la calidad de la búsqueda.
-    
-    # Convertir a minúsculas y eliminar acentos
-    text = text.lower()
-    text = re.sub(r'[áäà]', 'a', text)
-    text = re.sub(r'[éëè]', 'e', text)
-    text = re.sub(r'[íïì]', 'i', text)
-    text = re.sub(r'[óöò]', 'o', text)
-    text = re.sub(r'[úüù]', 'u', text)
-    
-    # Eliminar caracteres especiales pero mantener espacios entre palabras
-    text = re.sub(r'[^a-z0-9\s]', ' ', text)
-    
-    # Eliminar espacios múltiples
-    text = re.sub(r'\s+', ' ', text)
-    return text.strip()
-"""
 def get_embeddings(texts: List[str]) -> np.ndarray:
     """
     Obtiene los embeddings para una lista de textos.
@@ -668,5 +456,189 @@ class CambiarContrasenaProfesorView(APIView):
         except Exception as e:
             return Response(
                 {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        
+class ResetPasswordRequestView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email')
+        try:
+            user = User.objects.get(email=email)
+            # Generar nuevo token
+            user.verification_token = uuid.uuid4()
+            user.save()
+            
+            # Enviar email
+            reset_link = f"{settings.FRONTEND_URL}/reset-password/{user.verification_token}"
+            send_mail(
+                'Restablecer Contraseña',
+                f'Para restablecer tu contraseña, haz clic en el siguiente enlace: {reset_link}',
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+                fail_silently=False,
+                html_message=f'''
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                            <h2 style="color: #4a5568;">Restablecer Contraseña</h2>
+                            <p>Has solicitado restablecer tu contraseña. Haz clic en el siguiente botón para continuar:</p>
+                            <a href="{reset_link}" style="display: inline-block; padding: 10px 20px; background-color: #4299e1; color: white; text-decoration: none; border-radius: 5px;">
+                                Restablecer Contraseña
+                            </a>
+                            <p>Si no has solicitado restablecer tu contraseña, puedes ignorar este mensaje.</p>
+                        </div>
+                    </body>
+                </html>
+                '''
+            )
+            return Response(
+                {"message": "Se ha enviado un enlace de restablecimiento a tu correo electrónico."},
+                status=status.HTTP_200_OK
+            )
+        except User.DoesNotExist:
+            return Response(
+                {"error": "No existe una cuenta con ese correo electrónico."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+class ResetPasswordConfirmView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, token):
+        try:
+            user = User.objects.get(verification_token=token)
+            password = request.data.get('password')
+            confirm_password = request.data.get('confirmPassword')
+
+            if not password or not confirm_password:
+                return Response(
+                    {"error": "Ambas contraseñas son requeridas"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if password != confirm_password:
+                return Response(
+                    {"error": "Las contraseñas no coinciden"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if len(password) < 8:
+                return Response(
+                    {"error": "La contraseña debe tener al menos 8 caracteres"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if not any(char.isdigit() for char in password):
+                return Response(
+                    {"error": "La contraseña debe contener al menos un número"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if not any(char.isupper() for char in password):
+                return Response(
+                    {"error": "La contraseña debe contener al menos una letra mayúscula"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Actualizar contraseña
+            user.set_password(password)
+            user.verification_token = uuid.uuid4()  # Invalidar el token actual
+            user.save()
+
+            return Response(
+                {"message": "Contraseña actualizada exitosamente"},
+                status=status.HTTP_200_OK
+            )
+
+        except User.DoesNotExist:
+            return Response(
+                {"error": "Token inválido o expirado"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+
+class CambiarContrasenaView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            user = request.user
+            current_password = request.data.get('currentPassword')
+            new_password = request.data.get('newPassword')
+            confirm_password = request.data.get('confirmPassword')
+
+            # Verificar que se proporcionaron todos los campos
+            if not all([current_password, new_password, confirm_password]):
+                return Response(
+                    {"error": "Todos los campos son requeridos"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Verificar que la contraseña actual es correcta
+            if not user.check_password(current_password):
+                return Response(
+                    {"error": "La contraseña actual es incorrecta"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Verificar que las contraseñas nuevas coinciden
+            if new_password != confirm_password:
+                return Response(
+                    {"error": "Las contraseñas nuevas no coinciden"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Validar que la nueva contraseña cumple con los requisitos
+            try:
+                # Validaciones personalizadas
+                if len(new_password) < 8:
+                    raise ValidationError(
+                        "La contraseña debe tener al menos 8 caracteres."
+                    )
+                
+                if not any(char.isdigit() for char in new_password):
+                    raise ValidationError(
+                        "La contraseña debe contener al menos un número."
+                    )
+                
+                if not any(char.isupper() for char in new_password):
+                    raise ValidationError(
+                        "La contraseña debe contener al menos una letra mayúscula."
+                    )
+
+                # Validar la contraseña usando las validaciones de Django
+                validate_password(new_password, user)
+
+                # Verificar que la nueva contraseña no es igual a la actual
+                if current_password == new_password:
+                    return Response(
+                        {"error": "La nueva contraseña debe ser diferente a la actual"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                # Actualizar la contraseña
+                user.set_password(new_password)
+                user.save()
+
+                # Generar nuevos tokens para mantener la sesión activa
+                from rest_framework_simplejwt.tokens import RefreshToken
+                refresh = RefreshToken.for_user(user)
+
+                return Response({
+                    "message": "Contraseña actualizada exitosamente",
+                    "access": str(refresh.access_token),
+                    "refresh": str(refresh)
+                }, status=status.HTTP_200_OK)
+
+            except ValidationError as e:
+                return Response(
+                    {"error": str(e).strip('[]').strip("'")},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+        except Exception as e:
+            return Response(
+                {"error": "Ocurrió un error al cambiar la contraseña"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
