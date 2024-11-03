@@ -47,13 +47,43 @@ class RegisterUserView(APIView):
 
     def post(self, request, *args, **kwargs):
         serializer = AlumnoSerializer(data=request.data)
+        errors = {}
+
+        # Validar si el correo ya existe
+        email = request.data.get('email')
+        if User.objects.filter(email=email).exists():
+            errors['email'] = "Este correo electrónico ya está registrado."
+
+        # Validar si la boleta ya existe
+        boleta = request.data.get('boleta')
+        if Alumno.objects.filter(boleta=boleta).exists():
+            errors['boleta'] = "Esta boleta ya está registrada."
+
+        # Validar contraseña
+        password = request.data.get('password')
+        if password:
+            if len(password) < 8:
+                errors['password'] = "La contraseña debe tener al menos 8 caracteres."
+            elif not any(char.isdigit() for char in password):
+                errors['password'] = "La contraseña debe contener al menos un número."
+            elif not any(char.isupper() for char in password):
+                errors['password'] = "La contraseña debe contener al menos una letra mayúscula."
+
+        if errors:
+            return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
+
         if serializer.is_valid():
             try:
                 alumno = serializer.save()
-                return Response({"message": "Usuario registrado exitosamente. Por favor, verifica tu correo electrónico."}, status=status.HTTP_201_CREATED)
+                return Response({
+                    "message": "Usuario registrado exitosamente. Por favor, verifica tu correo electrónico."
+                }, status=status.HTTP_201_CREATED)
             except Exception as e:
-                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response({
+                    "errors": {"general": str(e)}
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny]
