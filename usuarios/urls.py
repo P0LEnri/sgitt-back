@@ -15,4 +15,6 @@ urlpatterns = [
     path('test-data/', views.test_users_data, name='test-users-data'),
     path('materias/', views.MateriaViewSet.as_view({'get': 'list'}), name='materia-list'),
     path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
+    path('cambiar-contrasena-profesor/', CambiarContrasenaProfesorView.as_view(), name='cambiar-contrasena-profesor'),
+
 ]
