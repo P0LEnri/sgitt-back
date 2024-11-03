@@ -126,7 +126,8 @@ class LoginUserView(APIView):
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
                     'user_type': 'alumno' if hasattr(user, 'alumno') else 'profesor',
-                    'user_email': str(email)
+                    'user_email': str(email),
+                    'primer_inicio': hasattr(user, 'profesor') and user.profesor.primer_inicio
                 })
             else:
                 return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -646,3 +647,56 @@ class ProfesorPerfilView(generics.RetrieveUpdateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
+    
+
+class CambiarContrasenaProfesorView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            profesor = Profesor.objects.get(user=request.user)
+            if not profesor.es_profesor:
+                return Response(
+                    {"error": "Solo los profesores pueden usar esta función"},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+            password = request.data.get('password')
+            confirm_password = request.data.get('confirmPassword')
+
+            if not password or not confirm_password:
+                return Response(
+                    {"error": "Ambas contraseñas son requeridas"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if password != confirm_password:
+                return Response(
+                    {"error": "Las contraseñas no coinciden"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Actualizar contraseña y primer_inicio
+            request.user.set_password(password)
+            request.user.save()
+            profesor.primer_inicio = False
+            profesor.save()
+
+            # Generar nuevos tokens
+            refresh = RefreshToken.for_user(request.user)
+            return Response({
+                'message': 'Contraseña actualizada exitosamente',
+                'refresh': str(refresh),
+                'access': str(refresh.access_token)
+            })
+
+        except Profesor.DoesNotExist:
+            return Response(
+                {"error": "Usuario no encontrado"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
