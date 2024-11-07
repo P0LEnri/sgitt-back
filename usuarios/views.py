@@ -347,6 +347,68 @@ def buscar_profesores(request):
             status=400
         )
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def buscar_alumnos(request):
+    """
+    Endpoint para buscar alumnos basado en similitud semántica.
+    """
+    query = request.GET.get('q', '').strip()
+    debug_mode = request.GET.get('debug', '').lower() == 'true'
+    
+    try:
+        # Si no hay query, devolver alumnos recientes
+        if not query:
+            alumnos = Alumno.objects.prefetch_related('areas_alumno').all()[:10]
+            serializer = AlumnoSerializer(alumnos, many=True)
+            return Response(serializer.data)
+
+        # Preprocesar y obtener embedding de la consulta
+        query_vector = get_embeddings([query])[0]
+        
+        # Obtener alumnos con sus relaciones precargadas
+        alumnos = Alumno.objects.prefetch_related('areas_alumno', 'user').all()
+        
+        # Calcular similitudes
+        alumno_scores = []
+        for alumno in alumnos:
+            areas = list(alumno.areas_alumno.all())
+            
+            if not areas:
+                continue
+                
+            # Calcular similitudes con áreas
+            area_embeddings = [a.get_embedding_array() for a in areas]
+            area_embeddings = np.stack(area_embeddings)
+            area_similarities = np.dot(area_embeddings, query_vector)
+            
+            score = float(np.max(area_similarities))
+            
+            if score > 0.0:  # Umbral mínimo de similitud
+                alumno_scores.append((alumno, score))
+        
+        # Ordenar por puntaje y tomar los mejores resultados
+        alumno_scores.sort(key=lambda x: x[1], reverse=True)
+        top_alumnos = alumno_scores[:6]
+        
+        # Preparar respuesta
+        response_data = []
+        for alumno, score in top_alumnos:
+            alumno_data = AlumnoSerializer(alumno).data
+            if debug_mode:
+                alumno_data['_debug'] = {
+                    'similarity_score': score
+                }
+            response_data.append(alumno_data)
+        
+        return Response(response_data)
+        
+    except Exception as e:
+        logger.error(f"Error en búsqueda de alumnos: {str(e)}", exc_info=True)
+        return Response(
+            {"error": "Error al procesar la búsqueda", "detail": str(e)},
+            status=400
+        )
 
 #################APIS###########################3
 class AlumnoAPI(generics.ListCreateAPIView):
