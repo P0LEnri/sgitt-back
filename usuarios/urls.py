@@ -19,6 +19,7 @@ urlpatterns = [
     path('reset-password-request/', ResetPasswordRequestView.as_view(), name='reset-password-request'),
     path('reset-password/<uuid:token>/', ResetPasswordConfirmView.as_view(), name='reset-password-confirm'),
     path('cambiar-contrasena/', CambiarContrasenaView.as_view(), name='cambiar-contrasena'),
+    path('alumnos/buscar/', buscar_alumnos, name='buscar_alumnos'),
 
 
 ]
