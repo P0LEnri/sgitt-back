@@ -30,6 +30,12 @@ from django.http import Http404
 import re
 from typing import List, Tuple, Dict
 from .embedding_utils import preprocess_text, model
+from rest_framework import generics, status, viewsets, permissions
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
+from .models import Alumno, Profesor
+from .serializers import AlumnoSerializer, ProfesorSerializer
 
 
 # Cargar el modelo de spaCy para español
@@ -670,3 +676,152 @@ class CambiarContrasenaProfesorView(APIView):
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+            
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_profesores(request):
+    profesores = Profesor.objects.select_related('user').prefetch_related('materias', 'areas_profesor').all()
+    serializer = ProfesorSerializer(profesores, many=True)
+    return Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_profesor(request, pk):
+    try:
+        profesor = Profesor.objects.get(pk=pk)
+        serializer = ProfesorSerializer(profesor, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    except Profesor.DoesNotExist:
+        return Response(status=404)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_profesor(request, pk):
+    try:
+        profesor = Profesor.objects.get(pk=pk)
+        profesor.delete()
+        return Response(status=204)
+    except Profesor.DoesNotExist:
+        return Response(status=404)    
+def delete_alumno(request, pk):
+    try:
+        alumno = Alumno.objects.get(pk=pk)
+        alumno.delete()
+        return Response(status=204)
+    except Alumno.DoesNotExist:
+        return Response(status=404)            
+    
+
+
+# Mantén tus vistas existentes y agrega estas nuevas:
+
+class AlumnoAPI(generics.ListCreateAPIView):
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Alumno.objects.select_related('user').all()
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(user__email__icontains=search) |
+                Q(user__first_name__icontains=search) |
+                Q(user__last_name__icontains=search) |
+                Q(boleta__icontains=search)
+            )
+        return queryset
+
+class AlumnoDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ProfesorAPI(generics.ListCreateAPIView):
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Profesor.objects.select_related('user').all()
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(user__email__icontains=search) |
+                Q(user__first_name__icontains=search) |
+                Q(user__last_name__icontains=search) |
+                Q(departamento__icontains=search)
+            )
+        return queryset
+
+class ProfesorListView(generics.ListCreateAPIView):
+    """Vista para listar y crear profesores (admin)"""
+    queryset = Profesor.objects.select_related('user').prefetch_related('materias', 'areas_profesor')
+    serializer_class = ProfesorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(user__email__icontains=search) |
+                Q(user__first_name__icontains=search) |
+                Q(user__last_name__icontains=search) |
+                Q(departamento__icontains=search)
+            )
+        return queryset
+
+class ProfesorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """Vista para ver, actualizar y eliminar profesores (admin)"""
+    queryset = Profesor.objects.select_related('user').prefetch_related('materias', 'areas_profesor')
+    serializer_class = ProfesorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_update(self, serializer):
+        try:
+            serializer.save()
+        except Exception as e:
+            print(f"Error updating profesor: {str(e)}")
+            raise
+
+    def perform_destroy(self, instance):
+        try:
+            instance.user.delete()  # Esto también eliminará el profesor debido a la relación on_delete=CASCADE
+        except Exception as e:
+            print(f"Error deleting profesor: {str(e)}")
+            raise
+        
+class AlumnoListView(generics.ListCreateAPIView):
+    queryset = Alumno.objects.select_related('user').all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Alumno.objects.select_related('user').all()
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(user__email__icontains=search) |
+                Q(user__first_name__icontains=search) |
+                Q(user__last_name__icontains=search) |
+                Q(boleta__icontains=search)
+            )
+        return queryset        
+        
