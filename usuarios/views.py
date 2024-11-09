@@ -683,6 +683,11 @@ def get_profesores(request):
     profesores = Profesor.objects.select_related('user').prefetch_related('materias', 'areas_profesor').all()
     serializer = ProfesorSerializer(profesores, many=True)
     return Response(serializer.data)
+def get_alumnos(request):
+    alumnos = Alumno.objects.select_related('user').all()
+    serializer = AlumnoSerializer(alumnos, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -696,6 +701,16 @@ def update_profesor(request, pk):
         return Response(serializer.errors, status=400)
     except Profesor.DoesNotExist:
         return Response(status=404)
+def update_alumno(request, pk):
+    try:
+        alumno = Alumno.objects.get(pk=pk)
+        serializer = AlumnoSerializer(alumno, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    except Alumno.DoesNotExist:
+        return Response(status=404)    
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
@@ -715,9 +730,6 @@ def delete_alumno(request, pk):
         return Response(status=404)            
     
 
-
-# Mantén tus vistas existentes y agrega estas nuevas:
-
 class AlumnoAPI(generics.ListCreateAPIView):
     queryset = Alumno.objects.all()
     serializer_class = AlumnoSerializer
@@ -734,6 +746,11 @@ class AlumnoAPI(generics.ListCreateAPIView):
                 Q(boleta__icontains=search)
             )
         return queryset
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['include_user_id'] = True
+        return context
 
 class AlumnoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Alumno.objects.all()
@@ -743,15 +760,49 @@ class AlumnoDetailView(generics.RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+        
+        # Actualizar datos del usuario base
+        user_data = {
+            'email': request.data.get('email'),
+            'first_name': request.data.get('nombre'),
+            'last_name': request.data.get('apellido_paterno')
+        }
+        
+        user = instance.user
+        for attr, value in user_data.items():
+            if value is not None:
+                setattr(user, attr, value)
+        user.save()
+
+        # Actualizar datos del alumno
+        alumno_data = {
+            'apellido_materno': request.data.get('apellido_materno'),
+            'boleta': request.data.get('boleta'),
+            'carrera': request.data.get('carrera'),
+            'plan_estudios': request.data.get('plan_estudios')
+        }
+
+        for attr, value in alumno_data.items():
+            if value is not None:
+                setattr(instance, attr, value)
+        instance.save()
+
+        # Serializar la respuesta
+        serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def perform_destroy(self, instance):
+        # Primero eliminamos el usuario asociado
+        user = instance.user
+        user.delete()
 
 class ProfesorAPI(generics.ListCreateAPIView):
     queryset = Profesor.objects.all()
