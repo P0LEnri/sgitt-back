@@ -1,5 +1,11 @@
-from django.urls import path
+from django.urls import include, path
 from . import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'alumnos', views.AlumnoViewSet)
+router.register(r'profesores', views.ProfesorViewSet)
+
 
 urlpatterns = [
     # Autenticación y Registro
@@ -31,4 +37,6 @@ urlpatterns = [
     # Materias
     path('materias/', views.MateriaViewSet.as_view({'get': 'list'}), name='materia-list'),
     path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
+    path('check-admin/', views.check_admin, name='check-admin'),
+    path('', include(router.urls)),
 ]
