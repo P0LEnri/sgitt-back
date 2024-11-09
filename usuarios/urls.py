@@ -39,9 +39,9 @@ urlpatterns = [
     path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
     path('check-admin/', views.check_admin, name='check-admin'),
     path('', include(router.urls)),
-    path('reset-password-request/', ResetPasswordRequestView.as_view(), name='reset-password-request'),
-    path('reset-password/<uuid:token>/', ResetPasswordConfirmView.as_view(), name='reset-password-confirm'),
-    path('cambiar-contrasena/', CambiarContrasenaView.as_view(), name='cambiar-contrasena'),
-    path('alumnos/buscar/', buscar_alumnos, name='buscar_alumnos'),
+    path('reset-password-request/', views.ResetPasswordRequestView.as_view(), name='reset-password-request'),
+    path('reset-password/<uuid:token>/', views.ResetPasswordConfirmView.as_view(), name='reset-password-confirm'),
+    path('cambiar-contrasena/', views.CambiarContrasenaView.as_view(), name='cambiar-contrasena'),
+    path('alumnos/buscar/', views.buscar_alumnos, name='buscar_alumnos'),
 
 ]
