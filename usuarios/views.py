@@ -34,6 +34,12 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from .embedding_utils import preprocess_text, model
+from rest_framework import generics, status, viewsets, permissions
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
+from .models import Alumno, Profesor
+from .serializers import AlumnoSerializer, ProfesorSerializer
 
 
 # Cargar el modelo de spaCy para español
@@ -124,21 +130,180 @@ class LoginUserView(APIView):
                         return Response({"error": "Tu cuenta está inactiva. Contacta al administrador."}, status=status.HTTP_403_FORBIDDEN)
                 
                 refresh = RefreshToken.for_user(user)
-                print('alumno' if hasattr(user, 'alumno') else 'profesor')
-                print(str(email))
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
                     'user_type': 'alumno' if hasattr(user, 'alumno') else 'profesor',
                     'user_email': str(email),
-                    'primer_inicio': hasattr(user, 'profesor') and user.profesor.primer_inicio
+                    'primer_inicio': hasattr(user, 'profesor') and user.profesor.primer_inicio,
+                    'is_admin': user.is_admin  # Añadir este campo
                 })
             else:
                 return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
         except ObjectDoesNotExist:
             return Response({"error": "Credenciales inválidas"}, status=status.HTTP_401_UNAUTHORIZED)
-        
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_admin(request):
+    try:
+        user = request.user
+        print(f"Checking admin status for user: {user.email}")  # Debug log
+        print(f"Is admin: {user.is_admin}")  # Debug log
+        return Response({
+            'is_admin': user.is_admin,
+            'email': user.email
+        })
+    except Exception as e:
+        print(f"Error checking admin status: {e}")  # Debug log
+        return Response(
+            {'error': 'Error checking admin status'}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+""" 
+            # Corrección ortográfica
+            query_words = query.split()
+            corrected_query = ' '.join([spell.correction(word) for word in query_words])
+
+            # Lematización y eliminación de stopwords
+            doc = nlp(corrected_query)
+            lemmatized_query = ' '.join([token.lemma_ for token in doc if not token.is_stop])
+            """
+
+
+"""# Cargar el modelo de word embeddings (asegúrate de que la ruta sea correcta)
+model_path = 'C:/Users/enri-/Downloads/cc.es.300.vec.gz'  # o .bin si usas el formato binario
+word_vectors = KeyedVectors.load_word2vec_format(model_path, binary=False, limit=100000)  # Limita a 100,000 palabras para ahorrar memoria
+
+def expand_query(query, word_vectors, topn=3):
+    expanded_terms = []
+    for word in query.split():
+        try:
+            similar_words = [w for w, _ in word_vectors.most_similar(word, topn=topn)]
+            expanded_terms.extend(similar_words)
+        except KeyError:
+            # Si la palabra no está en el vocabulario, la ignoramos
+            pass
+    return ' '.join(set(query.split() + expanded_terms))
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def buscar_profesores(request):
+    query = request.GET.get('q', '')
+    profesores = list(Profesor.objects.all())
+
+    if query and profesores:
+        try:
+            # Expandir la consulta con sinónimos
+            expanded_query = expand_query(query, word_vectors)
+            print(f"Consulta expandida: {expanded_query}")  # Para depuración
+            corpus = [prof.materias for prof in profesores]
+            #Expandir corpus con sinónimos
+            corpus = [expand_query(materia, word_vectors) for materia in corpus]
+            print(f"Corpus expandido: {corpus}")  # Para depuración
+
+            vectorizer = TfidfVectorizer()
+           
+            tfidf_matrix = vectorizer.fit_transform(corpus)
+            query_tfidf = vectorizer.transform([expanded_query])
+            
+            cosine_similarities = cosine_similarity(query_tfidf, tfidf_matrix).flatten()
+            similar_indices = cosine_similarities.argsort()[::-1]
+            
+            # Seleccionar los 5 profesores más similares
+            top_5_indices = similar_indices[:5]
+            profesores = [profesores[int(i)] for i in top_5_indices ]
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
+    
+    serializer = ProfesorSerializer(profesores, many=True)
+    return Response(serializer.data)"""
+
+"""
+
+# Cargar el modelo BETO
+tokenizer = AutoTokenizer.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
+model = AutoModel.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
+
+def get_bert_embedding(text):
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512, padding=True)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    return outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
+
+def calculate_profesor_similarity(query_vector, profesor):
+    
+    #Calcula la similitud entre la consulta y cada materia del profesor,
+    #devolviendo la máxima similitud encontrada.
+    
+    materias = profesor.materias.all()
+    if not materias:
+        return 0.0
+    
+    # Calcular similitud para cada materia
+    materia_similarities = []
+    for materia in materias:
+        materia_vector = get_bert_embedding(materia.nombre)
+        similarity = cosine_similarity([query_vector], [materia_vector])[0][0]
+        materia_similarities.append(similarity)
+    
+    # Podemos usar diferentes estrategias para combinar las similitudes:
+    # 1. Máximo (mejor coincidencia individual)
+    max_similarity = max(materia_similarities)
+    # 2. Promedio (coincidencia general)
+    avg_similarity = sum(materia_similarities) / len(materia_similarities)
+    # 3. Promedio ponderado de las mejores N coincidencias
+    top_n = sorted(materia_similarities, reverse=True)[:2]  # Tomamos las 2 mejores
+    weighted_similarity = sum(top_n) / len(top_n)
+    
+    # Combinamos las métricas (puedes ajustar los pesos según necesites)
+    final_similarity = (max_similarity * 0.5 + 
+                       avg_similarity * 0.2 + 
+                       weighted_similarity * 0.3)
+    
+    return final_similarity
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def buscar_profesores(request):
+    query = request.GET.get('q', '')
+    # Obtener profesores con sus materias precargadas
+    profesores = list(Profesor.objects.prefetch_related('materias').all())
+
+    if query and profesores:
+        try:
+            print(f"Consulta: {query}")
+            query_vector = get_bert_embedding(query)
+            
+            # Calcular similitudes
+            similarities = []
+            for prof in profesores:
+                similarity = calculate_profesor_similarity(query_vector, prof)
+                similarities.append((prof, similarity))
+                print(f"Profesor: {prof.user.email}, Similitud: {similarity}")  # Debug
+
+            # Filtrar y ordenar resultados
+            filtered_similarities = [
+                (prof, sim) for prof, sim in similarities 
+                if sim > 0.3  # Umbral mínimo de similitud
+            ]
+            
+            filtered_similarities.sort(key=lambda x: x[1], reverse=True)
+            top_5_profesores = [prof for prof, sim in filtered_similarities[:6]]
+
+            serializer = ProfesorSerializer(top_5_profesores, many=True)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            print(f"Error en búsqueda: {str(e)}")
+            return Response({"error": str(e)}, status=400)
+    
+    # Si no hay query, devolver una selección limitada de profesores
+    serializer = ProfesorSerializer(profesores[:9], many=True)
+    return Response(serializer.data)
+
+"""
 logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
@@ -704,3 +869,261 @@ class CambiarContrasenaView(APIView):
                 {"error": "Ocurrió un error al cambiar la contraseña"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+            
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_profesores(request):
+    profesores = Profesor.objects.select_related('user').prefetch_related('materias', 'areas_profesor').all()
+    serializer = ProfesorSerializer(profesores, many=True)
+    return Response(serializer.data)
+def get_alumnos(request):
+    alumnos = Alumno.objects.select_related('user').all()
+    serializer = AlumnoSerializer(alumnos, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_profesor(request, pk):
+    try:
+        profesor = Profesor.objects.get(pk=pk)
+        serializer = ProfesorSerializer(profesor, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    except Profesor.DoesNotExist:
+        return Response(status=404)
+def update_alumno(request, pk):
+    try:
+        alumno = Alumno.objects.get(pk=pk)
+        serializer = AlumnoSerializer(alumno, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    except Alumno.DoesNotExist:
+        return Response(status=404)    
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_profesor(request, pk):
+    try:
+        profesor = Profesor.objects.get(pk=pk)
+        profesor.delete()
+        return Response(status=204)
+    except Profesor.DoesNotExist:
+        return Response(status=404)    
+def delete_alumno(request, pk):
+    try:
+        alumno = Alumno.objects.get(pk=pk)
+        alumno.delete()
+        return Response(status=204)
+    except Alumno.DoesNotExist:
+        return Response(status=404)            
+    
+
+class AlumnoAPI(generics.ListCreateAPIView):
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Alumno.objects.select_related('user').all()
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(user__email__icontains=search) |
+                Q(user__first_name__icontains=search) |
+                Q(user__last_name__icontains=search) |
+                Q(boleta__icontains=search)
+            )
+        return queryset
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['include_user_id'] = True
+        return context
+
+class AlumnoDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        
+        # Actualizar datos del usuario base
+        user_data = {
+            'email': request.data.get('email'),
+            'first_name': request.data.get('nombre'),
+            'last_name': request.data.get('apellido_paterno')
+        }
+        
+        user = instance.user
+        for attr, value in user_data.items():
+            if value is not None:
+                setattr(user, attr, value)
+        user.save()
+
+        # Actualizar datos del alumno
+        alumno_data = {
+            'apellido_materno': request.data.get('apellido_materno'),
+            'boleta': request.data.get('boleta'),
+            'carrera': request.data.get('carrera'),
+            'plan_estudios': request.data.get('plan_estudios')
+        }
+
+        for attr, value in alumno_data.items():
+            if value is not None:
+                setattr(instance, attr, value)
+        instance.save()
+
+        # Serializar la respuesta
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def perform_destroy(self, instance):
+        # Primero eliminamos el usuario asociado
+        user = instance.user
+        user.delete()
+
+class ProfesorAPI(generics.ListCreateAPIView):
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Profesor.objects.select_related('user').all()
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(user__email__icontains=search) |
+                Q(user__first_name__icontains=search) |
+                Q(user__last_name__icontains=search) |
+                Q(departamento__icontains=search)
+            )
+        return queryset
+
+class ProfesorListView(generics.ListCreateAPIView):
+    """Vista para listar y crear profesores (admin)"""
+    queryset = Profesor.objects.select_related('user').prefetch_related('materias', 'areas_profesor')
+    serializer_class = ProfesorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(user__email__icontains=search) |
+                Q(user__first_name__icontains=search) |
+                Q(user__last_name__icontains=search) |
+                Q(departamento__icontains=search)
+            )
+        return queryset
+
+class ProfesorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """Vista para ver, actualizar y eliminar profesores (admin)"""
+    queryset = Profesor.objects.select_related('user').prefetch_related('materias', 'areas_profesor')
+    serializer_class = ProfesorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_update(self, serializer):
+        try:
+            serializer.save()
+        except Exception as e:
+            print(f"Error updating profesor: {str(e)}")
+            raise
+
+    def perform_destroy(self, instance):
+        try:
+            instance.user.delete()  # Esto también eliminará el profesor debido a la relación on_delete=CASCADE
+        except Exception as e:
+            print(f"Error deleting profesor: {str(e)}")
+            raise
+        
+class AlumnoListView(generics.ListCreateAPIView):
+    queryset = Alumno.objects.select_related('user').all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Alumno.objects.select_related('user').all()
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(user__email__icontains=search) |
+                Q(user__first_name__icontains=search) |
+                Q(user__last_name__icontains=search) |
+                Q(boleta__icontains=search)
+            )
+        return queryset        
+        
+    
+# usuarios/views.py
+from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from django_filters import rest_framework as django_filters
+
+class AlumnoFilter(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='search_fields')
+    carrera = django_filters.ChoiceFilter(choices=Alumno.Carrera.choices)
+    plan_estudios = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = Alumno
+        fields = ['carrera', 'plan_estudios']
+
+    def search_fields(self, queryset, name, value):
+        return queryset.filter(
+            Q(user__email__icontains=value) |
+            Q(user__first_name__icontains=value) |
+            Q(user__last_name__icontains=value) |
+            Q(boleta__icontains=value)
+        )
+
+class ProfesorFilter(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='search_fields')
+    materias = django_filters.ModelMultipleChoiceFilter(
+        queryset=Materia.objects.all(),
+        field_name='materias',
+        conjoined=False
+    )
+
+    class Meta:
+        model = Profesor
+        fields = ['materias']
+
+    def search_fields(self, queryset, name, value):
+        return queryset.filter(
+            Q(user__email__icontains=value) |
+            Q(user__first_name__icontains=value) |
+            Q(user__last_name__icontains=value)
+        )
+
+class AlumnoViewSet(viewsets.ModelViewSet):
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = AlumnoFilter
+    search_fields = ['user__email', 'user__first_name', 'user__last_name', 'boleta']
+
+class ProfesorViewSet(viewsets.ModelViewSet):
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = ProfesorFilter
+    search_fields = ['user__email', 'user__first_name', 'user__last_name']

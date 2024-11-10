@@ -27,10 +27,11 @@ class AlumnoSerializer(serializers.ModelSerializer):
     areas_alumno = AreaConocimientoSerializer(many=True, read_only=True)
     areas_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
     areas_custom = serializers.ListField(child=serializers.CharField(), write_only=True, required=False, default=[])
+    user_id = serializers.IntegerField(source='user.id', read_only=True)
 
     class Meta:
         model = Alumno
-        fields = ('email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids', 'areas_custom')
+        fields = ('id', 'email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids', 'areas_custom', 'user_id')
 
     def validate(self, data):
         # Solo validar contraseñas si están presentes en los datos
@@ -244,3 +245,5 @@ class ProfesorSerializer(serializers.ModelSerializer):
         representation['nombre'] = instance.user.first_name
         representation['apellido'] = instance.user.last_name
         return representation
+    
+    
