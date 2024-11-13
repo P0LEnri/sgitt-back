@@ -38,6 +38,7 @@ class PropuestaSerializer(serializers.ModelSerializer):
 
     def get_autor(self, obj):
         return {
+            'id': obj.autor.id,
             'nombre': f"{obj.autor.first_name} {obj.autor.last_name}",
             'email': obj.autor.email,
             'tipo': 'profesor' if hasattr(obj.autor, 'profesor') else 'alumno'
