@@ -161,11 +161,12 @@ class ProfesorSerializer(serializers.ModelSerializer):
         required=False,
         default=[]
     )
+    user_id = serializers.IntegerField(source='user.id', read_only=True)
 
 
     class Meta:
         model = Profesor
-        fields = ('id', 'email', 'nombre', 'apellido_paterno', 'apellido_materno', 'password', 'confirmPassword', 'materias', 'materias', 'materias_ids', 'areas_profesor', 'areas_ids','es_profesor', 'departamento', 
+        fields = ('id', 'user_id','email', 'nombre', 'apellido_paterno', 'apellido_materno', 'password', 'confirmPassword', 'materias', 'materias', 'materias_ids', 'areas_profesor', 'areas_ids','es_profesor', 'departamento', 
                  'primer_inicio')
 
 

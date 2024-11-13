@@ -42,6 +42,6 @@ urlpatterns = [
     path('reset-password-request/', views.ResetPasswordRequestView.as_view(), name='reset-password-request'),
     path('reset-password/<uuid:token>/', views.ResetPasswordConfirmView.as_view(), name='reset-password-confirm'),
     path('cambiar-contrasena/', views.CambiarContrasenaView.as_view(), name='cambiar-contrasena'),
-    path('alumnos/buscar/', views.buscar_alumnos, name='buscar_alumnos'),
+    path('alumno/buscar/', views.buscar_alumnos, name='buscar_alumnos'),
 
 ]

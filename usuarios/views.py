@@ -161,149 +161,6 @@ def check_admin(request):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
-""" 
-            # Corrección ortográfica
-            query_words = query.split()
-            corrected_query = ' '.join([spell.correction(word) for word in query_words])
-
-            # Lematización y eliminación de stopwords
-            doc = nlp(corrected_query)
-            lemmatized_query = ' '.join([token.lemma_ for token in doc if not token.is_stop])
-            """
-
-
-"""# Cargar el modelo de word embeddings (asegúrate de que la ruta sea correcta)
-model_path = 'C:/Users/enri-/Downloads/cc.es.300.vec.gz'  # o .bin si usas el formato binario
-word_vectors = KeyedVectors.load_word2vec_format(model_path, binary=False, limit=100000)  # Limita a 100,000 palabras para ahorrar memoria
-
-def expand_query(query, word_vectors, topn=3):
-    expanded_terms = []
-    for word in query.split():
-        try:
-            similar_words = [w for w, _ in word_vectors.most_similar(word, topn=topn)]
-            expanded_terms.extend(similar_words)
-        except KeyError:
-            # Si la palabra no está en el vocabulario, la ignoramos
-            pass
-    return ' '.join(set(query.split() + expanded_terms))
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def buscar_profesores(request):
-    query = request.GET.get('q', '')
-    profesores = list(Profesor.objects.all())
-
-    if query and profesores:
-        try:
-            # Expandir la consulta con sinónimos
-            expanded_query = expand_query(query, word_vectors)
-            print(f"Consulta expandida: {expanded_query}")  # Para depuración
-            corpus = [prof.materias for prof in profesores]
-            #Expandir corpus con sinónimos
-            corpus = [expand_query(materia, word_vectors) for materia in corpus]
-            print(f"Corpus expandido: {corpus}")  # Para depuración
-
-            vectorizer = TfidfVectorizer()
-           
-            tfidf_matrix = vectorizer.fit_transform(corpus)
-            query_tfidf = vectorizer.transform([expanded_query])
-            
-            cosine_similarities = cosine_similarity(query_tfidf, tfidf_matrix).flatten()
-            similar_indices = cosine_similarities.argsort()[::-1]
-            
-            # Seleccionar los 5 profesores más similares
-            top_5_indices = similar_indices[:5]
-            profesores = [profesores[int(i)] for i in top_5_indices ]
-        except Exception as e:
-            return Response({"error": str(e)}, status=400)
-    
-    serializer = ProfesorSerializer(profesores, many=True)
-    return Response(serializer.data)"""
-
-"""
-
-# Cargar el modelo BETO
-tokenizer = AutoTokenizer.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
-model = AutoModel.from_pretrained("dccuchile/bert-base-spanish-wwm-uncased")
-
-def get_bert_embedding(text):
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512, padding=True)
-    with torch.no_grad():
-        outputs = model(**inputs)
-    return outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
-
-def calculate_profesor_similarity(query_vector, profesor):
-    
-    #Calcula la similitud entre la consulta y cada materia del profesor,
-    #devolviendo la máxima similitud encontrada.
-    
-    materias = profesor.materias.all()
-    if not materias:
-        return 0.0
-    
-    # Calcular similitud para cada materia
-    materia_similarities = []
-    for materia in materias:
-        materia_vector = get_bert_embedding(materia.nombre)
-        similarity = cosine_similarity([query_vector], [materia_vector])[0][0]
-        materia_similarities.append(similarity)
-    
-    # Podemos usar diferentes estrategias para combinar las similitudes:
-    # 1. Máximo (mejor coincidencia individual)
-    max_similarity = max(materia_similarities)
-    # 2. Promedio (coincidencia general)
-    avg_similarity = sum(materia_similarities) / len(materia_similarities)
-    # 3. Promedio ponderado de las mejores N coincidencias
-    top_n = sorted(materia_similarities, reverse=True)[:2]  # Tomamos las 2 mejores
-    weighted_similarity = sum(top_n) / len(top_n)
-    
-    # Combinamos las métricas (puedes ajustar los pesos según necesites)
-    final_similarity = (max_similarity * 0.5 + 
-                       avg_similarity * 0.2 + 
-                       weighted_similarity * 0.3)
-    
-    return final_similarity
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def buscar_profesores(request):
-    query = request.GET.get('q', '')
-    # Obtener profesores con sus materias precargadas
-    profesores = list(Profesor.objects.prefetch_related('materias').all())
-
-    if query and profesores:
-        try:
-            print(f"Consulta: {query}")
-            query_vector = get_bert_embedding(query)
-            
-            # Calcular similitudes
-            similarities = []
-            for prof in profesores:
-                similarity = calculate_profesor_similarity(query_vector, prof)
-                similarities.append((prof, similarity))
-                print(f"Profesor: {prof.user.email}, Similitud: {similarity}")  # Debug
-
-            # Filtrar y ordenar resultados
-            filtered_similarities = [
-                (prof, sim) for prof, sim in similarities 
-                if sim > 0.3  # Umbral mínimo de similitud
-            ]
-            
-            filtered_similarities.sort(key=lambda x: x[1], reverse=True)
-            top_5_profesores = [prof for prof, sim in filtered_similarities[:6]]
-
-            serializer = ProfesorSerializer(top_5_profesores, many=True)
-            return Response(serializer.data)
-            
-        except Exception as e:
-            print(f"Error en búsqueda: {str(e)}")
-            return Response({"error": str(e)}, status=400)
-    
-    # Si no hay query, devolver una selección limitada de profesores
-    serializer = ProfesorSerializer(profesores[:9], many=True)
-    return Response(serializer.data)
-
-"""
 logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
@@ -435,10 +292,10 @@ def calculate_similarity_score(query_vector: np.ndarray, profesor: Profesor) -> 
     final_score = 0.0
     if areas:
         weights = {
-            'max_materia': 0.4,
-            'avg_materia': 0.4,
-            'max_area': 0.1,
-            'avg_area': 0.1
+            'max_materia': 0.3,
+            'avg_materia': 0.2,
+            'max_area': 0.3,
+            'avg_area': 0.2
         }
     else:
         weights = {
@@ -478,7 +335,7 @@ def buscar_profesores(request):
         profesor_scores = []
         for profesor in profesores:
             final_score, detailed_scores = calculate_similarity_score(query_vector, profesor)
-            print(f"Profesor: {profesor.user.email}, Score: {final_score:.3f} (Details: {detailed_scores})")
+            print(f"Profesor: {profesor.user.email , profesor.user.id}, Score: {final_score:.3f} (Details: {detailed_scores})")
 
             if debug_mode:
                 logger.info(f"Profesor: {profesor.user.email}")
@@ -496,6 +353,7 @@ def buscar_profesores(request):
         response_data = []
         for profesor, score, detailed_scores in top_profesores:
             profesor_data = ProfesorSerializer(profesor).data
+            print(f"Profesor: {profesor_data}, Score: {score:.3f}")
             if debug_mode:
                 profesor_data['_debug'] = {
                     'similarity_score': score,
@@ -518,8 +376,16 @@ def buscar_alumnos(request):
     """
     Endpoint para buscar alumnos basado en similitud semántica.
     """
+    # Verificar que el usuario autenticado es un profesor
+    if not hasattr(request.user, 'profesor'):
+        return Response(
+            {"error": "Solo los profesores pueden buscar alumnos"},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
     query = request.GET.get('q', '').strip()
     debug_mode = request.GET.get('debug', '').lower() == 'true'
+    print(f"Query: {query}")
     
     try:
         # Si no hay query, devolver alumnos recientes
