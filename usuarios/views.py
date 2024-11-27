@@ -993,3 +993,36 @@ class ProfesorViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_class = ProfesorFilter
     search_fields = ['user__email', 'user__first_name', 'user__last_name']
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def report_problem(request):
+    try:
+        report_type = request.data.get('type')
+        description = request.data.get('description')
+        user_email = request.data.get('email')
+
+        # Email content
+        subject = f'Nuevo reporte de problema: {report_type}'
+        message = f"""
+        Tipo: {report_type}
+        Descripcion: {description}
+        Reportado por: {user_email}
+        """
+        
+        # Send email
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[settings.EMAIL_HOST_USER],
+            fail_silently=False,
+        )
+
+        return Response({'message': 'Report sent successfully'})
+    
+    except Exception as e:
+        return Response(
+            {'message': 'Error sending report', 'error': str(e)}, 
+            status=500
+        )

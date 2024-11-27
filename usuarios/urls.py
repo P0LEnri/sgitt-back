@@ -44,4 +44,8 @@ urlpatterns = [
     path('cambiar-contrasena/', views.CambiarContrasenaView.as_view(), name='cambiar-contrasena'),
     path('alumno/buscar/', views.buscar_alumnos, name='buscar_alumnos'),
 
+    # Reportes
+    path('reports/problem/', views.report_problem, name='report_problem'),
+ 
+
 ]
