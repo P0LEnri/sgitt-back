@@ -108,7 +108,8 @@ class Profesor(models.Model):
     areas_profesor = models.ManyToManyField(AreaConocimiento, related_name='profesores')
     es_profesor = models.BooleanField(default=True)
     departamento = models.CharField(max_length=100, blank=True) 
-    primer_inicio = models.BooleanField(default=True)  
+    primer_inicio = models.BooleanField(default=True)
+    disponibilidad = models.IntegerField(default=5)
 
     class Meta:
         ordering = ['user__email']

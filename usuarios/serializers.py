@@ -167,7 +167,7 @@ class ProfesorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profesor
         fields = ('id', 'user_id','email', 'nombre', 'apellido_paterno', 'apellido_materno', 'password', 'confirmPassword', 'materias', 'materias', 'materias_ids', 'areas_profesor', 'areas_ids','es_profesor', 'departamento', 
-                 'primer_inicio')
+                 'primer_inicio', 'disponibilidad')
 
 
     def validate(self, data):
