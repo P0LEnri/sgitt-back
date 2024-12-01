@@ -8,16 +8,22 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/asgi/
 """
 
 import os
-from django.core.asgi import get_asgi_application
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sgitt.settings')
+
+# Import Django settings after setting DJANGO_SETTINGS_MODULE
+import django
+django.setup()
+
+# Then import your application components
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
+from django.core.asgi import get_asgi_application
 from chat.routing import websocket_urlpatterns
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sgitt.settings')
+from chat.middleware import TokenAuthMiddleware
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(
+    "websocket": TokenAuthMiddleware(
         URLRouter(
             websocket_urlpatterns
         )

@@ -9,4 +9,6 @@ router.register(r'messages', views.MessageViewSet, basename='message')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('messages/<int:pk>/mark_as_read/', views.MessageViewSet.as_view({'post': 'mark_as_read'}), name='message-mark-as-read'),
+
 ]
