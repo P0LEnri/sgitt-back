@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
 from .models import Conversation, Message
 from .serializers import ConversationSerializer, MessageSerializer
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationSerializer
@@ -47,7 +49,9 @@ class MessageViewSet(viewsets.ModelViewSet):
         conversation_id = self.request.query_params.get('conversation_id')
         if conversation_id:
             return Message.objects.filter(conversation_id=conversation_id)
-        return Message.objects.none()
+        return Message.objects.filter(
+        conversation__participants=self.request.user
+        )
     
     def perform_create(self, serializer):
         conversation_id = self.request.data.get('conversation_id')
@@ -55,18 +59,40 @@ class MessageViewSet(viewsets.ModelViewSet):
         message = serializer.save(sender=self.request.user, conversation=conversation)
         message.mark_as_read(self.request.user)  # Marcar como leído para el remitente
     
+    
     @action(detail=True, methods=['POST'])
     def mark_as_read(self, request, pk=None):
-        message = self.get_object()
-        message.mark_as_read(request.user)
-        # Notificar a través de WebSocket la actualización
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            f'notifications_{request.user.id}',
-            {
-                'type': 'unread_count_update',
-                'conversation_id': message.conversation.id,
-                'unread_count': message.conversation.messages.exclude(read_by=request.user).count()
-            }
-        )
-        return Response({'status': 'message marked as read'})
+        try:
+            message = self.get_object()
+            # Verificar si el usuario es participante de la conversación
+            if not message.conversation.participants.filter(id=request.user.id).exists():
+                return Response(
+                    {'error': 'No eres participante de esta conversación'},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+            
+            # Marcar mensaje como leído
+            message.mark_as_read(request.user)
+            
+            # Notificar a través de WebSocket
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                f'notifications_{request.user.id}',
+                {
+                    'type': 'unread_count_update',
+                    'conversation_id': message.conversation.id,
+                    'unread_count': message.conversation.messages.exclude(read_by=request.user).count()
+                }
+            )
+            
+            return Response({'status': 'message marked as read'})
+        except Message.DoesNotExist:
+            return Response(
+                {'error': 'Mensaje no encontrado'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )

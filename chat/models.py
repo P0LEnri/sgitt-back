@@ -14,6 +14,14 @@ class Conversation(models.Model):
     def mark_all_read_for_user(self, user):
         self.messages.exclude(read_by=user).update(read_by=user)
     
+    def get_participants(self):
+        """Método auxiliar para obtener participantes"""
+        return self.participants.all()
+    
+    def is_participant(self, user):
+        """Método auxiliar para verificar si un usuario es participante"""
+        return self.participants.filter(id=user.id).exists()
+    
     def __str__(self):
         if self.is_group:
             return self.name
@@ -34,9 +42,11 @@ class Message(models.Model):
         ]
     
     def mark_as_read(self, user):
+        """
+        Marca el mensaje como leído por un usuario específico
+        """
         if user not in self.read_by.all():
             self.read_by.add(user)
-            self.save()
     
     def is_read_by(self, user):
         return self.read_by.filter(id=user.id).exists()

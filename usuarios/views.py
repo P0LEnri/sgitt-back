@@ -292,15 +292,15 @@ def calculate_similarity_score(query_vector: np.ndarray, profesor: Profesor) -> 
     final_score = 0.0
     if areas:
         weights = {
-            'max_materia': 0.3,
-            'avg_materia': 0.2,
-            'max_area': 0.3,
-            'avg_area': 0.2
+            'max_materia': 0.2,
+            'avg_materia': 0.3,
+            'max_area': 0.2,
+            'avg_area': 0.3
         }
     else:
         weights = {
-            'max_materia': 0.5,
-            'avg_materia': 0.5
+            'max_materia': 0.4,
+            'avg_materia': 0.6
         }
     
     for key, weight in weights.items():
@@ -321,7 +321,7 @@ def buscar_profesores(request):
     try:
         # Si no hay query, devolver profesores recientes o destacados
         if not query:
-            profesores = Profesor.objects.prefetch_related('materias', 'areas_profesor').all()[:10]
+            profesores = Profesor.objects.prefetch_related('materias', 'areas_profesor').all().order_by('-disponibilidad')[:10]
             serializer = ProfesorSerializer(profesores, many=True)
             return Response(serializer.data)
 
@@ -335,18 +335,20 @@ def buscar_profesores(request):
         profesor_scores = []
         for profesor in profesores:
             final_score, detailed_scores = calculate_similarity_score(query_vector, profesor)
-            print(f"Profesor: {profesor.user.email , profesor.user.id}, Score: {final_score:.3f} (Details: {detailed_scores})")
-
+            #print(f"Profesor: {profesor.user.email , profesor.user.id}, Score: {final_score:.3f} (Details: {detailed_scores})")
+            
             if debug_mode:
                 logger.info(f"Profesor: {profesor.user.email}")
                 logger.info(f"Scores: {detailed_scores}")
                 logger.info(f"Final Score: {final_score}")
-            
+           
             if final_score > 0.0:  # Umbral mínimo de similitud
                 profesor_scores.append((profesor, final_score, detailed_scores))
+
+            
         
         # Ordenar por puntaje y tomar los mejores resultados
-        profesor_scores.sort(key=lambda x: x[1], reverse=True)
+        profesor_scores.sort(key=lambda x: (x[1], x[0].disponibilidad), reverse=True)
         top_profesores = profesor_scores[:6]
         
         # Preparar respuesta
