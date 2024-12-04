@@ -252,6 +252,17 @@ def test_users_data(request):
     return Response(data)
  
 
+def get_confidence_level(score: float) -> str:
+    if score >= 0.7:
+        return "Muy alta similitud"
+    elif score >= 0.55:
+        return "Alta similitud"
+    elif score >= 0.35:
+        return "Similitud moderada" 
+    elif score >= 0.25:
+        return "Baja similitud"
+    else:
+        return "Muy baja similitud"
 
 def get_embeddings(texts: List[str]) -> np.ndarray:
     """
@@ -262,7 +273,7 @@ def get_embeddings(texts: List[str]) -> np.ndarray:
 
 def calculate_similarity_score(query_vector: np.ndarray, profesor: Profesor) -> Tuple[float, Dict]:
     """
-    Calcula un puntaje de similitud compuesto para un profesor.
+    Calcula un puntaje de similitud compuesto para un profesor usando similitud coseno.
     Retorna el puntaje final y un diccionario con los puntajes individuales.
     """
     materias = list(profesor.materias.all())
@@ -277,14 +288,22 @@ def calculate_similarity_score(query_vector: np.ndarray, profesor: Profesor) -> 
     if materias:
         materia_embeddings = [m.get_embedding_array() for m in materias]
         materia_embeddings = np.stack(materia_embeddings)
-        materia_similarities = np.dot(materia_embeddings, query_vector)
+        # Normalizar los vectores
+        materia_norms = np.linalg.norm(materia_embeddings, axis=1, keepdims=True)
+        query_norm = np.linalg.norm(query_vector)
+        # Calcular similitud coseno
+        materia_similarities = np.dot(materia_embeddings, query_vector) / (materia_norms * query_norm)
         scores['max_materia'] = float(np.max(materia_similarities))
         scores['avg_materia'] = float(np.mean(materia_similarities))
     
     if areas:
         area_embeddings = [a.get_embedding_array() for a in areas]
         area_embeddings = np.stack(area_embeddings)
-        area_similarities = np.dot(area_embeddings, query_vector)
+        # Normalizar los vectores
+        area_norms = np.linalg.norm(area_embeddings, axis=1, keepdims=True)
+        query_norm = np.linalg.norm(query_vector)
+        # Calcular similitud coseno
+        area_similarities = np.dot(area_embeddings, query_vector) / (area_norms * query_norm)
         scores['max_area'] = float(np.max(area_similarities))
         scores['avg_area'] = float(np.mean(area_similarities))
     
@@ -306,8 +325,9 @@ def calculate_similarity_score(query_vector: np.ndarray, profesor: Profesor) -> 
     for key, weight in weights.items():
         if key in scores:
             final_score += scores[key] * weight
+    confidence_level = get_confidence_level(final_score)
     
-    return final_score, scores
+    return final_score, scores, confidence_level
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -334,7 +354,7 @@ def buscar_profesores(request):
         # Calcular similitudes
         profesor_scores = []
         for profesor in profesores:
-            final_score, detailed_scores = calculate_similarity_score(query_vector, profesor)
+            final_score, detailed_scores,confidence_level  = calculate_similarity_score(query_vector, profesor)
             #print(f"Profesor: {profesor.user.email , profesor.user.id}, Score: {final_score:.3f} (Details: {detailed_scores})")
             
             if debug_mode:
@@ -343,19 +363,23 @@ def buscar_profesores(request):
                 logger.info(f"Final Score: {final_score}")
            
             if final_score > 0.0:  # Umbral mínimo de similitud
-                profesor_scores.append((profesor, final_score, detailed_scores))
+                profesor_scores.append((profesor, final_score, detailed_scores,confidence_level))
 
             
         
         # Ordenar por puntaje y tomar los mejores resultados
         profesor_scores.sort(key=lambda x: (x[1], x[0].disponibilidad), reverse=True)
-        top_profesores = profesor_scores[:6]
+        top_profesores = profesor_scores[:18]
         
         # Preparar respuesta
         response_data = []
-        for profesor, score, detailed_scores in top_profesores:
+        for profesor, score, detailed_scores,confidence_level in top_profesores:
             profesor_data = ProfesorSerializer(profesor).data
-            print(f"Profesor: {profesor_data}, Score: {score:.3f}")
+            profesor_data['confidence'] = {
+            'score': score,
+            'level': confidence_level
+        }
+            print(f"Profesor: {profesor_data['email']}, Score: {score:.3f}, Confidence: {confidence_level}")
             if debug_mode:
                 profesor_data['_debug'] = {
                     'similarity_score': score,
@@ -371,14 +395,9 @@ def buscar_profesores(request):
             {"error": "Error al procesar la búsqueda", "detail": str(e)},
             status=400
         )
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def buscar_alumnos(request):
-    """
-    Endpoint para buscar alumnos basado en similitud semántica.
-    """
-    # Verificar que el usuario autenticado es un profesor
     if not hasattr(request.user, 'profesor'):
         return Response(
             {"error": "Solo los profesores pueden buscar alumnos"},
@@ -387,22 +406,16 @@ def buscar_alumnos(request):
 
     query = request.GET.get('q', '').strip()
     debug_mode = request.GET.get('debug', '').lower() == 'true'
-    print(f"Query: {query}")
     
     try:
-        # Si no hay query, devolver alumnos recientes
         if not query:
-            alumnos = Alumno.objects.prefetch_related('areas_alumno').all()[:10]
+            alumnos = Alumno.objects.prefetch_related('areas_alumno').all()[:18]
             serializer = AlumnoSerializer(alumnos, many=True)
             return Response(serializer.data)
 
-        # Preprocesar y obtener embedding de la consulta
         query_vector = get_embeddings([query])[0]
-        
-        # Obtener alumnos con sus relaciones precargadas
         alumnos = Alumno.objects.prefetch_related('areas_alumno', 'user').all()
         
-        # Calcular similitudes
         alumno_scores = []
         for alumno in alumnos:
             areas = list(alumno.areas_alumno.all())
@@ -410,24 +423,26 @@ def buscar_alumnos(request):
             if not areas:
                 continue
                 
-            # Calcular similitudes con áreas
             area_embeddings = [a.get_embedding_array() for a in areas]
             area_embeddings = np.stack(area_embeddings)
             area_similarities = np.dot(area_embeddings, query_vector)
             
             score = float(np.max(area_similarities))
+            confidence_level = get_confidence_level(score)
             
-            if score > 0.0:  # Umbral mínimo de similitud
-                alumno_scores.append((alumno, score))
+            if score > 0.0:
+                alumno_scores.append((alumno, score, confidence_level))
         
-        # Ordenar por puntaje y tomar los mejores resultados
         alumno_scores.sort(key=lambda x: x[1], reverse=True)
-        top_alumnos = alumno_scores[:6]
+        top_alumnos = alumno_scores[:18]  # Aumentamos a 18 resultados
         
-        # Preparar respuesta
         response_data = []
-        for alumno, score in top_alumnos:
+        for alumno, score, confidence_level in top_alumnos:
             alumno_data = AlumnoSerializer(alumno).data
+            alumno_data['confidence'] = {
+                'score': score,
+                'level': confidence_level
+            }
             if debug_mode:
                 alumno_data['_debug'] = {
                     'similarity_score': score
