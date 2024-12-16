@@ -28,10 +28,11 @@ class AlumnoSerializer(serializers.ModelSerializer):
     areas_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
     areas_custom = serializers.ListField(child=serializers.CharField(), write_only=True, required=False, default=[])
     user_id = serializers.IntegerField(source='user.id', read_only=True)
+    is_admin = serializers.BooleanField(source='user.is_admin', required=False)
 
     class Meta:
         model = Alumno
-        fields = ('id', 'email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids', 'areas_custom', 'user_id')
+        fields = ('id', 'email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids', 'areas_custom', 'user_id', 'is_admin')
 
     def validate(self, data):
         # Solo validar contraseñas si están presentes en los datos
@@ -55,7 +56,7 @@ class AlumnoSerializer(serializers.ModelSerializer):
             first_name=user_data.get('first_name'),
             last_name=user_data.get('last_name'),
             is_active=False,
-            email_verified=False 
+            email_verified=False
         )
         
         alumno = Alumno.objects.create(user=user, **validated_data)
@@ -162,12 +163,13 @@ class ProfesorSerializer(serializers.ModelSerializer):
         default=[]
     )
     user_id = serializers.IntegerField(source='user.id', read_only=True)
+    is_admin = serializers.BooleanField(source='user.is_admin', required=False)
 
 
     class Meta:
         model = Profesor
         fields = ('id', 'user_id','email', 'nombre', 'apellido_paterno', 'apellido_materno', 'password', 'confirmPassword', 'materias', 'materias', 'materias_ids', 'areas_profesor', 'areas_ids','es_profesor', 'departamento', 
-                 'primer_inicio', 'disponibilidad')
+                 'primer_inicio', 'disponibilidad', 'is_admin')
 
 
     def validate(self, data):
