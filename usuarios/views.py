@@ -834,80 +834,33 @@ class AlumnoDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AlumnoSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def create(self, request, *args, **kwargs):
-        try:
-            data = request.data
-            # Crear usuario
-            user = get_user_model().objects.create_user(
-                email=data.get('email'),
-                password=data.get('password', '123456'),  # Contraseña por defecto
-                first_name=data.get('nombre'),
-                last_name=data.get('apellido_paterno'),
-                is_active=True,
-                email_verified=True
-            )
-
-            # Crear alumno
-            alumno = Alumno.objects.create(
-                user=user,
-                apellido_materno=data.get('apellido_materno'),
-                boleta=data.get('boleta'),
-                carrera=data.get('carrera'),
-                plan_estudios=data.get('plan_estudios')
-            )
-
-            serializer = self.get_serializer(alumno)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
     def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
         instance = self.get_object()
         
-        # Actualizar datos del usuario base
-        user_data = {
-            'email': request.data.get('email'),
-            'first_name': request.data.get('nombre'),
-            'last_name': request.data.get('apellido_paterno')
-        }
+        # Extraer datos
+        is_admin = request.data.get('is_admin')
         
+        # Actualizar datos del usuario base
         user = instance.user
-        for attr, value in user_data.items():
-            if value is not None:
-                setattr(user, attr, value)
+        user.email = request.data.get('email', user.email)
+        user.first_name = request.data.get('nombre', user.first_name)
+        user.last_name = request.data.get('apellido_paterno', user.last_name)
+        
+        # Actualizar is_admin explícitamente
+        if is_admin is not None:
+            user.is_admin = is_admin == 'true' or is_admin is True
         user.save()
 
         # Actualizar datos del alumno
-        alumno_data = {
-            'apellido_materno': request.data.get('apellido_materno'),
-            'boleta': request.data.get('boleta'),
-            'carrera': request.data.get('carrera'),
-            'plan_estudios': request.data.get('plan_estudios')
-        }
-
-        for attr, value in alumno_data.items():
-            if value is not None:
-                setattr(instance, attr, value)
+        instance.apellido_materno = request.data.get('apellido_materno', instance.apellido_materno)
+        instance.boleta = request.data.get('boleta', instance.boleta)
+        instance.carrera = request.data.get('carrera', instance.carrera)
+        instance.plan_estudios = request.data.get('plan_estudios', instance.plan_estudios)
         instance.save()
 
-        # Serializar la respuesta
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-
-    def perform_update(self, serializer):
-        serializer.save()
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
     
-    def perform_destroy(self, instance):
-        # Primero eliminamos el usuario asociado
-        user = instance.user
-        user.delete()
-
 class ProfesorAPI(generics.ListCreateAPIView):
     queryset = Profesor.objects.all()
     serializer_class = ProfesorSerializer
@@ -1101,6 +1054,8 @@ def report_problem(request):
         )
 # usuarios/views.py
 
+# usuarios/views.py
+
 class AlumnoListCreateView(generics.ListCreateAPIView):
     queryset = Alumno.objects.all()
     serializer_class = AlumnoSerializer
@@ -1110,6 +1065,10 @@ class AlumnoListCreateView(generics.ListCreateAPIView):
         try:
             data = request.data
             
+            # Procesar is_admin correctamente
+            is_admin = data.get('is_admin')
+            is_admin_bool = is_admin == 'true' or is_admin is True
+            
             # Crear usuario
             user = User.objects.create_user(
                 email=data['email'],
@@ -1118,10 +1077,10 @@ class AlumnoListCreateView(generics.ListCreateAPIView):
                 last_name=data['apellido_paterno'],
                 is_active=True,
                 email_verified=True,
-                is_admin=data.get('is_admin', False)
+                is_admin=is_admin_bool  
             )
 
-            # Crear alumno
+      
             alumno = Alumno.objects.create(
                 user=user,
                 apellido_materno=data['apellido_materno'],
