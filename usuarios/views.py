@@ -395,9 +395,51 @@ def buscar_profesores(request):
             {"error": "Error al procesar la búsqueda", "detail": str(e)},
             status=400
         )
+def calculate_alumno_similarity_score(query_vector: np.ndarray, alumno: Alumno) -> Tuple[float, Dict, str]:
+    """
+    Calcula un puntaje de similitud compuesto para un alumno.
+    Retorna el puntaje final, un diccionario con los puntajes individuales y el nivel de confianza.
+    """
+    areas = list(alumno.areas_alumno.all())
+    
+    if not areas:
+        return 0.0, {}, "bajo"
+    
+    # Calcular similitudes
+    scores = {}
+    
+    # Calcular similitudes de áreas
+    area_embeddings = [a.get_embedding_array() for a in areas]
+    area_embeddings = np.stack(area_embeddings)
+    
+    # Normalizar los vectores
+    area_norms = np.linalg.norm(area_embeddings, axis=1, keepdims=True)
+    query_norm = np.linalg.norm(query_vector)
+    
+    # Calcular similitud coseno
+    area_similarities = np.dot(area_embeddings, query_vector) / (area_norms * query_norm)
+    scores['max_area'] = float(np.max(area_similarities))
+    scores['avg_area'] = float(np.mean(area_similarities))
+    
+    # Calcular puntaje final ponderado
+    weights = {
+        'max_area': 0.6,
+        'avg_area': 0.4
+    }
+    
+    final_score = sum(scores[key] * weight for key, weight in weights.items())
+    
+    # Determinar nivel de confianza
+    confidence_level = get_confidence_level(final_score)
+    
+    return final_score, scores, confidence_level
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def buscar_alumnos(request):
+    """
+    Endpoint para buscar alumnos basado en similitud semántica.
+    Solo accesible para profesores.
+    """
     if not hasattr(request.user, 'profesor'):
         return Response(
             {"error": "Solo los profesores pueden buscar alumnos"},
@@ -408,44 +450,49 @@ def buscar_alumnos(request):
     debug_mode = request.GET.get('debug', '').lower() == 'true'
     
     try:
+        # Si no hay query, devolver alumnos recientes
         if not query:
             alumnos = Alumno.objects.prefetch_related('areas_alumno').all()[:18]
             serializer = AlumnoSerializer(alumnos, many=True)
             return Response(serializer.data)
 
+        # Preprocesar y obtener embedding de la consulta
         query_vector = get_embeddings([query])[0]
+        
+        # Obtener alumnos con sus relaciones precargadas
         alumnos = Alumno.objects.prefetch_related('areas_alumno', 'user').all()
         
+        # Calcular similitudes
         alumno_scores = []
         for alumno in alumnos:
-            areas = list(alumno.areas_alumno.all())
+            final_score, detailed_scores, confidence_level = calculate_alumno_similarity_score(query_vector, alumno)
             
-            if not areas:
-                continue
-                
-            area_embeddings = [a.get_embedding_array() for a in areas]
-            area_embeddings = np.stack(area_embeddings)
-            area_similarities = np.dot(area_embeddings, query_vector)
+            if debug_mode:
+                logger.info(f"Alumno: {alumno.user.email}")
+                logger.info(f"Scores: {detailed_scores}")
+                logger.info(f"Final Score: {final_score}")
             
-            score = float(np.max(area_similarities))
-            confidence_level = get_confidence_level(score)
-            
-            if score > 0.0:
-                alumno_scores.append((alumno, score, confidence_level))
+            if final_score > 0.0:  # Umbral mínimo de similitud
+                alumno_scores.append((alumno, final_score, detailed_scores, confidence_level))
         
+        # Ordenar por puntaje y tomar los mejores resultados
         alumno_scores.sort(key=lambda x: x[1], reverse=True)
-        top_alumnos = alumno_scores[:18]  # Aumentamos a 18 resultados
+        top_alumnos = alumno_scores[:18]
         
+        # Preparar respuesta
         response_data = []
-        for alumno, score, confidence_level in top_alumnos:
+        for alumno, score, detailed_scores, confidence_level in top_alumnos:
             alumno_data = AlumnoSerializer(alumno).data
             alumno_data['confidence'] = {
                 'score': score,
                 'level': confidence_level
             }
+            print(f"Alumno: {alumno_data['email']}, Score: {score:.3f}, Confidence: {confidence_level}")
+            
             if debug_mode:
                 alumno_data['_debug'] = {
-                    'similarity_score': score
+                    'similarity_score': score,
+                    'detailed_scores': detailed_scores
                 }
             response_data.append(alumno_data)
         
