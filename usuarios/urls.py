@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'alumnos', views.AlumnoViewSet)
 router.register(r'profesores', views.ProfesorViewSet)
+router.register(r'materias', views.MateriaViewSet)
 
 
 urlpatterns = [
@@ -35,8 +36,8 @@ urlpatterns = [
     path('profesores/<int:pk>/delete/', views.delete_profesor, name='delete-profesor'),
     
     # Materias
-    path('materias/', views.MateriaViewSet.as_view({'get': 'list'}), name='materia-list'),
-    path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
+    # path('materias/', views.MateriaViewSet.as_view({'get': 'list'}), name='materia-list'),
+    # path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
     path('check-admin/', views.check_admin, name='check-admin'),
     path('', include(router.urls)),
     path('reset-password-request/', views.ResetPasswordRequestView.as_view(), name='reset-password-request'),

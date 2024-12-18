@@ -475,7 +475,7 @@ class MateriasAPI(generics.ListAPIView):
     queryset = Materia.objects.all()
     serializer_class = MateriaSerializer
 
-class MateriaViewSet(viewsets.ReadOnlyModelViewSet):
+class MateriaViewSet(viewsets.ModelViewSet):
     queryset = Materia.objects.all()
     serializer_class = MateriaSerializer
     permission_classes = [AllowAny]

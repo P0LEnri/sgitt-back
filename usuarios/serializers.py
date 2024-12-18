@@ -21,7 +21,7 @@ class AlumnoSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
     nombre = serializers.CharField(source='user.first_name')
     apellido_paterno = serializers.CharField(source='user.last_name')
-    apellido_materno = serializers.CharField()
+    apellido_materno = serializers.CharField(required=False, allow_blank=True)  
     password = serializers.CharField(write_only=True)
     confirmPassword = serializers.CharField(write_only=True)
     areas_alumno = AreaConocimientoSerializer(many=True, read_only=True)
@@ -157,12 +157,13 @@ class MateriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Materia
         fields = ['id', 'nombre']
+        read_only_fields = ['embedding']
 
 class ProfesorSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
     nombre = serializers.CharField(source='user.first_name')
     apellido_paterno = serializers.CharField(source='user.last_name')
-    apellido_materno = serializers.CharField()
+    apellido_materno = serializers.CharField(required=False, allow_blank=True)  
     password = serializers.CharField(write_only=True, required=False)
     confirmPassword = serializers.CharField(write_only=True, required=False)
     materias = MateriaSerializer(many=True, read_only=True)
