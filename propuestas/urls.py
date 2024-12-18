@@ -18,18 +18,8 @@ router.register(r'crud/propuestas', views.PropuestaViewSet, basename='crud-propu
 
 urlpatterns = [
     path('', include(router.urls)),
-    # path('propuestas/', views.PropuestaViewSet.as_view({'get': 'list', 'post': 'create'}), name='propuestas-list'),
-    # path('propuestas/<int:pk>/', views.PropuestaViewSet.as_view({
-    #     'get': 'retrieve',
-    #     'put': 'update',
-    #     'patch': 'partial_update',
-    #     'delete': 'destroy'
-    # }), name='propuesta-detail'),
-    # Para el detail view, usar path normal
+    # Rutas específicas para el admin CRUD
+    path('crud/propuestas/', views.PropuestaDetailView.as_view(), name='crud-propuestas-list'),
     path('crud/propuestas/<int:pk>/', views.PropuestaDetailView.as_view(), name='crud-propuesta-detail'),
-    # path('crud/alumnos/<int:pk>/', views.AlumnoDetailView.as_view(), name='crud-alumno-detail'),
-    # path('crud/profesores/<int:pk>/', views.ProfesorDetailView.as_view(), name='crud-profesor-detail'),
-    # Para el delete, usar path normal
     path('propuestas/<int:pk>/delete/', views.delete_propuesta, name='delete-propuesta'),
-    
 ]

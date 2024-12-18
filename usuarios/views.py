@@ -522,7 +522,7 @@ class MateriasAPI(generics.ListAPIView):
     queryset = Materia.objects.all()
     serializer_class = MateriaSerializer
 
-class MateriaViewSet(viewsets.ReadOnlyModelViewSet):
+class MateriaViewSet(viewsets.ModelViewSet):
     queryset = Materia.objects.all()
     serializer_class = MateriaSerializer
     permission_classes = [AllowAny]
@@ -882,52 +882,32 @@ class AlumnoDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
         instance = self.get_object()
         
-        # Actualizar datos del usuario base
-        user_data = {
-            'email': request.data.get('email'),
-            'first_name': request.data.get('nombre'),
-            'last_name': request.data.get('apellido_paterno')
-        }
+        # Extraer datos
+        is_admin = request.data.get('is_admin')
         
+        # Actualizar datos del usuario base
         user = instance.user
-        for attr, value in user_data.items():
-            if value is not None:
-                setattr(user, attr, value)
+        user.email = request.data.get('email', user.email)
+        user.first_name = request.data.get('nombre', user.first_name)
+        user.last_name = request.data.get('apellido_paterno', user.last_name)
+        
+        # Actualizar is_admin explícitamente
+        if is_admin is not None:
+            user.is_admin = is_admin == 'true' or is_admin is True
         user.save()
 
         # Actualizar datos del alumno
-        alumno_data = {
-            'apellido_materno': request.data.get('apellido_materno'),
-            'boleta': request.data.get('boleta'),
-            'carrera': request.data.get('carrera'),
-            'plan_estudios': request.data.get('plan_estudios')
-        }
-
-        for attr, value in alumno_data.items():
-            if value is not None:
-                setattr(instance, attr, value)
+        instance.apellido_materno = request.data.get('apellido_materno', instance.apellido_materno)
+        instance.boleta = request.data.get('boleta', instance.boleta)
+        instance.carrera = request.data.get('carrera', instance.carrera)
+        instance.plan_estudios = request.data.get('plan_estudios', instance.plan_estudios)
         instance.save()
 
-        # Serializar la respuesta
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-
-    def perform_update(self, serializer):
-        serializer.save()
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
     
-    def perform_destroy(self, instance):
-        # Primero eliminamos el usuario asociado
-        user = instance.user
-        user.delete()
-
 class ProfesorAPI(generics.ListCreateAPIView):
     queryset = Profesor.objects.all()
     serializer_class = ProfesorSerializer
@@ -968,6 +948,33 @@ class ProfesorDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profesor.objects.select_related('user').prefetch_related('materias', 'areas_profesor')
     serializer_class = ProfesorSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        try:
+            data = request.data
+            # Crear usuario
+            user = get_user_model().objects.create_user(
+                email=data.get('email'),
+                password=data.get('password', '123456'),  # Contraseña por defecto
+                first_name=data.get('nombre'),
+                last_name=data.get('apellido_paterno'),
+                is_active=True,
+                email_verified=True
+            )
+
+            # Crear profesor
+            profesor = Profesor.objects.create(
+                user=user,
+                apellido_materno=data.get('apellido_materno'),
+                departamento=data.get('departamento'),
+                es_profesor=True,
+                primer_inicio=True
+            )
+
+            serializer = self.get_serializer(profesor)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_update(self, serializer):
         try:
@@ -1049,6 +1056,8 @@ class AlumnoViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_class = AlumnoFilter
     search_fields = ['user__email', 'user__first_name', 'user__last_name', 'boleta']
+    
+    
 
 class ProfesorViewSet(viewsets.ModelViewSet):
     queryset = Profesor.objects.all()
@@ -1090,3 +1099,84 @@ def report_problem(request):
             {'message': 'Error sending report', 'error': str(e)}, 
             status=500
         )
+# usuarios/views.py
+
+# usuarios/views.py
+
+class AlumnoListCreateView(generics.ListCreateAPIView):
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        try:
+            data = request.data
+            
+            # Procesar is_admin correctamente
+            is_admin = data.get('is_admin')
+            is_admin_bool = is_admin == 'true' or is_admin is True
+            
+            # Crear usuario
+            user = User.objects.create_user(
+                email=data['email'],
+                password=data.get('password', '123456'),
+                first_name=data['nombre'],
+                last_name=data['apellido_paterno'],
+                is_active=True,
+                email_verified=True,
+                is_admin=is_admin_bool  
+            )
+
+      
+            alumno = Alumno.objects.create(
+                user=user,
+                apellido_materno=data['apellido_materno'],
+                boleta=data['boleta'],
+                carrera=data['carrera'],
+                plan_estudios=data['plan_estudios']
+            )
+
+            serializer = self.get_serializer(alumno)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+class ProfesorListCreateView(generics.ListCreateAPIView):
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        try:
+            data = request.data
+            
+            # Crear usuario
+            user = User.objects.create_user(
+                email=data['email'],
+                password=data.get('password', '123456'),
+                first_name=data['nombre'],
+                last_name=data['apellido_paterno'],
+                is_active=True,
+                email_verified=True,
+                is_admin=data.get('is_admin', False)
+            )
+
+            # Crear profesor
+            profesor = Profesor.objects.create(
+                user=user,
+                apellido_materno=data['apellido_materno'],
+                departamento=data['departamento'],
+                es_profesor=True,
+                primer_inicio=True
+            )
+
+            serializer = self.get_serializer(profesor)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )

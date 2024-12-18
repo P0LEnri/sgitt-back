@@ -21,17 +21,18 @@ class AlumnoSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
     nombre = serializers.CharField(source='user.first_name')
     apellido_paterno = serializers.CharField(source='user.last_name')
-    apellido_materno = serializers.CharField()
+    apellido_materno = serializers.CharField(required=False, allow_blank=True)  
     password = serializers.CharField(write_only=True)
     confirmPassword = serializers.CharField(write_only=True)
     areas_alumno = AreaConocimientoSerializer(many=True, read_only=True)
     areas_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
     areas_custom = serializers.ListField(child=serializers.CharField(), write_only=True, required=False, default=[])
+    is_admin = serializers.BooleanField(source='user.is_admin', required=False)
     user_id = serializers.IntegerField(source='user.id', read_only=True)
 
     class Meta:
         model = Alumno
-        fields = ('id', 'email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids', 'areas_custom', 'user_id')
+        fields = ('id', 'email', 'password', 'confirmPassword', 'nombre', 'apellido_paterno', 'apellido_materno', 'boleta', 'carrera', 'plan_estudios', 'areas_alumno', 'areas_ids', 'areas_custom', 'user_id', 'is_admin')
 
     def validate(self, data):
         # Solo validar contraseñas si están presentes en los datos
@@ -55,7 +56,7 @@ class AlumnoSerializer(serializers.ModelSerializer):
             first_name=user_data.get('first_name'),
             last_name=user_data.get('last_name'),
             is_active=False,
-            email_verified=False 
+            email_verified=False
         )
         
         alumno = Alumno.objects.create(user=user, **validated_data)
@@ -85,6 +86,8 @@ class AlumnoSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         areas_ids = validated_data.pop('areas_ids', [])
         areas_custom = validated_data.pop('areas_custom', [])
+        user_data = validated_data.pop('user', {})
+
 
         # Actualizar áreas
         instance.areas_alumno.clear()
@@ -101,6 +104,20 @@ class AlumnoSerializer(serializers.ModelSerializer):
         for area_nombre in areas_custom:
             area, _ = AreaConocimiento.objects.get_or_create(nombre=area_nombre)
             instance.areas_alumno.add(area)
+            
+        user = instance.user
+        for attr, value in user_data.items():
+            setattr(user, attr, value)
+        
+        # Asegurarse de que is_admin se procese correctamente
+        if 'is_admin' in user_data:
+            user.is_admin = user_data['is_admin']
+        user.save()
+
+        # Actualizar alumno
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
 
         return instance
 
@@ -140,12 +157,13 @@ class MateriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Materia
         fields = ['id', 'nombre']
+        read_only_fields = ['embedding']
 
 class ProfesorSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
     nombre = serializers.CharField(source='user.first_name')
     apellido_paterno = serializers.CharField(source='user.last_name')
-    apellido_materno = serializers.CharField()
+    apellido_materno = serializers.CharField(required=False, allow_blank=True)  
     password = serializers.CharField(write_only=True, required=False)
     confirmPassword = serializers.CharField(write_only=True, required=False)
     materias = MateriaSerializer(many=True, read_only=True)
@@ -162,12 +180,13 @@ class ProfesorSerializer(serializers.ModelSerializer):
         default=[]
     )
     user_id = serializers.IntegerField(source='user.id', read_only=True)
+    is_admin = serializers.BooleanField(source='user.is_admin', required=False)
 
 
     class Meta:
         model = Profesor
         fields = ('id', 'user_id','email', 'nombre', 'apellido_paterno', 'apellido_materno', 'password', 'confirmPassword', 'materias', 'materias', 'materias_ids', 'areas_profesor', 'areas_ids','es_profesor', 'departamento', 
-                 'primer_inicio', 'disponibilidad')
+                 'primer_inicio', 'disponibilidad', 'is_admin')
 
 
     def validate(self, data):

@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'alumnos', views.AlumnoViewSet)
 router.register(r'profesores', views.ProfesorViewSet)
+router.register(r'materias', views.MateriaViewSet)
 
 
 urlpatterns = [
@@ -22,21 +23,21 @@ urlpatterns = [
     path('alumnos/', views.AlumnoAPI.as_view(), name='alumnos-list'),
     path('alumnos/perfil/', views.AlumnoPerfilView.as_view(), name='alumno-perfil'),
     path('alumnos/<int:pk>/', views.AlumnoDetailView.as_view(), name='alumno-detail'),
-    path('crud/alumnos/', views.AlumnoListView.as_view(), name='crud-alumnos-list'),
+    path('crud/alumnos/', views.AlumnoListCreateView.as_view(), name='crud-alumnos-list'),
     path('crud/alumnos/<int:pk>/', views.AlumnoDetailView.as_view(), name='crud-alumno-detail'),
     path('alumnos/<int:pk>/delete/', views.delete_alumno, name='delete-alumno'),
 
-    # Profesores (Perfil, CRUD y Búsqueda)
+    # Profesores
     path('profesores/', views.ProfesorAPI.as_view(), name='profesores-list'),
     path('profesores/perfil/', views.ProfesorPerfilView.as_view(), name='profesor-perfil'),
     path('profesores/buscar/', views.buscar_profesores, name='buscar-profesores'),
-    path('crud/profesores/', views.ProfesorListView.as_view(), name='crud-profesores-list'),
+    path('crud/profesores/', views.ProfesorListCreateView.as_view(), name='crud-profesores-list'),
     path('crud/profesores/<int:pk>/', views.ProfesorDetailView.as_view(), name='crud-profesor-detail'),
     path('profesores/<int:pk>/delete/', views.delete_profesor, name='delete-profesor'),
-
+    
     # Materias
-    path('materias/', views.MateriaViewSet.as_view({'get': 'list'}), name='materia-list'),
-    path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
+    # path('materias/', views.MateriaViewSet.as_view({'get': 'list'}), name='materia-list'),
+    # path('materias/<int:pk>/', views.MateriaViewSet.as_view({'get': 'retrieve'}), name='materia-detail'),
     path('check-admin/', views.check_admin, name='check-admin'),
     path('', include(router.urls)),
     path('reset-password-request/', views.ResetPasswordRequestView.as_view(), name='reset-password-request'),
