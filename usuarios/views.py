@@ -1172,9 +1172,14 @@ class ProfesorListCreateView(generics.ListCreateAPIView):
                 es_profesor=True,
                 primer_inicio=True
             )
-
-            serializer = self.get_serializer(profesor)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+            if 'materias_ids' in data:
+                materias_ids = data['materias_ids']
+                profesor.materias.set(materias_ids)
+        
+            return Response(self.get_serializer(profesor).data, 
+                       status=status.HTTP_201_CREATED)
+            
         except Exception as e:
             return Response(
                 {'error': str(e)},
